@@ -11,4 +11,5 @@ public class AlarmDto {
     DeviceDto device;
     List<UserDto> user;
     OrganizationDto organization;
+    String uuid;
 }

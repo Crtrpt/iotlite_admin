@@ -22,7 +22,8 @@ public class IotliteApplication {
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("com.dj.iotlite.api")).build();
+                .apis(RequestHandlerSelectors.basePackage("com.dj.iotlite.api"))
+                .build();
     }
 
 }

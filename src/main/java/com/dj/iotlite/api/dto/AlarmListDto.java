@@ -9,4 +9,5 @@ public class AlarmListDto {
     UserDto user;
     OrganizationDto organization;
     TaskDto task;
+    String uuid;
 }

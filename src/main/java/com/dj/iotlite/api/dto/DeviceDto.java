@@ -6,4 +6,5 @@ import lombok.Data;
 public class DeviceDto {
     String name;
     String product;
+    String uuid;
 }
