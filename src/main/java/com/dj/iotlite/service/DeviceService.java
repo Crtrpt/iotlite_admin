@@ -17,4 +17,35 @@ public class DeviceService {
     DeviceRepository deviceRepository;
 
 
+    public Object queryDevice(String uuid) {
+        return null;
+    }
+
+    public Object getDeviceList() {
+        return null;
+    }
+
+    public Object removeDevice(String uuid) {
+        return null;
+    }
+
+    public Object saveDevice() {
+        return null;
+    }
+
+    public Object getProductList() {
+        return null;
+    }
+
+    public Object removeProduct(String uuid) {
+        return null;
+    }
+
+    public Object saveProduct() {
+        return null;
+    }
+
+    public Object queryProduct(String uuid) {
+        return null;
+    }
 }

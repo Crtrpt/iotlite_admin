@@ -13,4 +13,23 @@ public class TaskService {
     @Autowired
     TaskRepository taskRepository;
 
+    public Object getTaskList() {
+        return null;
+    }
+
+    public Object removeTask(String uuid) {
+        return null;
+    }
+
+    public Object saveTask() {
+        return null;
+    }
+
+    public Object queryTask(String uuid) {
+        return null;
+    }
+
+    public Object getAlarmList() {
+        return null;
+    }
 }

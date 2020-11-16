@@ -19,4 +19,36 @@ public class UserService {
 
     @Autowired
     OrganizationUserRepository organizationUserRepository;
+
+    public Object getOrganizationList() {
+        return null;
+    }
+
+    public Object removeOrganization(String uuid) {
+        return null;
+    }
+
+    public Object saveOrganization() {
+        return null;
+    }
+
+    public Object queryOrganization(String uuid) {
+        return null;
+    }
+
+    public Object queryUser(String uuid) {
+        return null;
+    }
+
+    public Object getUserList() {
+        return null;
+    }
+
+    public Object removeUser(String uuid) {
+        return null;
+    }
+
+    public Object saveUser() {
+        return null;
+    }
 }
