@@ -1,6 +1,7 @@
 package com.dj.iotlite.api;
 
 import com.dj.iotlite.api.dto.*;
+import com.dj.iotlite.api.form.DeviceActionForm;
 import com.dj.iotlite.api.form.DeviceQueryForm;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.service.DeviceService;
@@ -37,12 +38,22 @@ public class DeviceController extends BaseController {
     }
 
     @PostMapping("/save")
-    public ResDto<Boolean> save() {
-        return success(deviceService.saveDevice());
+    public ResDto<Boolean> save(@RequestBody DeviceDto deviceDto) {
+        return success(deviceService.saveDevice(deviceDto));
     }
 
     @GetMapping("/query")
     public ResDto<DeviceDto> query(@RequestParam("uuid") String uuid) {
         return success(deviceService.queryDevice(uuid));
+    }
+
+    @GetMapping("/action")
+    public ResDto<AsynPage> action(DeviceActionForm action) {
+        return success(deviceService.action(action));
+    }
+
+    @GetMapping("/enable")
+    public ResDto<AsynPage> enable(@RequestParam("uuid") String uuid) {
+        return success(deviceService.enable(uuid));
     }
 }

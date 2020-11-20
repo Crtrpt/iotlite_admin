@@ -16,6 +16,7 @@ public class AuthController extends BaseController {
 
     @PostMapping("/login")
     public ResDto<LoginDto> login(@RequestBody LoginForm Loginform) {
+
         return success(authService.login(Loginform));
     }
 

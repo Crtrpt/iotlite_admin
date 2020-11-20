@@ -16,6 +16,7 @@ public enum BusinessExceptionEnum implements IExceptionEnum {
     CLIENT_GROUP_EXIST(10006, "服务商不存在"),
     ACCOUNT_NOT_HAVE_LOGIN_PERMISSION(10007, "该账号没有登录权限"),
     ACCOUNT_MUST_NOT_NULL(10008, "账号不能为空"),
+    ACCOUNT_NOT_FOUND(10009,"账户不存在"),
 
 
     PERMISSION_DENIED(20001, "访问被拒绝"),

@@ -1,5 +1,7 @@
 package com.dj.iotlite.service;
 
+import com.dj.iotlite.api.dto.DeviceDto;
+import com.dj.iotlite.api.form.DeviceActionForm;
 import com.dj.iotlite.api.form.DeviceQueryForm;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.device.DeviceRepository;
@@ -27,7 +29,6 @@ public class DeviceService {
 
     @Autowired
     DeviceRepository deviceRepository;
-
 
     public Object queryDevice(String uuid) {
         return null;
@@ -57,7 +58,7 @@ public class DeviceService {
         return null;
     }
 
-    public Object saveDevice() {
+    public Object saveDevice(DeviceDto deviceDto) {
         return null;
     }
 
@@ -74,6 +75,24 @@ public class DeviceService {
     }
 
     public Object queryProduct(String uuid) {
+        return null;
+    }
+
+    /**
+     * 对设备发送命令
+     * @param action
+     * @return
+     */
+    public Object action(DeviceActionForm action) {
+        return null;
+    }
+
+    /**
+     * 启用或者关闭设备
+     * @param uuid
+     * @return
+     */
+    public Object enable(String uuid) {
         return null;
     }
 }
