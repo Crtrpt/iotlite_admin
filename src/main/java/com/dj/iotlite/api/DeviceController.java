@@ -1,13 +1,14 @@
 package com.dj.iotlite.api;
 
-import com.dj.iotlite.api.dto.AlarmListDto;
-import com.dj.iotlite.api.dto.DeviceDto;
-import com.dj.iotlite.api.dto.DeviceListDto;
-import com.dj.iotlite.api.dto.ResDto;
+import com.dj.iotlite.api.dto.*;
+import com.dj.iotlite.api.form.DeviceQueryForm;
+import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.service.DeviceService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 @RestController
@@ -19,8 +20,15 @@ public class DeviceController extends BaseController {
     DeviceService deviceService;
 
     @GetMapping("/list")
-    public ResDto<List<DeviceListDto>> list() {
-        return success(deviceService.getDeviceList());
+    public ResDto<Page<DeviceListDto>> list(DeviceQueryForm deviceQueryForm) {
+        Page<DeviceListDto> ret = new Page<DeviceListDto>();
+        org.springframework.data.domain.Page<Device> res = deviceService.getDeviceList(deviceQueryForm);
+        res.forEach(s -> {
+            DeviceListDto t = new DeviceListDto();
+            BeanUtils.copyProperties(s, t);
+            ret.getData().add(t);
+        });
+        return success(ret);
     }
 
     @PostMapping("/remove")

@@ -1,0 +1,28 @@
+{
+  "version": "01",
+  "magic_code": "",
+  "property": {
+    "temperature": 20,
+    "power": 128,
+    "online": "1b",
+    "lat": 113.62000000,
+    "lng": 34.75000000,
+    "lock": true
+  },
+  "event": {
+    "temperature_high": "temperature>50",
+    "temperature_lower": "temperature<20",
+    "power_lower": "power<20",
+    "device_leave": "last_ct-now()>20",
+    "door_change": "vallock!=oldlock",
+    "location_change": "vallat!=oldlat || vallng!=oldlng"
+  },
+  "alarm": {
+    "open_door": "lock==true",
+    "close_door": "lock==false"
+  },
+  "control": {
+    "open_door": "lock=true",
+    "close_door": "lock=false"
+  }
+}

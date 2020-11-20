@@ -1,11 +1,13 @@
 package com.dj.iotlite.api;
 
-import com.dj.iotlite.api.dto.ProductListDto;
-import com.dj.iotlite.api.dto.ResDto;
-import com.dj.iotlite.api.dto.UserDto;
-import com.dj.iotlite.api.dto.UserListDto;
+import com.dj.iotlite.api.dto.*;
+import com.dj.iotlite.api.form.OrganizationQueryForm;
+import com.dj.iotlite.api.form.UserQueryForm;
+import com.dj.iotlite.entity.organization.Organization;
+import com.dj.iotlite.entity.user.User;
 import com.dj.iotlite.service.TaskService;
 import com.dj.iotlite.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +22,15 @@ public class UserController extends BaseController {
     UserService userService;
 
     @GetMapping("/list")
-    public ResDto<List<UserListDto>> list() {
-        return success(userService.getUserList());
+    public ResDto<Page<UserListDto>> list(UserQueryForm query) {
+        Page<UserListDto> ret = new Page<>();
+        org.springframework.data.domain.Page<User> res = userService.getUserList(query);
+        res.forEach(s -> {
+            UserListDto t = new UserListDto();
+            BeanUtils.copyProperties(s, t);
+            ret.getData().add(t);
+        });
+        return success(ret);
     }
 
     @PostMapping("/remove")

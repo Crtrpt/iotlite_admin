@@ -1,6 +1,7 @@
 package com.dj.iotlite.entity.product;
 
 import com.dj.iotlite.entity.Base;
+import com.dj.iotlite.enums.GatewayEnum;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
@@ -9,16 +10,17 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.HashMap;
 
 @Data
-@SQLDelete(sql = "update `product` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
+@SQLDelete(sql = "update `gateway` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
 @Entity
-@Table(name = "product")
+@Table(name = "gateway")
 @Where(clause = "deleted_at is null")
 @DynamicUpdate
 @Cacheable
 @org.hibernate.annotations.TypeDef(name = "json", typeClass = JsonStringType.class)
-public class Product extends Base {
+public class Gateway extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +30,7 @@ public class Product extends Base {
 
     String remark;
 
-    /**
-     * 产品图标
-     */
-    String icon;
+    GatewayEnum edgetype;
 
     String uuid;
 
@@ -50,5 +49,5 @@ public class Product extends Base {
      */
     @Type(type = "json")
     @Column(columnDefinition = "json")
-    String spec;
+    HashMap setting;
 }

@@ -1,0 +1,14 @@
+{
+  "version": "01",
+  "name": "example_light",
+  "property": {
+    "power": "20"
+  },
+  "event": {
+    "off": "power==0",
+    "on": "power>0"
+  },
+  "control": {
+    "on": "power=100"
+  }
+}

@@ -1,9 +1,12 @@
 package com.dj.iotlite.api;
 
-import com.dj.iotlite.api.dto.OrganizationDto;
-import com.dj.iotlite.api.dto.OrganizationListDto;
-import com.dj.iotlite.api.dto.ResDto;
+import com.dj.iotlite.api.dto.*;
+import com.dj.iotlite.api.form.DeviceQueryForm;
+import com.dj.iotlite.api.form.OrganizationQueryForm;
+import com.dj.iotlite.entity.organization.Organization;
+import com.dj.iotlite.entity.product.Gateway;
 import com.dj.iotlite.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +21,15 @@ public class OrganizationController extends BaseController {
     UserService deviceService;
 
     @GetMapping("/list")
-    public ResDto<List<OrganizationListDto>> list() {
-        return success(deviceService.getOrganizationList());
+    public ResDto<Page<OrganizationListDto>> list(OrganizationQueryForm query) {
+        Page<OrganizationListDto> ret = new Page<>();
+        org.springframework.data.domain.Page<Organization> res = deviceService.getOrganizationList(query);
+        res.forEach(s -> {
+            OrganizationListDto t = new OrganizationListDto();
+            BeanUtils.copyProperties(s, t);
+            ret.getData().add(t);
+        });
+        return success(ret);
     }
 
     @PostMapping("/remove")

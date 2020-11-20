@@ -4,9 +4,11 @@ import com.dj.iotlite.entity.Base;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.HashMap;
 
 @Data
 @SQLDelete(sql = "update `device` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
@@ -20,6 +22,11 @@ public class Device extends Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    /**
+     * 设备图标
+     */
+    String icon;
 
     /**
      * 设备名称
@@ -43,5 +50,7 @@ public class Device extends Base {
     /**
      * 设备影子
      */
-    String shadow;
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    HashMap shadow;
 }

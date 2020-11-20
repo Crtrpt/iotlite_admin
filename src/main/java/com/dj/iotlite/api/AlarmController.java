@@ -1,8 +1,15 @@
 package com.dj.iotlite.api;
 
 import com.dj.iotlite.api.dto.AlarmListDto;
+import com.dj.iotlite.api.dto.DeviceListDto;
+import com.dj.iotlite.api.dto.Page;
 import com.dj.iotlite.api.dto.ResDto;
+import com.dj.iotlite.api.form.AlarmQueryForm;
+import com.dj.iotlite.api.form.DeviceQueryForm;
+import com.dj.iotlite.entity.alarm.Alarm;
+import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.service.TaskService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +25,15 @@ public class AlarmController extends BaseController {
     TaskService taskService;
 
     @GetMapping("/list")
-    public ResDto<AlarmListDto> list() {
-        return success(taskService.getAlarmList());
+    public ResDto<Page<AlarmListDto>> list(AlarmQueryForm query) {
+        Page<AlarmListDto> ret = new Page<>();
+        org.springframework.data.domain.Page<Alarm> res = taskService.getAlarmList(query);
+        res.forEach(s -> {
+            AlarmListDto t = new AlarmListDto();
+            BeanUtils.copyProperties(s, t);
+            ret.getData().add(t);
+        });
+        return success(ret);
     }
 
 }

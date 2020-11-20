@@ -16,3 +16,4 @@ public class ResDto<T> {
         this.setData((T) res);
     }
 }
+
