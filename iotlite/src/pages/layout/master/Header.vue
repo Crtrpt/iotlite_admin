@@ -4,11 +4,11 @@
       <b-sidebar id="sidebar-1" title="Menu" shadow>
       <div class="px-3 py-2">
             <b-nav vertical class="w-25">
-              <b-nav-item active>产品</b-nav-item>
-              <b-nav-item>设备</b-nav-item>
-              <b-nav-item>网关</b-nav-item>
-              <b-nav-item>组织</b-nav-item>
-              <b-nav-item>用户</b-nav-item>
+              <b-nav-item :to="{name:'product'}">Product</b-nav-item>
+              <b-nav-item :to="{name:'device'}">Device</b-nav-item>
+              <b-nav-item :to="{name:'gateway'}">Gateway</b-nav-item>
+              <b-nav-item :to="{name:'organization'}">Organization</b-nav-item>
+              <b-nav-item :to="{name:'user'}">User</b-nav-item>
             </b-nav>
       </div>
     </b-sidebar>

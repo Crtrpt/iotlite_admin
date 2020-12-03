@@ -12,30 +12,27 @@ export default {
   name: 'Dashboard',
   data(){
         return  {
-          grid: undefined,
-          count: 0,
-          info: "",
-          timerId: undefined,
-        items: [
-            { w:2, content:  '' },
-            { w:8, content:   ''},
-            { w:2, content:   ''},
-            { w:2, content:   '' },
-            { w:8,h:3, content: '' },
-            { w:2, content: '' },
-            { w:2, content: ''},
-            { w:2, content: '' },
-            { w:2, content: '' },
-            { w:2, content: '' },
-            { w:2, content: '' },
-            { w:2, content: ''},
-            { w:2, content: '' },
-            { w:2, content: '' },
-            { w:2, content: '' },
-            { w:2, content: '' },
-          ],
-        }
-    },
+        grid: undefined,
+          items: [
+              { w:2, content:  '' },
+              { w:8, content:   ''},
+              { w:2, content:   ''},
+              { w:2, content:   '' },
+              { w:8,h:3, content: '' },
+              { w:2, content: '' },
+              { w:2, content: ''},
+              { w:2, content: '' },
+              { w:2, content: '' },
+              { w:2, content: '' },
+              { w:2, content: '' },
+              { w:2, content: ''},
+              { w:2, content: '' },
+              { w:2, content: '' },
+              { w:2, content: '' },
+              { w:2, content: '' },
+            ],
+          }
+        },
           watch: {
             /**
              * Clear the info text after a two second timeout. Clears previous timeout first.

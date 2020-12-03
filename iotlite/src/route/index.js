@@ -1,6 +1,12 @@
-
 import  MasterLayout  from "../pages/layout/master/MasterLayout";
 import  UserLayout  from "../pages/layout/user/UserLayout";
+
+import product from "./product"
+import device from "./device"
+import organization from "./organization"
+import user from "./user"
+import gateway from "./gateway"
+
 var routes = [
   {
     path: '/',
@@ -13,16 +19,23 @@ var routes = [
         component: require('../pages/Dashboard').default,
         name: 'dashboard',
         meta:{
-          name:"首页"
+          name:"Home"
+        }
+      },
+      ...device,
+      ...product,
+      ...gateway,
+      ...organization,
+      ...user,
+      {
+        path: 'gateway',
+        component: require('../pages/gateway/Index').default,
+        name: 'gateway',
+        meta:{
+          name:"setting"
         }
       }
-
     ],
-  },
-  {
-    path: '/user',
-    component: UserLayout,
-    name: 'user',
   },
   {
     path: '/passport',
