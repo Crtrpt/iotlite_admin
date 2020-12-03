@@ -1,0 +1,22 @@
+{
+  "eslintIntegration": true,
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 100,
+  "useTabs": false,
+  "tabWidth": 2,
+  "tabSize": 2,
+  "quoteProps": "as-needed",
+  "jsxSingleQuote": false,
+  "trailingComma": "es5",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "always",
+  "rangeStart": 0,
+  "rangeEnd": 800,
+  "requirePragma": false,
+  "insertPragma": false,
+  "proseWrap": "preserve",
+  "htmlWhitespaceSensitivity": "css",
+  "endOfLine": "lf"
+}
