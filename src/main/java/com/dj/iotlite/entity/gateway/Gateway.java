@@ -28,7 +28,7 @@ public class Gateway extends Base {
 
     String name;
 
-    String remark;
+    String description;
 
     GatewayEnum edgetype;
 

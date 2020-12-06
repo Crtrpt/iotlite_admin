@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class ProductDto {
     String name;
-    String uuid;
+    String description;
+    Object spec;
 }

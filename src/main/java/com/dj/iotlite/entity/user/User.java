@@ -24,14 +24,25 @@ public class User extends Base {
     /**
      * user uuid
      */
-    String Uuid;
+    String uuid;
 
     String name;
 
-    String remark;
+    String description;
 
     String account;
 
     String password;
+
+    /**
+     * 用户所属组织机构
+     */
+    Long organizationId;
+
+    String email;
+
+    String phone;
+
+    Boolean isActive;
 
 }

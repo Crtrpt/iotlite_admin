@@ -29,7 +29,7 @@ public class DeviceGroup extends Base {
     /**
      * 备注
      */
-    String remark;
+    String description;
 
 
 }

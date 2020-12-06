@@ -1,5 +1,6 @@
 package com.dj.iotlite.entity;
 
+
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Data;
 import org.hibernate.annotations.Type;

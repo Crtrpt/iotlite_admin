@@ -9,9 +9,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.parser.Entity;
-import java.util.List;
-
 @RestController
 @RequestMapping("/device")
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -27,7 +24,8 @@ public class DeviceController extends BaseController {
         res.forEach(s -> {
             DeviceListDto t = new DeviceListDto();
             BeanUtils.copyProperties(s, t);
-            ret.getData().add(t);
+            deviceService.getProduct(s.getProductId(),t.getProduct());
+            ret.getList().add(t);
         });
         return success(ret);
     }
@@ -42,9 +40,9 @@ public class DeviceController extends BaseController {
         return success(deviceService.saveDevice(deviceDto));
     }
 
-    @GetMapping("/query")
-    public ResDto<DeviceDto> query(@RequestParam("uuid") String uuid) {
-        return success(deviceService.queryDevice(uuid));
+    @GetMapping("/info")
+    public ResDto<DeviceDto> query(@RequestParam("id") Long id) {
+        return success(deviceService.queryDevice(id));
     }
 
     @GetMapping("/action")

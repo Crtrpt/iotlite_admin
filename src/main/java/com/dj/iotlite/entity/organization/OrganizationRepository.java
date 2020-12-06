@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,5 +16,9 @@ public interface OrganizationRepository extends
         JpaRepository<Organization, Long> {
 
     Optional<Organization> findFirstByUuid(String uuid);
+
+    List<Organization> findAllByFid(Long fid);
+
+    Integer countAllByFid(Long fid);
 
 }

@@ -1,14 +1,15 @@
 package com.dj.iotlite.api;
 
 import com.dj.iotlite.api.dto.*;
+import com.dj.iotlite.api.form.OrganizationForm;
+import com.dj.iotlite.api.form.UserForm;
 import com.dj.iotlite.api.form.UserQueryForm;
 import com.dj.iotlite.entity.user.User;
 import com.dj.iotlite.service.UserService;
+import com.dj.iotlite.utils.PasswordUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -25,7 +26,7 @@ public class UserController extends BaseController {
         res.forEach(s -> {
             UserListDto t = new UserListDto();
             BeanUtils.copyProperties(s, t);
-            ret.getData().add(t);
+            ret.getList().add(t);
         });
         return success(ret);
     }
@@ -36,8 +37,8 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/save")
-    public ResDto<Boolean> save() {
-        return success(userService.saveUser());
+    public ResDto<Boolean> save(@RequestBody UserForm userForm) {
+        return success(userService.saveUser(userForm));
     }
 
     @GetMapping("/query")

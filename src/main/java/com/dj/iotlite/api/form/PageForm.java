@@ -9,14 +9,14 @@ import org.springframework.data.domain.Sort;
 public class PageForm {
     String words;
 
-    int pageSize = 0;
-    int pageNum = 10;
+    int pageSize;
+    int pageNum;
 
     String sortBy = "id";
     boolean sortDesc = true;
 
 
     public Pageable getPage() {
-        return PageRequest.of(this.pageNum - 1, 10, Sort.by(new Sort.Order(this.sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
+        return PageRequest.of(this.pageNum - 1, this.pageSize, Sort.by(new Sort.Order(this.sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
     }
 }

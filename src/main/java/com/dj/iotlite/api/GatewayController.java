@@ -26,7 +26,7 @@ public class GatewayController extends BaseController {
         res.forEach(s -> {
             GatewayListDto t = new GatewayListDto();
             BeanUtils.copyProperties(s, t);
-            ret.getData().add(t);
+            ret.getList().add(t);
         });
         return success(ret);
     }

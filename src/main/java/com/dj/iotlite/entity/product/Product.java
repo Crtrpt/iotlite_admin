@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.HashMap;
 
 @Data
 @SQLDelete(sql = "update `product` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
@@ -26,7 +27,7 @@ public class Product extends Base {
 
     String name;
 
-    String remark;
+    String description;
 
     /**
      * 产品图标
@@ -50,5 +51,5 @@ public class Product extends Base {
      */
     @Type(type = "json")
     @Column(columnDefinition = "json")
-    String spec;
+    Object spec;
 }

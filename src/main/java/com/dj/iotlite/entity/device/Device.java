@@ -36,21 +36,21 @@ public class Device extends Base {
     /**
      * 设备备注
      */
-    String remark;
+    String description;
 
     /**
      * 设备的uuid
      */
     String uuid;
 
-    /**
-     * 关联的产品的uuid
-     */
-    String productUuid;
+
+    Long productId;
     /**
      * 设备影子
      */
     @Type(type = "json")
     @Column(columnDefinition = "json")
     HashMap shadow;
+
+    String sn;
 }

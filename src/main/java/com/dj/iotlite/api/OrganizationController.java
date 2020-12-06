@@ -1,10 +1,9 @@
 package com.dj.iotlite.api;
 
 import com.dj.iotlite.api.dto.*;
-import com.dj.iotlite.api.form.DeviceQueryForm;
+import com.dj.iotlite.api.form.OrganizationForm;
 import com.dj.iotlite.api.form.OrganizationQueryForm;
 import com.dj.iotlite.entity.organization.Organization;
-import com.dj.iotlite.entity.product.Gateway;
 import com.dj.iotlite.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,32 +17,39 @@ import java.util.List;
 public class OrganizationController extends BaseController {
 
     @Autowired
-    UserService deviceService;
+    UserService userService;
 
     @GetMapping("/list")
     public ResDto<Page<OrganizationListDto>> list(OrganizationQueryForm query) {
         Page<OrganizationListDto> ret = new Page<>();
-        org.springframework.data.domain.Page<Organization> res = deviceService.getOrganizationList(query);
+        org.springframework.data.domain.Page<Organization> res = userService.getOrganizationList(query);
         res.forEach(s -> {
             OrganizationListDto t = new OrganizationListDto();
             BeanUtils.copyProperties(s, t);
-            ret.getData().add(t);
+            ret.getList().add(t);
         });
+        System.out.println(res);
+        ret.setTotal(res.getTotalElements());
         return success(ret);
     }
 
     @PostMapping("/remove")
     public ResDto<Boolean> remove(@RequestParam("uuid") String uuid) {
-        return success(deviceService.removeOrganization(uuid));
+        return success(userService.removeOrganization(uuid));
     }
 
     @PostMapping("/save")
-    public ResDto<Boolean> save() {
-        return success(deviceService.saveOrganization());
+    public ResDto<Boolean> save(@RequestBody OrganizationForm organizationForm) {
+        return success(userService.saveOrganization(organizationForm));
     }
 
     @GetMapping("/query")
     public ResDto<OrganizationDto> query(@RequestParam("uuid") String uuid) {
-        return success(deviceService.queryOrganization(uuid));
+        return success(userService.queryOrganization(uuid));
+    }
+
+    @GetMapping("/tree")
+    public ResDto<List<OrganizationDto>> Tree(@RequestParam(value = "id" ,defaultValue = "") Long id) {
+        return success(userService.queryOrganizationTree(id));
     }
 }

@@ -30,9 +30,9 @@ public class DeviceLog extends Base {
      */
     DirectionEnum direction= DirectionEnum.UP;
     /**
-     * remark
+     * description
      */
-    String remark;
+    String description;
     /**
      * raw data
      */

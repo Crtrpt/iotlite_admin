@@ -24,8 +24,14 @@ public class Organization extends Base {
 
     String name;
 
-    String remark;
+    String description;
 
     String uuid;
+
+    Integer childrenNum;
+
+    Integer userNum;
+
+    Long fid;
 
 }

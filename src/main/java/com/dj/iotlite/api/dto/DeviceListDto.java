@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class DeviceListDto implements BaseDto{
+    Long id;
     String name;
-    ProductDto product;
+    ProductDto product=new ProductDto();
     String uuid;
 }

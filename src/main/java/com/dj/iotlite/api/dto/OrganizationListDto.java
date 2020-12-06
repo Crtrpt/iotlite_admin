@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class OrganizationListDto implements BaseDto {
+    Long id;
     String name;
-    String uuid;
+    String description;
 }

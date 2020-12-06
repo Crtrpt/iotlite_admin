@@ -6,4 +6,6 @@ import lombok.Data;
 public class OrganizationDto {
     String name;
     String uuid;
+    String description;
+    String childrenNum;
 }

@@ -4,7 +4,12 @@ import lombok.Data;
 
 @Data
 public class DeviceDto {
+    Long id;
     String name;
-    String product;
+    Long productId;
+    String description;
+    String sn;
     String uuid;
+
+    ProductDto product;
 }
