@@ -1,25 +1,18 @@
 <template>
   <b-container fluid class="dashboard">
     <b-row>
-
-      <b-col cols="1">
-        <b-button @click="addNewWidget">Add</b-button>
-      </b-col>
-      <b-col>
-        <section class="grid-stack"></section>
-      </b-col>
+      loading ...
     </b-row>
-    
   </b-container>
 </template>
-
 <script>
 
 import 'gridstack/dist/gridstack.min.css'
 import Vue from 'vue'
 import GridStack from "../../node_modules/gridstack/dist/gridstack-h5"
 
-import TestWidget from "../widget/test/TestWidget" 
+import ProductWidget from "../widget/test/ProductWidget" 
+import DeviceWidget from "../widget/test/DeviceWidget" 
 
 export default {
   name: 'Dashboard',
@@ -27,30 +20,10 @@ export default {
         return  {
           grid: undefined,
            items:[],
-          // items: [
-          //     { w:2, content:  '' },
-          //     { w:8, content:   ''},
-          //     { w:2, content:   ''},
-          //     { w:2, content:   '' },
-          //     { w:8,h:3, content: '' },
-          //     { w:2, content: '' },
-          //     { w:2, content: ''},
-          //     { w:2, content: '' },
-          //     { w:2, content: '' },
-          //     { w:2, content: '' },
-          //     { w:2, content: '' },
-          //     { w:2, content: ''},
-          //     { w:2, content: '' },
-          //     { w:2, content: '' },
-          //     { w:2, content: '' },
-          //     { w:2, content: '' },
-          //   ],
           }
         },
           watch: {
-            /**
-             * Clear the info text after a two second timeout. Clears previous timeout first.
-             */
+
             info: function (newVal, oldVal) {
               if (newVal.length === 0) return;
 
@@ -77,10 +50,11 @@ export default {
             console.log(node);
             node.id = node.content = "<p>111</p>";
             //  this.grid.addWidget( node);
-            var w=   Vue.extend(TestWidget);
+            console.log(ProductWidget);
+            var w=   Vue.extend(ProductWidget);
          
             var   a=new w().$mount().$el
-            this.grid.addWidget(a);
+            this.grid.addWidget(a,ProductWidget.meta);
           },
         },
   components: {  },

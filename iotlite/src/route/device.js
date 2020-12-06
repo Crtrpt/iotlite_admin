@@ -33,6 +33,14 @@ const device  =[
       }
     },
     {
+      path: 'metric',
+      component: require('../pages/device/device/Metric').default,
+      name: 'deviceMetric',
+      meta:{
+        name:"deviceMetric"
+      }
+    },
+    {
       path: 'log',
       component: require('../pages/device/device/Log').default,
       name: 'deviceLog',

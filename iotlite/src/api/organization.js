@@ -14,7 +14,7 @@ const organization={
       return request.post("organization/save",ctx)
     },
     tree:(ctx)=>{
-      return request.post("organization/tree",ctx)
+      return request.get("organization/tree",ctx)
     }
 }
 

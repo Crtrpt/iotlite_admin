@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import {product} from "../../api/product"
+
 export default {
   name:"New",
   data(){
@@ -59,7 +61,9 @@ export default {
   },
   methods:{
     onSubmit(){
+        product.save(this.form).then((res)=>{
 
+        })
     }
   }
 }

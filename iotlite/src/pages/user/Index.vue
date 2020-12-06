@@ -7,7 +7,7 @@
         <b-button-toolbar key-nav aria-label="Toolbar with button groups" >
           <b-button-group >
             <b-modal id="new" title="New User">
-              <New />
+              <New :data="query"/>
             </b-modal>
             <b-button variant="primary" v-b-modal.new>New</b-button>
           </b-button-group>
@@ -40,7 +40,7 @@
         </b-dropdown>
       </template>
       </b-table>
-       <b-pagination-nav :number-of-pages="10" use-router></b-pagination-nav>
+       <b-pagination  v-model ="query.page_num"  :total-rows="helper.total"></b-pagination>
     </b-col>
     </b-row>
   </b-container>
@@ -56,58 +56,19 @@ export default {
   components:{New,OrganizationTree},
   data(){
     return {
+      helper:{total:0},
       query:{
         organizationId:0,
         words:"",
+        pageNum:1,
+        pageSize:10,
       },
       items:[
-        {
-          "name":"admin",
-          "desc":"admin",
-          "role":"admin",
-          "organization":"admin",
-          "lastLoginIp":"0.0.0.0",
-          "lastLoginTime":"2020年12月3日18:27:29",
-          "action":""
-        },
-        {
-          "name":"developer",
-          "role":"developer"
-        },
-        {
-          "name":"sale",
-          "role":"sale"
-        },
-        {
-          "name":"client",
-          "role":"client"
-        },
-        {
-          "name":"client",
-          "role":"user"
-        },
-         {
-          "name":"client",
-          "role":"user"
-        },
-         {
-          "name":"client",
-          "role":"user"
-        },
-         {
-          "name":"client",
-          "role":"user"
-        },
-         {
-          "name":"client",
-          "role":"user"
-        },
-         {
-          "name":"client",
-          "role":"user"
-        },
       ]
     }
+  },
+  mounted(){
+    this.getList();
   },
   methods:{
     getList(){

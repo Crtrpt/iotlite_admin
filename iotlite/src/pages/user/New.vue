@@ -2,7 +2,6 @@
   <div>
     <b-form @submit="onSubmit" >
       <b-form-group
-        id="input-group-1"
         label="Name:"
         description="User name"
       >
@@ -13,31 +12,59 @@
           placeholder="Enter User Name"
         ></b-form-input>
       </b-form-group>
+       <b-form-group
+        label="Account:"
+        description="Account"
+      >
+        <b-form-input
+          v-model="form.account"
+          type="text"
+          required
+          placeholder="Enter User Account"
+        ></b-form-input>
+      </b-form-group>
+
       <b-form-group
-        id="input-group-1"
+        label="Email:"
+        description="Email"
+      >
+        <b-form-input
+          v-model="form.email"
+          type="text"
+          placeholder="Enter User Email"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group
+        label="Phone:"
+        description="Phone"
+      >
+        <b-form-input
+          v-model="form.phone"
+          type="text"
+          placeholder="Enter User Phone"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group
         label="Desc:"
         description="User desc"
       >
         <b-form-input
           v-model="form.description"
           type="text"
-          required
           placeholder="enter User description"
         ></b-form-input>
       </b-form-group>
       <b-form-group
-        id="input-group-1"
-        label="Type:"
-        description="User type gas smoke and so on"
+        label="Password:"
+        description="User password"
       >
         <b-form-input
-          v-model="form.type"
+          v-model="form.password"
           type="text"
-          required
-          list="type-list"
-          placeholder="enter User type"
+          placeholder="enter password"
         ></b-form-input>
-        <b-form-datalist id="type-list" :options="UserType"></b-form-datalist>
       </b-form-group>
        <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
@@ -45,8 +72,18 @@
 </template>
 
 <script>
+import {user} from "../../api/user"
+
 export default {
   name:"New",
+  props:{
+    data:{
+      type:Object
+    }
+  },
+  mounted(){
+    this.form.organizationId=this.data.organizationId||0
+  },
   data(){
     return {
       UserType:[
@@ -59,7 +96,9 @@ export default {
   },
   methods:{
     onSubmit(){
+        user.save(this.form).then((res)=>{
 
+        })
     }
   }
 }

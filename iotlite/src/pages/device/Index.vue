@@ -22,10 +22,11 @@
   </b-row>
 
   <b-row>
-    <b-col col cols="2"  v-for="p in list" :key="p.id">
-      <b-card  :title="p.name" img-src="https://picsum.photos/200/100/?image=41" img-alt="Image" img-top>
+    <b-col col cols="2"  v-for="p in items" :key="p.id">
+      <b-card  :title="p.name" img-src="/img/product.jpg" img-alt="Image" img-top>
         <b-card-text>
           {{p.description}} 
+          {{p.product.name}}
         </b-card-text>
         <router-link :to="{name: 'deviceDetail',params: { id: p.id }}"> <b-icon icon="gear-fill"/></router-link>
       </b-card>
@@ -35,25 +36,36 @@
 </template>
 
 <script>
+import {device} from "../../api/device"
 import New from "./New"
 export default {
   name:"Device",
   components:{New},
   data(){
     return {
-      list:[
-        {
-          id:"1",
-          name:"燃气",
-          description:"CQ2010"
-        },
-        {
-          id:"2",
-          name:"烟感",
-          description:"CQ2010"
-        },
-        
+       query:{
+        organizationId:0,
+        words:"",
+        pageNum:1,
+        pageSize:10,
+      },
+      items:[        
       ],
+    }
+  },
+  mounted(){
+    this.getList();
+  },
+  methods:{
+    getList(){
+      var _this=this;
+      device.list(this.query).then((res)=>{
+          _this.items=res.data.list;
+      })
+    },
+    detail(row){
+      console.log(row);
+      this.$router.push({name: 'userDetail',params: { id: row.item.id }})
     }
   }
 }

@@ -39,13 +39,33 @@
         ></b-form-input>
       </b-form-group>
 
+            <b-form-group
+        id="input-group-1"
+        label="Product:"
+        description="device product"
+      >
+        <ProductSelect v-model="form.productId"></ProductSelect>
+      </b-form-group>
+
+      <b-form-group
+        id="input-group-1"
+        label="Gateway:"
+        description="device gateway"
+      >
+        <GatewaySelect v-model="form.gatewayId"></GatewaySelect>
+      </b-form-group>
+
        <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
   </div>
 </template>
 
 <script>
+import {device} from "../../api/device"
+import GatewaySelect from '../../components/gateway/GatewaySelect.vue'
+import ProductSelect from '../../components/product/ProductSelect.vue'
 export default {
+  components: { ProductSelect ,GatewaySelect},
   name:"New",
   data(){
     return {
@@ -59,7 +79,9 @@ export default {
   },
   methods:{
     onSubmit(){
+        device.save(this.form).then((res)=>{
 
+        })
     }
   }
 }

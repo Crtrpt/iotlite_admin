@@ -25,7 +25,7 @@
 
   <b-row>
     <b-col col cols="2"  v-for="p in list" :key="p.id">
-      <b-card  :title="p.name" img-src="https://picsum.photos/200/100/?image=41" img-alt="Image" img-top>
+      <b-card  :title="p.name" img-src="/img/product.jpg" img-alt="Image" img-top>
         <b-card-text>
           {{p.description}} 
         </b-card-text>
@@ -49,37 +49,30 @@ export default {
     return {
       list:[
 
-        {
-          id:"1",
-          name:"Ctwing",
-          isStart:false,
-          description:"中国电信NBiot ctwing"
-        },
-        {
-          id:"2",
-          name:"Onenet",
-           isStart:false,
-          description:"中国移动ONENET onenet"
-        },
-        {
-          id:"3",
-          name:"自己开发的网关",
-           isStart:false,
-          description:"4G网关"
-        },
+        // {
+        //   id:"1",
+        //   name:"Ctwing",
+        //   isStart:false,
+        //   description:"中国电信NBiot ctwing"
+        // },
+        // {
+        //   id:"2",
+        //   name:"Onenet",
+        //    isStart:false,
+        //   description:"中国移动ONENET onenet"
+        // },
+        // {
+        //   id:"3",
+        //   name:"自己开发的网关",
+        //    isStart:false,
+        //   description:"4G网关"
+        // },
         {
           id:"4",
           name:"MQTT",
            isStart:false,
           description:"mqtt网关"
-        },
-        {
-          id:"5",
-          name:"COAP",
-           isStart:false,
-          description:"coap网关"
-        },
-        
+        }
       ],
     }
   }

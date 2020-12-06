@@ -7,7 +7,7 @@
         <b-button-toolbar key-nav aria-label="Toolbar with button groups">
           <b-button-group >
             <b-modal id="new" title="New Organization">
-              <New />
+              <New :data="query"/>
             </b-modal>
             <b-button variant="primary" v-b-modal.new>New</b-button>
           </b-button-group>
@@ -27,7 +27,7 @@
 
     <b-row>
     <b-col cols="2">
-     <OrganizationTree></OrganizationTree>
+     <OrganizationTree v-model="query.organizationId"></OrganizationTree>
     </b-col>
     <b-col cols="10">
       <b-table striped hover :items="items">
@@ -39,6 +39,7 @@
         </b-dropdown>
         </template>
       </b-table>
+       <b-pagination  v-model ="query.page_num"  :total-rows="helper.total"></b-pagination>
     </b-col>
     </b-row>
   </b-container>
@@ -52,43 +53,38 @@ import {organization} from "../../api/organization"
 export default {
   name:"Organization",
   components:{New,OrganizationTree},
+  mounted(){
+    this.getList();
+  },
+  watch:{
+    "query":{
+      deep:true,
+      handler:function(){
+        this.getList()
+      }
+    }
+  },
   methods:{
     getList(){
       var _this=this;
-      organization.list(this.query).then((res)=>{
+      organization.list(_this.query).then((res)=>{
           _this.items=res.data.list;
+          _this.total=res.total;
       })
     },
   },
   data(){
     return {
+      helper:{
+          total:0,
+      },
       query:{
-        organizationId:0,
+        organizationId: 0,
         words:"",
+        pageNum:1,
+        pageSize:10,
       },
       items:[
-        {
-          "name":"admin",
-          "location":"admin",
-          "organization":"",
-          "action":""
-        },
-        {
-          "name":"developer",
-          "role":"developer"
-        },
-        {
-          "name":"sale",
-          "role":"sale"
-        },
-        {
-          "name":"client",
-          "role":"client"
-        },
-        {
-          "name":"client",
-          "role":"Organization"
-        },
       ]
     }
   }

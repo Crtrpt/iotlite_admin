@@ -6,22 +6,24 @@ import device from "./device"
 import organization from "./organization"
 import user from "./user"
 import gateway from "./gateway"
+import dashboard from "./dashboard"
 
 var routes = [
   {
     path: '/',
     component: MasterLayout,
-    name: 'home',
-    redirect: { name: 'dashboard' },
+    name: 'root',
+    redirect: { name: 'home' },
     children: [
       {
-        path: 'dashboard',
-        component: require('../pages/Dashboard').default,
-        name: 'dashboard',
+        path: 'home',
+        component: require('../pages/Home').default,
+        name: 'home',
         meta:{
-          name:"Home"
+          name:"home"
         }
       },
+      ...dashboard,
       ...device,
       ...product,
       ...gateway,

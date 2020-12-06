@@ -4,6 +4,8 @@
       <b-sidebar id="sidebar-1" title="Menu" shadow>
       <div class="px-3 py-2">
             <b-nav vertical class="w-25">
+              <b-nav-item :to="{name:'home'}">Home</b-nav-item>
+              <b-nav-item :to="{name:'dashboard'}">Dashboard</b-nav-item>
               <b-nav-item :to="{name:'product'}">Product</b-nav-item>
               <b-nav-item :to="{name:'device'}">Device</b-nav-item>
               <b-nav-item :to="{name:'gateway'}">Gateway</b-nav-item>
