@@ -1,0 +1,65 @@
+{
+  "version": "01",
+  "name": "thermometer",
+  "desc": "温度计",
+  "property": [
+    {
+      "name": "temperature",
+      "desc": "温度",
+      "value": 0,
+      "expect": 0
+    },
+    {
+      "name": "power",
+      "desc": "电量",
+      "value": 0,
+      "expect": 0
+    }
+  ],
+  "alarm": [
+    {
+      "name": "温度过低",
+      "level": "20",
+      "condition":"temperature<20",
+      "resume": "temperature>20"
+    },
+    {
+      "name": "电量低",
+      "level": "10",
+      "condition":"power<20",
+      "resume": "power>20"
+    }
+  ],
+  "control":[
+    {
+      "name": "turn off",
+      "desc": "关电",
+      "action":"power=0"
+    },
+    {
+      "name": "turn on",
+      "desc": "开电",
+      "action":"power=20"
+    }
+  ],
+  "metric":[
+    {
+      "name":"温度",
+      "source": {
+        "type": "property"
+      }
+    }
+  ],
+  "event": [
+    {
+      "name": "turn off",
+      "desc": "关电",
+      "condition":"power==0"
+    },
+    {
+      "name": "开电",
+      "desc": "打开电灯",
+      "condition":"power==0"
+    }
+  ]
+}

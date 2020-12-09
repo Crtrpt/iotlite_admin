@@ -1,25 +1,28 @@
 package com.dj.iotlite;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.dj.iotlite.spec.Specification;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class SpecTests {
+
     @Test
-    void  gen(){
-        String spec="{\n" +
-                "  \"version\": \"01\",\n" +
-                "  \"name\": \"example_light\",\n" +
-                "  \"property\": {\n" +
-                "    \"power\": \"20\"\n" +
-                "  },\n" +
-                "  \"event\": {\n" +
-                "    \"off\": \"power==0\",\n" +
-                "    \"on\": \"power>0\"\n" +
-                "  },\n" +
-                "  \"control\": {\n" +
-                "    \"on\": \"power=100\"\n" +
-                "  }\n" +
-                "}";
-        ObjectMapper mapper = new ObjectMapper();
-    }
+    void  gen() throws IOException {
+        File f=new File("../spec/temperature.spec.json");
+
+        BufferedReader br = new BufferedReader(new FileReader(f));
+
+        String specV1;
+
+        while ((specV1 = br.readLine()) != null)
+            System.out.println(specV1);
+        }
+
+        Gson gson=new Gson();
+
 }
