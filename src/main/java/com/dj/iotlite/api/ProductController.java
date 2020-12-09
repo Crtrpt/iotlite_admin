@@ -29,6 +29,7 @@ public class ProductController extends BaseController {
             BeanUtils.copyProperties(s, t);
             ret.getList().add(t);
         });
+        ret.setTotal(res.getTotalElements());
         return success(ret);
     }
 

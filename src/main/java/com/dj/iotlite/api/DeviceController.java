@@ -27,6 +27,7 @@ public class DeviceController extends BaseController {
             deviceService.getProduct(s.getProductId(),t.getProduct());
             ret.getList().add(t);
         });
+        ret.setTotal(res.getTotalElements());
         return success(ret);
     }
 

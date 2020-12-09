@@ -28,7 +28,7 @@
           {{p.description}} 
           {{p.product.name}}
         </b-card-text>
-        <router-link :to="{name: 'deviceDetail',params: { id: p.id }}"> <b-icon icon="gear-fill"/></router-link>
+        <router-link  active-class="active" :to="{name: 'deviceDetail',params: { id: p.id }}"> <b-icon icon="gear-fill"/></router-link>
       </b-card>
     </b-col>
   </b-row>

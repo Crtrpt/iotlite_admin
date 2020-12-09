@@ -61,8 +61,12 @@ export default {
   },
   methods:{
     onSubmit(){
+       var _this=this;
+       
         product.save(this.form).then((res)=>{
-
+            if(res.code==0){
+              _this.$emit("close",true);
+            }
         })
     }
   }
