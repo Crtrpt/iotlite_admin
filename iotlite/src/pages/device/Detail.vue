@@ -6,26 +6,13 @@
       <p>{{form.description}}</p>
     </b-col>
   </b-row>
-  <!-- <b-row>
-    <b-col col cols="12" class="mt-2 mb-2">
-      <b-button-toolbar key-nav aria-label="Toolbar with button groups">
-        <b-button-group >
-          <b-button variant="secondary">Edit</b-button>
-        </b-button-group>
-
-        <b-button-group  class="ml-1">
-          <b-button variant="secondary">Export</b-button>
-        </b-button-group>
-      </b-button-toolbar>
-    </b-col>
-  </b-row> -->
   <b-row>
     <b-col>
       <b-nav tabs>
-        <b-nav-item to="base" active>Base</b-nav-item>
-        <b-nav-item to="control" > Control</b-nav-item>
-        <b-nav-item to="metric" > Metric</b-nav-item>
-        <b-nav-item to="log"  >Log</b-nav-item>
+        <b-nav-item to="base"  active-class="active" >Base</b-nav-item>
+        <b-nav-item to="control"  active-class="active" > Control</b-nav-item>
+        <b-nav-item to="metric"  active-class="active" > Metric</b-nav-item>
+        <b-nav-item to="log"   active-class="active" >Log</b-nav-item>
       </b-nav>
       <router-view class="content" :form=form></router-view>
     </b-col>

@@ -97,9 +97,7 @@ public class DeviceService {
                         //uuid
                         criteriaBuilder.like(root.get("uuid").as(String.class), "%" + query.getWords() + "%"),
                         //备注
-                        criteriaBuilder.like(root.get("description").as(String.class), "%" + query.getWords() + "%"),
-                        //账户
-                        criteriaBuilder.like(root.get("account").as(String.class), "%" + query.getWords() + "%")
+                        criteriaBuilder.like(root.get("description").as(String.class), "%" + query.getWords() + "%")
                 ));
             }
             Predicate[] p = new Predicate[list.size()];
