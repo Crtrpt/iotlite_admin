@@ -27,27 +27,20 @@ public class TestController extends BaseController {
 
     @GetMapping("/groovy")
     public ResDto<Object> groovy() throws Exception {
-        File f=new File("./spec/temperature.spec.json");
+        File f = new File("./spec/temperature.spec.json");
 
         BufferedReader br = new BufferedReader(new FileReader(f));
         String specV1Json;
-        String sp="";
+        String sp = "";
 
-        while ((specV1Json = br.readLine()) != null){
-            sp=sp+specV1Json;
+        while ((specV1Json = br.readLine()) != null) {
+            sp = sp + specV1Json;
         }
-        //            System.out.println(specV1Json);
-        SpecV1 specV1=new SpecV1();
+        // System.out.println(specV1Json);
+        SpecV1 specV1 = new SpecV1();
         specV1.fromJson(sp);
-        String[] roots = new String[] { "." };
 
         specV1.action("turn off");
-
-        GroovyScriptEngine gse = new GroovyScriptEngine(roots);
-        Binding binding = new Binding();
-        binding.setVariable("input", "world");
-        gse.run("test.groovy", binding);
-        System.out.println(binding.getVariable("output"));
-        return success("success");
+        return success();
     }
 }

@@ -3,6 +3,8 @@ package com.dj.iotlite.spec;
 
 
 
+import com.dj.iotlite.spec.exception.NotFoundActionException;
+import com.dj.iotlite.spec.exception.NotFoundPropertyException;
 import com.google.gson.Gson;
 import groovy.lang.GroovyShell;
 import lombok.Data;
@@ -23,7 +25,7 @@ public class SpecV1 implements Specification {
     }
 
     @Override
-    public void setProperty(String property, String value) throws Exception {
+    public void setProperty(String property, Integer value) throws Exception {
         this.property.forEach(p->{
             if(property.equals(p.name)){
                 p.expect=value;
@@ -33,28 +35,45 @@ public class SpecV1 implements Specification {
 
     @Override
     public void action(String name) throws Exception {
-        this.control.forEach(c->{
-            if(c.name.equals(name)){
+        if (name.equals("reset")) {
+            this.property.stream().forEach(p -> {
+                p.setExpect(p.defaultValue);
+            });
+            return;
+        }
+        for (Control c : this.control) {
+            if (c.name.equals(name)) {
                 //执行控制脚本
-                GroovyShell gs=new GroovyShell();
-
-                this.property.stream().forEach(p->{
-                    gs.setVariable(p.name,p.value);
+                GroovyShell gs = new GroovyShell();
+                this.property.stream().forEach(p -> {
+                    gs.setVariable(p.name, p.expect);
                 });
-//                System.out.println("执行"+c.action);
+                System.out.println("EXEC -> "+c.action);
                 gs.evaluate(c.action);
-                this.property.stream().forEach(p->{
-                    p.value=String.valueOf(gs.getVariable(p.name));
+                this.property.stream().forEach(p -> {
+                    p.setExpect((int) gs.getVariable(p.name));
                 });
+                return;
             }
-        });
+        }
+        throw new NotFoundActionException(name);
     }
 
+    @Data
     static class  Property {
         String name;
         String desc;
-        String value;
-        String expect;
+        Integer value;
+
+        Integer defaultValue;
+//        String type;
+        Integer threshold;
+
+        Integer expect;
+
+        public void setExpect(Integer expect) {
+            this.expect = expect;
+        }
     }
 
     @Data
@@ -62,6 +81,7 @@ public class SpecV1 implements Specification {
         String name;
         String desc;
         Integer level;
+        Integer interval;
         String condition;
         String resume;
     }
@@ -94,6 +114,16 @@ public class SpecV1 implements Specification {
     String desc;
     Integer version;
     List<Property> property;
+
+    public Integer getProperty(String property) {
+        for (Property property1 : this.property) {
+            if(property1.getName().equals( property)){
+                return  property1.getExpect();
+            }
+        }
+        throw new NotFoundPropertyException();
+    }
+
     List<Alarm> alarm;
     List<Event> event;
     List<Control> control;

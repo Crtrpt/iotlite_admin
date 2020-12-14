@@ -7,12 +7,15 @@
       "name": "temperature",
       "desc": "温度",
       "value": 0,
+      "defaultValue": 0,
       "expect": 0
     },
     {
       "name": "power",
       "desc": "电量",
       "value": 0,
+      "threshold": 5,
+      "defaultValue": 0,
       "expect": 0
     }
   ],
@@ -20,12 +23,14 @@
     {
       "name": "温度过低",
       "level": "20",
+      "interval": 10,
       "condition":"temperature<20",
       "resume": "temperature>20"
     },
     {
       "name": "电量低",
       "level": "10",
+      "interval": 10,
       "condition":"power<20",
       "resume": "power>20"
     }
@@ -39,14 +44,25 @@
     {
       "name": "turn on",
       "desc": "开电",
-      "action":"power=20"
+      "action":"power=100"
+    },
+    {
+      "name": "turn up",
+      "desc": "调高温度",
+      "action":"temperature=temperature+20"
+    },
+    {
+      "name": "turn down",
+      "desc": "调高温度",
+      "action":"temperature=temperature-10"
     }
   ],
   "metric":[
     {
       "name":"温度",
       "source": {
-        "type": "property"
+        "type": "property",
+        "name": "temperature"
       }
     }
   ],
