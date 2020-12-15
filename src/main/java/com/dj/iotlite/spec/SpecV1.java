@@ -36,7 +36,7 @@ public class SpecV1 implements Specification {
     @Override
     public void action(String name) throws Exception {
         if (name.equals("reset")) {
-            this.property.stream().forEach(p -> {
+            this.property.forEach(p -> {
                 p.setExpect(p.defaultValue);
             });
             return;
@@ -45,12 +45,12 @@ public class SpecV1 implements Specification {
             if (c.name.equals(name)) {
                 //执行控制脚本
                 GroovyShell gs = new GroovyShell();
-                this.property.stream().forEach(p -> {
+                this.property.forEach(p -> {
                     gs.setVariable(p.name, p.expect);
                 });
                 System.out.println("EXEC -> "+c.action);
                 gs.evaluate(c.action);
-                this.property.stream().forEach(p -> {
+                this.property.forEach(p -> {
                     p.setExpect((int) gs.getVariable(p.name));
                 });
                 return;
@@ -103,16 +103,21 @@ public class SpecV1 implements Specification {
 
     @Data
     static class  Metric {
+        @Data
         static class Source {
             String type;
+            String name;
         }
         String name;
         Source source;
     }
 
     String name;
+
     String desc;
+
     Integer version;
+
     List<Property> property;
 
     public Integer getProperty(String property) {

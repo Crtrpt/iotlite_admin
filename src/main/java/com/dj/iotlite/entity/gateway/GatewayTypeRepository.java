@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GatewayRepository extends CrudRepository<Gateway, Long>, JpaSpecificationExecutor<Gateway>, JpaRepository<Gateway, Long> {
+public interface GatewayTypeRepository extends CrudRepository<GatewayType, Long>, JpaSpecificationExecutor<GatewayType>, JpaRepository<GatewayType, Long> {
 
 }

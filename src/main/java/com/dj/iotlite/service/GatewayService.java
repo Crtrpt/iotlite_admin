@@ -1,12 +1,15 @@
 package com.dj.iotlite.service;
 
+import com.dj.iotlite.api.dto.GatewayTypeDto;
 import com.dj.iotlite.api.form.DeviceQueryForm;
 import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.device.DeviceRepository;
+import com.dj.iotlite.entity.gateway.Gateway;
 import com.dj.iotlite.entity.gateway.GatewayRepository;
-import com.dj.iotlite.entity.product.Gateway;
+import com.dj.iotlite.entity.gateway.GatewayType;
+import com.dj.iotlite.entity.gateway.GatewayTypeRepository;
 import com.dj.iotlite.entity.product.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,6 +19,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -26,6 +30,9 @@ public class GatewayService {
 
     @Autowired
     GatewayRepository gatewayRepository;
+
+    @Autowired
+    GatewayTypeRepository gatewayTypeRepository;
 
 
     public Object queryDevice(String uuid) {
@@ -90,5 +97,13 @@ public class GatewayService {
             return null;
         };
         return gatewayRepository.findAll(specification, query.getPage());
+    }
+
+    public Object queryAllGatewayType() {
+        return gatewayTypeRepository.findAll().stream().map(s->{
+            GatewayTypeDto target=new GatewayTypeDto();
+            BeanUtils.copyProperties(s,target);
+            return  target;
+        }).collect(Collectors.toList());
     }
 }

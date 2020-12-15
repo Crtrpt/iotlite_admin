@@ -1,11 +1,8 @@
 package com.dj.iotlite.api;
 
-import com.dj.iotlite.api.dto.GatewayDto;
-import com.dj.iotlite.api.dto.GatewayListDto;
-import com.dj.iotlite.api.dto.Page;
-import com.dj.iotlite.api.dto.ResDto;
+import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.DeviceQueryForm;
-import com.dj.iotlite.entity.product.Gateway;
+import com.dj.iotlite.entity.gateway.Gateway;
 import com.dj.iotlite.service.GatewayService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +41,10 @@ public class GatewayController extends BaseController {
     @GetMapping("/query")
     public ResDto<GatewayDto> query(@RequestParam("uuid") String uuid) {
         return success(gatewayService.queryGateway(uuid));
+    }
+
+    @GetMapping("/all")
+    public ResDto<GatewayTypeDto> query() {
+        return success(gatewayService.queryAllGatewayType());
     }
 }

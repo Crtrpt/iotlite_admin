@@ -13,39 +13,25 @@ import javax.persistence.*;
 import java.util.HashMap;
 
 @Data
-@SQLDelete(sql = "update `gateway` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
+@SQLDelete(sql = "update `gateway_type` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
 @Entity
-@Table(name = "gateway")
+@Table(name = "gateway_type")
 @Where(clause = "deleted_at is null")
 @DynamicUpdate
 @Cacheable
 @org.hibernate.annotations.TypeDef(name = "json", typeClass = JsonStringType.class)
-public class Gateway extends Base {
+public class GatewayType extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    /**
+     * http网关 websocket网关 mqtt网关
+     */
     String name;
 
     String description;
 
-    GatewayEnum edgetype;
-
-    String uuid;
-
-    /**
-     * 服务器端网关
-     */
-    String ServiceGatewayUuid;
-
-    /**
-     * 边缘网关UUID
-     */
-    String EdgeGatewayUuid;
-
-
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
-    HashMap setting;
+    String plugin;
 }
