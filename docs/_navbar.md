@@ -1,10 +1,16 @@
 <!-- _navbar.md -->
+* [Home](/)
 
 * [Case](case.md)
 
-* [Demo](dev.md)
+* Eco
+  * [Integrated](integrated.md)
+  * [Community Support](Support.md)
+  * [Enterprise Support](Enterprise.md)
 
-* [Developer document](document.md)
+* [Demo](demo.md)  
+
+* [Doc](document.md)
 
 * Lang
   * [English](/)

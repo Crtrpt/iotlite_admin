@@ -1,8 +1,16 @@
 <!-- _navbar.md -->
 
-* [演示](dev.md)
+* [主页](/)
 
-* [开发者文档](dev.md)
+* [案例](case.md)
+
+* [集成](integrated.md)
+
+* [演示](demo.md)
+
+* [技术支持](Support.md)
+
+* [开发文档](document.md)
 
 * 语言
   * [英文](/)
