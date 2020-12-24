@@ -23,7 +23,7 @@
 
   <b-row>
     <b-col col cols="2"  v-for="p in items" :key="p.id">
-      <b-card  :title="p.name" img-src="/img/product.jpg" img-alt="Image" img-top>
+      <b-card  :title="p.name" >
         <b-card-text>
           {{p.description}} 
           {{p.product.name}}

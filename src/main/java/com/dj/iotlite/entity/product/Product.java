@@ -33,18 +33,15 @@ public class Product extends Base {
      * 产品图标
      */
     String icon;
-
+    /**
+     * 产品uuid
+     */
     String uuid;
 
     /**
-     * 服务器端网关
+     * 网关类型
      */
-    String ServiceGatewayUuid;
-
-    /**
-     * 边缘网关UUID
-     */
-    String EdgeGatewayUuid;
+    Integer type;
 
     /**
      * 产品物模型

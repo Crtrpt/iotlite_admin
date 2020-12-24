@@ -100,6 +100,7 @@ public class GatewayService {
     }
 
     public Object queryAllGatewayType() {
+
         return gatewayTypeRepository.findAll().stream().map(s->{
             GatewayTypeDto target=new GatewayTypeDto();
             BeanUtils.copyProperties(s,target);

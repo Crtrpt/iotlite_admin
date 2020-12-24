@@ -1,0 +1,98 @@
+{
+  "version": "01",
+  "name": "thermometer",
+  "desc": "http网关",
+  "property": [
+    {
+      "name": "devices",
+      "desc": "设备数量",
+      "value": 0,
+      "defaultValue": 0,
+      "expect": 0
+    },
+    {
+      "name": "cpu",
+      "desc": "CPU",
+      "value": 0,
+      "defaultValue": 0,
+      "expect": 0
+    },
+    {
+      "name": "mem",
+      "desc": "内存",
+      "value": 0,
+      "defaultValue": 0,
+      "expect": 0
+    },
+    {
+      "name": "net",
+      "desc": "带宽",
+      "value": 0,
+      "defaultValue": 0,
+      "expect": 0
+    },
+    {
+      "name": "disk",
+      "desc": "磁盘",
+      "value": 0,
+      "defaultValue": 0,
+      "expect": 0
+    }
+  ],
+  "control":[
+    {
+      "name": "reset",
+      "desc": "重启",
+      "action":"reset"
+    }
+  ],
+  "metric":[
+    {
+      "name":"连接数",
+      "source": {
+        "type": "property",
+        "name": "devices"
+      }
+    },
+    {
+      "name":"内存负载",
+      "source": {
+        "type": "property",
+        "name": "mem"
+      }
+    },
+    {
+      "name":"CPU负载",
+      "source": {
+        "type": "property",
+        "name": "cpu"
+      }
+    },
+    {
+      "name":"磁盘负载",
+      "source": {
+        "type": "property",
+        "name": "disk"
+      }
+    },
+    {
+      "name":"带宽负载",
+      "source": {
+        "type": "property",
+        "name": "net"
+      }
+    }
+  ],
+  "event": [
+    {
+      "name": "online",
+      "desc": "上线",
+      "condition":"power==0"
+    },
+    {
+      "name": "offline",
+      "desc": "下线",
+      "condition":"power==0"
+    }
+  ]
+}

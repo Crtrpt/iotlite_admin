@@ -25,7 +25,7 @@
 
   <b-row>
     <b-col col cols="2"  v-for="p in items" :key="p.id">
-      <b-card  :title="p.name" img-src="/img/product.jpg" img-alt="Image" img-top class="mt-2 product_card" @click="detail(p)" >
+      <b-card  :title="p.name" class="mt-2 product_card" @click="detail(p)" >
         <b-card-text>
           {{p.description}} 
         </b-card-text>

@@ -4,6 +4,7 @@
 * [Start](start.md)  
     * [Download](download.md)
     * [Install](install.md)
+    * [Update](update.md)
 * [Developer document](document.md)
     * [ServerGate](servergate.md)
         * [Base](servergate/base.md)

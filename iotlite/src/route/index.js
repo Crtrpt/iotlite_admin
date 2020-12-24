@@ -13,7 +13,7 @@ var routes = [
     path: '/',
     component: MasterLayout,
     name: 'root',
-    redirect: { name: 'home' },
+    redirect: { name: 'product' },
     children: [
       {
         path: 'home',

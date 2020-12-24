@@ -28,16 +28,12 @@
       <b-form-group
         id="input-group-1"
         label="Type:"
-        description="product type gas smoke and so on"
+        description="gateway or device"
       >
-        <b-form-input
-          v-model="form.type"
-          type="text"
-          required
-          list="type-list"
-          placeholder="enter product type"
-        ></b-form-input>
-        <b-form-datalist id="type-list" :options="productType"></b-form-datalist>
+       <b-form-radio-group>
+        <b-form-radio v-model="form.type"  value="0">Device</b-form-radio>
+        <b-form-radio v-model="form.type"  value="1">Gateway</b-form-radio>
+        </b-form-radio-group>
       </b-form-group>
        <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
@@ -52,7 +48,7 @@ export default {
   data(){
     return {
       productType:[
-          "烟感","燃气"
+          "设备","网关"
       ],
       form:{
 

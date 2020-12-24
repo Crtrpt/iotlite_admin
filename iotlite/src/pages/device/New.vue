@@ -70,7 +70,7 @@ export default {
   data(){
     return {
       productType:[
-          "烟感","燃气"
+          "设备","网关"
       ],
       form:{
 

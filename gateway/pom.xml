@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>http</module>
-        <module>websocket</module>
         <module>mqtt</module>
     </modules>
 

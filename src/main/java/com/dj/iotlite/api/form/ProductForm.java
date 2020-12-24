@@ -6,4 +6,5 @@ import lombok.Data;
 public class ProductForm {
     String name;
     String description;
+    Integer type;
 }
