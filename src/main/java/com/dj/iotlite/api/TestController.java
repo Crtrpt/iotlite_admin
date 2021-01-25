@@ -1,25 +1,23 @@
 package com.dj.iotlite.api;
 
-import com.dj.iotlite.api.dto.Page;
+
 import com.dj.iotlite.api.dto.ResDto;
-import com.dj.iotlite.api.dto.UserDto;
-import com.dj.iotlite.api.dto.UserListDto;
-import com.dj.iotlite.api.form.UserForm;
-import com.dj.iotlite.api.form.UserQueryForm;
-import com.dj.iotlite.entity.user.User;
 import com.dj.iotlite.service.UserService;
 import com.dj.iotlite.spec.SpecV1;
-import groovy.lang.Binding;
-import groovy.util.GroovyScriptEngine;
-import org.springframework.beans.BeanUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/test")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@Slf4j
 public class TestController extends BaseController {
 
     @Autowired
@@ -41,6 +39,18 @@ public class TestController extends BaseController {
         specV1.fromJson(sp);
 
         specV1.action("turn off");
+        return success();
+    }
+
+    @Autowired
+    @Qualifier("clickHouseJdbcTemplate")
+    JdbcTemplate postgresJdbcTemplate;
+
+    @GetMapping("/clickhouse")
+    public ResDto<Object> clickhouse() throws Exception {
+        List<Map<String, Object>> maps = postgresJdbcTemplate.queryForList("select * from test1.userEvents ");
+
+       System.out.println(maps);
         return success();
     }
 }
