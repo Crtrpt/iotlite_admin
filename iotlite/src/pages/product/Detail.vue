@@ -2,7 +2,7 @@
   <b-container fluid>
   <b-row>
     <b-col>
-      <h1>Product# {{form.name}}</h1>
+      <h5>Product# {{form.name}}</h5>
       <p>{{form.description}}</p>
     </b-col>
   </b-row>

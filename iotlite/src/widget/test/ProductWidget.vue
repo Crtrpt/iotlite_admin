@@ -2,8 +2,8 @@
     <div class="grid-stack-item">
       <div class="grid-stack-item-content">
           <b-row>
-            <b-col><h1>Product</h1></b-col>
-            <b-col><h1>4</h1>
+            <b-col><h5>Product</h5></b-col>
+            <b-col><h5>4</h5>
             </b-col>
           </b-row>
       </div>

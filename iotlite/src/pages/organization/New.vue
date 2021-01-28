@@ -2,7 +2,7 @@
   <div>
     <b-form @submit="onSubmit" >
       <b-form-group
-        id="input-group-1"
+        
         label="Name:"
         description="Organization name"
       >
@@ -15,7 +15,7 @@
       </b-form-group>
 
       <b-form-group
-        id="input-group-1"
+        
         label="Desc:"
         description="Organization desc"
       >

@@ -2,7 +2,7 @@
   <b-container fluid>
   <b-row>
     <b-col>
-      <h1>Gateway</h1>
+      <h5>Gateway</h5>
     </b-col>
     <b-col cols="12" class="mt-2 mb-2">
       <b-button-toolbar key-nav aria-label="Toolbar with button groups">

@@ -2,71 +2,71 @@
   <div>
     <b-form @submit="onSubmit" >
       <b-form-group
-        label="Name:"
-        description="User name"
+        label="名称:"
+        description="用户名称"
       >
         <b-form-input
           v-model="form.name"
           type="text"
           required
-          placeholder="Enter User Name"
+          placeholder="输入用户名称"
         ></b-form-input>
       </b-form-group>
        <b-form-group
-        label="Account:"
-        description="Account"
+        label="账户:"
+        description="账户"
       >
         <b-form-input
           v-model="form.account"
           type="text"
           required
-          placeholder="Enter User Account"
+          placeholder="输入登录账户"
         ></b-form-input>
       </b-form-group>
 
       <b-form-group
-        label="Email:"
-        description="Email"
+        label="邮箱:"
+        description="邮箱"
       >
         <b-form-input
           v-model="form.email"
           type="text"
-          placeholder="Enter User Email"
+          placeholder="输入用户邮箱"
         ></b-form-input>
       </b-form-group>
 
       <b-form-group
-        label="Phone:"
-        description="Phone"
+        label="手机号:"
+        description="手机号"
       >
         <b-form-input
           v-model="form.phone"
           type="text"
-          placeholder="Enter User Phone"
+          placeholder="用户手机号"
         ></b-form-input>
       </b-form-group>
 
       <b-form-group
-        label="Desc:"
-        description="User desc"
+        label="描述:"
+        description="用户描述信息"
       >
         <b-form-input
           v-model="form.description"
           type="text"
-          placeholder="enter User description"
+          placeholder="用户描述"
         ></b-form-input>
       </b-form-group>
       <b-form-group
-        label="Password:"
-        description="User password"
+        label="密码:"
+        description="输入密码"
       >
         <b-form-input
           v-model="form.password"
           type="text"
-          placeholder="enter password"
+          placeholder="输入密码"
         ></b-form-input>
       </b-form-group>
-       <b-button type="submit" variant="primary">Submit</b-button>
+       <b-button type="submit" variant="primary">提交</b-button>
     </b-form>
   </div>
 </template>

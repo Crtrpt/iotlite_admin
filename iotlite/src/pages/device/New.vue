@@ -2,60 +2,52 @@
   <div>
     <b-form @submit="onSubmit" >
       <b-form-group
-        id="input-group-1"
-        label="Sn:"
-        description="device sb"
+        
+        label="设备序列号:"
+        description="设备序列号"
       >
         <b-form-input
           v-model="form.sn"
           type="text"
           required
-          placeholder="Enter Device Sn"
+          placeholder="输入设备序列号"
         ></b-form-input>
       </b-form-group>
 
       <b-form-group
-        id="input-group-1"
-        label="Name:"
-        description="device name"
+        
+        label="设备名称:"
+        description="设备名称"
       >
         <b-form-input
           v-model="form.name"
           type="text"
           required
-          placeholder="Enter Device Name"
+          placeholder="输入设备名称"
         ></b-form-input>
       </b-form-group>
       <b-form-group
-        id="input-group-1"
-        label="Desc:"
-        description="device desc"
+        
+        label="描述:"
+        description="设备描述"
       >
         <b-form-input
           v-model="form.description"
           type="text"
           required
-          placeholder="enter device description"
+          placeholder="输入设备描述"
         ></b-form-input>
       </b-form-group>
 
             <b-form-group
-        id="input-group-1"
-        label="Product:"
-        description="device product"
+        
+        label="产品型号:"
+        description="产品型号"
       >
         <ProductSelect v-model="form.productId"></ProductSelect>
       </b-form-group>
 
-      <b-form-group
-        id="input-group-1"
-        label="Gateway:"
-        description="device gateway"
-      >
-        <GatewaySelect v-model="form.gatewayId"></GatewaySelect>
-      </b-form-group>
-
-       <b-button type="submit" variant="primary">Submit</b-button>
+       <b-button type="submit" variant="primary">保存</b-button>
     </b-form>
   </div>
 </template>

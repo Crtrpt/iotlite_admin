@@ -14,6 +14,16 @@ Vue.use(IconsPlugin)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+
+import './assets/css/main.css'
+import './assets/css/error.css'
+import './assets/css/dash.css'
+import "./assets/css/structure.css"
+import "./assets/css/switch.css"
+import "./assets/css/breadcrumb.css"
+import "./assets/css/custom-modal.css"
+import "./assets/css/custom-pagination.css"
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({

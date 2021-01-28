@@ -1,10 +1,16 @@
 <template>
   <div>
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb" class="breadcrumb-two">
       <ol class="breadcrumb">
-          <li class="breadcrumb-item active" aria-current="page" ><a @click="goRoot" href="javascript:void(0);">Root</a></li>
-         <li class="breadcrumb-item " aria-current="page"  v-if="parent.id!=null"><a href="javascript:void(0);">{{parent.name}}({{current.childrenNum||0}})</a></li>
-         <li class="breadcrumb-item " aria-current="page" v-if="current.id!=null">{{current.name}}({{current.childrenNum||0}})</li>
+        <li class="breadcrumb-item "  ><a @click="goRoot" href="javascript:void(0);">根</a></li>
+         <li class="breadcrumb-item active"   v-if="parent.id!=null">
+           <a href="javascript:void(0);">{{parent.name}}</a>
+        </li>
+         <li class="breadcrumb-item" aria-current="page" v-if="current.id!=null">
+           <a href="javascript:void(0);">
+            {{current.name}}({{current.childrenNum||0}})
+           </a>
+          </li>
       </ol>
     </nav>
     <b-list-group>
@@ -62,12 +68,12 @@ export default {
       parent:{
         id:null,
           id:10000,
-          name:"xxx",
+          name:"上级",
       },
       current:{
         id:null,
           id:10000,
-          name:"xxx",
+          name:"当前",
       },
       list:[
       ]

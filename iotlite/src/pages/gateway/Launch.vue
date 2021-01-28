@@ -2,7 +2,7 @@
   <div>
     <b-form @submit="onSubmit" >
        <b-form-group
-        id="input-group-1"
+        
         label="Type:"
         description="gateway type gas smoke and so on"
       >
@@ -16,7 +16,7 @@
         <b-form-datalist id="type-list" :options="gatewayType"></b-form-datalist>
       </b-form-group>
       <b-form-group
-        id="input-group-1"
+        
         label="Name:"
         description="gateway name"
       >
@@ -28,7 +28,7 @@
         ></b-form-input>
       </b-form-group>
       <b-form-group
-        id="input-group-1"
+        
         label="Desc:"
         description="gateway desc"
       >

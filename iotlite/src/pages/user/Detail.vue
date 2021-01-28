@@ -2,7 +2,7 @@
   <b-container fluid>
   <b-row>
     <b-col>
-      <h1>user Detail</h1>
+      <h5>user Detail</h5>
       <p>desc</p>
     </b-col>
   </b-row>

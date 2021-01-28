@@ -1,26 +1,31 @@
 <template>
-  <b-container fluid>
-  <b-row>
-    <b-col>
-      <h1>device</h1>
-    </b-col>
-    <b-col cols="12" class="mt-2 mb-2">
-      <b-button-toolbar key-nav aria-label="Toolbar with button groups">
-        <b-button-group >
-          <b-modal id="new" title="New device">
-            <New />
-          </b-modal>
-          <b-button variant="primary" v-b-modal.new>New</b-button>
-        </b-button-group>
+    <b-col cols="12">
+      <div class="widget box box-shadow">
+          <div class="widget-header">
+              <b-row>
+                <b-col>
+                  <h4>设备</h4>
+                </b-col>
+                <b-col cols="12" class="mt-2 mb-2">
+                  <b-button-toolbar>
 
-        <!-- <b-button-group class="ml-1">
-          <b-button variant="secondary">Import</b-button>
-          <b-button variant="secondary">Export</b-button>
-        </b-button-group> -->
-      </b-button-toolbar>
-    </b-col>
-  </b-row>
 
+                    <b-button-group  class="mr-2">
+                      <b-modal id="new" title="新建设备" hide-footer>
+                        <New />
+                      </b-modal>
+                      <b-button variant="primary" v-b-modal.new  >新建设备</b-button>
+                    </b-button-group>
+
+                    <b-button-group class="mr-2" >
+                      <b-button variant="primary" v-b-modal.new  >导入</b-button>
+                      <b-button variant="primary" v-b-modal.new  >导出</b-button>
+                    </b-button-group>
+
+                  </b-button-toolbar>
+                </b-col>
+              </b-row>
+          </div>
   <b-row>
     <b-col col cols="2"  v-for="p in items" :key="p.id">
       <b-card  :title="p.name" >
@@ -32,7 +37,8 @@
       </b-card>
     </b-col>
   </b-row>
-</b-container>
+      </div>
+    </b-col>
 </template>
 
 <script>

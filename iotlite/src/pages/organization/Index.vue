@@ -1,15 +1,23 @@
 <template>
     <b-container fluid>
     
-     <h1>Organization</h1>
+     <h5>组织</h5>
     <b-row>
       <b-col cols="12" class="mt-2 mb-2">
         <b-button-toolbar key-nav aria-label="Toolbar with button groups">
+
+          <b-button-group class="mr-2" >
+            <b-button variant="primary" @click="displayOrganizationTree=!displayOrganizationTree">
+              <b-icon icon="bar-chart-steps"></b-icon>
+            </b-button>
+          </b-button-group>
+
           <b-button-group >
-            <b-modal id="new" title="New Organization">
+            <b-modal id="new" title="组织">
               <New :data="query"/>
             </b-modal>
-            <b-button variant="primary" v-b-modal.new>New</b-button>
+            
+            <b-button variant="primary" v-b-modal.new>新建</b-button>
           </b-button-group>
           <b-button-group class="ml-1">
               <b-input-group  class="mb-2 mr-sm-2 mb-sm-0">
@@ -75,6 +83,7 @@ export default {
   },
   data(){
     return {
+      displayOrganizationTree:false,
       helper:{
           total:0,
       },
