@@ -4,6 +4,7 @@
 
       <b-row class="mt-2">
           <b-col> <b-pagination 
+            v-if="helper.total>10"
             v-model="query.pageNum"
             :per-page="query.pageSize"
             :total-rows="helper.total"></b-pagination></b-col>
@@ -47,7 +48,7 @@ export default {
       var _this=this;
        device.logList(Object.assign(
          {
-        prductSn:this.form.product.sn,
+        productSn:this.form.product.sn,
         deviceSn:this.form.sn,
        },this.query
        )).then((res)=>{

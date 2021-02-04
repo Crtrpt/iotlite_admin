@@ -702,3 +702,15 @@
 2021-02-04 18:06:20,351 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:547)- Completed initialization in 11 ms
 2021-02-04 18:23:04,108 INFO [http-nio-4201-exec-1] (DeviceListener.java:24)- device modify
 2021-02-04 19:02:21,783 INFO [http-nio-4201-exec-4] (DeviceListener.java:24)- device modify
+2021-02-04 19:04:31,142 INFO [http-nio-4201-exec-9] (DeviceLogServiceImpl.java:22)- 1612436671130 Down admin default/3/1 turn off {"v":5}
+2021-02-04 19:04:31,142 INFO [http-nio-4201-exec-1] (DeviceLogServiceImpl.java:22)- 1612436671130 Down admin default/3/1 turn off {"v":5}
+2021-02-04 19:04:31,142 INFO [http-nio-4201-exec-6] (DeviceLogServiceImpl.java:22)- 1612436671130 Down admin default/3/1 turn off {"v":5}
+2021-02-04 19:04:31,202 INFO [http-nio-4201-exec-1] (DeviceInstance.java:78)- topic default/3/1  data: {}
+2021-02-04 19:04:31,203 INFO [http-nio-4201-exec-9] (DeviceInstance.java:78)- topic default/3/1  data: {}
+2021-02-04 19:04:31,286 INFO [http-nio-4201-exec-6] (DeviceInstance.java:78)- topic default/3/1  data: {}
+2021-02-04 19:04:56,685 INFO [http-nio-4201-exec-10] (DeviceLogServiceImpl.java:22)- 1612436696685 Down admin default/3/1 turn up {"v":6,"temperature":20}
+2021-02-04 19:04:56,688 INFO [http-nio-4201-exec-10] (DeviceInstance.java:78)- topic default/3/1  data: {"temperature":20}
+2021-02-04 19:04:57,308 INFO [http-nio-4201-exec-7] (DeviceLogServiceImpl.java:22)- 1612436697308 Down admin default/3/1 turn up {"v":7,"temperature":20}
+2021-02-04 19:04:57,311 INFO [http-nio-4201-exec-7] (DeviceInstance.java:78)- topic default/3/1  data: {"temperature":20}
+2021-02-04 19:06:43,508 INFO [http-nio-4201-exec-3] (DeviceLogServiceImpl.java:22)- 1612436803508 Down admin default/3/1 turn off {"v":8}
+2021-02-04 19:06:43,588 INFO [http-nio-4201-exec-3] (DeviceInstance.java:78)- topic default/3/1  data: {}
