@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 @Configuration
 public class DataSourceConfig {
+
     @Bean("primaryDataSource")
     @Primary
     @ConfigurationProperties("spring.datasource-mysql")

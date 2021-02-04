@@ -34,11 +34,11 @@ const product  =[
       }
     },
     {
-      path: 'version',
-      component: require('../pages/product/product/Version').default,
-      name: 'productDetailVersion',
+      path: 'device',
+      component: require('../pages/product/product/Device').default,
+      name: 'productDeviceList',
       meta:{
-        name:"productDetailVersion"
+        name:"productDeviceList"
       }
     }
   ]

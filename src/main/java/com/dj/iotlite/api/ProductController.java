@@ -1,10 +1,13 @@
 package com.dj.iotlite.api;
 
 import com.dj.iotlite.api.dto.*;
+import com.dj.iotlite.api.form.DeviceQueryForm;
 import com.dj.iotlite.api.form.ProductForm;
 import com.dj.iotlite.api.form.ProductQueryForm;
+import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.service.DeviceService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/product")
 @CrossOrigin(origins = "*", maxAge = 3600)
+@Slf4j
 public class ProductController extends BaseController {
 
     @Autowired
@@ -27,6 +31,21 @@ public class ProductController extends BaseController {
         res.forEach(s -> {
             ProductListDto t = new ProductListDto();
             BeanUtils.copyProperties(s, t);
+            ret.getList().add(t);
+        });
+        ret.setTotal(res.getTotalElements());
+        return success(ret);
+    }
+
+    @GetMapping("/deviceList")
+    public ResDto<Page<ProductListDto>> deviceList(DeviceQueryForm query) {
+
+        Page<DeviceListDto> ret = new Page<DeviceListDto>();
+        org.springframework.data.domain.Page<Device> res = deviceService.getDeviceList(query);
+        res.forEach(s -> {
+            DeviceListDto t = new DeviceListDto();
+            BeanUtils.copyProperties(s, t);
+            deviceService.getProduct(s.getProductId(), t.getProduct());
             ret.getList().add(t);
         });
         ret.setTotal(res.getTotalElements());

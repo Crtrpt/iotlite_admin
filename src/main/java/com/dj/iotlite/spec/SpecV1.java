@@ -60,7 +60,7 @@ public class SpecV1 implements Specification {
     }
 
     @Data
-    static class  Property {
+    static public class  Property {
         String name;
         String desc;
         Integer value;

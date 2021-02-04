@@ -23,6 +23,9 @@ public class Device extends Base {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    String sn;
+
+    String productSn;
     /**
      * 设备图标
      */
@@ -52,5 +55,15 @@ public class Device extends Base {
     @Column(columnDefinition = "json")
     HashMap shadow;
 
-    String sn;
+    /**
+     * 每次修改版本加一
+     */
+    Integer version;
+
+    /**
+     * 产品物模型
+     */
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    Object spec;
 }

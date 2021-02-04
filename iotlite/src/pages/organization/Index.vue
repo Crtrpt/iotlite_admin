@@ -13,11 +13,11 @@
           </b-button-group>
 
           <b-button-group >
-            <b-modal id="new" title="组织">
+            <b-modal id="new" title="组织"  hide-footer  @hidden="getList">
               <New :data="query"/>
             </b-modal>
             
-            <b-button variant="primary" v-b-modal.new>新建</b-button>
+          <b-button variant="primary" v-b-modal.new>新建</b-button>
           </b-button-group>
           <b-button-group class="ml-1">
               <b-input-group  class="mb-2 mr-sm-2 mb-sm-0">
@@ -26,7 +26,7 @@
                       <b-icon icon="search" @click="getList" />
                     </b-input-group-text>
                 </template>
-                <b-form-input id="inline-form-input-username" v-model="query.words" placeholder="Search"></b-form-input>
+                <b-form-input id="inline-form-input-username" v-model="query.words" placeholder="搜索"></b-form-input>
               </b-input-group>
           </b-button-group> 
         </b-button-toolbar>
@@ -47,7 +47,7 @@
         </b-dropdown>
         </template>
       </b-table>
-       <b-pagination  v-model ="query.page_num"  :total-rows="helper.total"></b-pagination>
+       <b-pagination  v-if="total>10" v-model ="query.page_num"  :total-rows="helper.total"></b-pagination>
     </b-col>
     </b-row>
   </b-container>

@@ -13,7 +13,7 @@
           </li>
       </ol>
     </nav>
-    <b-list-group>
+    <b-list-group class="mt-2 mb-2">
       <b-list-group-item v-for="i in list" :key="i.id">
         <a   href="javascript:void(0);" v-on:click="click(i)" >
           {{i.name}}({{i.childrenNum||0}})

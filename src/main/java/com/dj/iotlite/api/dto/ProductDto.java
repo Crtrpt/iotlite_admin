@@ -7,4 +7,5 @@ public class ProductDto {
     String name;
     String description;
     Object spec;
+    String sn;
 }

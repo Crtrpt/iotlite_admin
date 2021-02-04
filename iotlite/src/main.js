@@ -23,6 +23,7 @@ import "./assets/css/switch.css"
 import "./assets/css/breadcrumb.css"
 import "./assets/css/custom-modal.css"
 import "./assets/css/custom-pagination.css"
+import "./assets/css/custom-list-group.css"
 
 Vue.use(VueRouter)
 

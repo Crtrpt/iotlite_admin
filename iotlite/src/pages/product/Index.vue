@@ -16,22 +16,21 @@
                       <b-button variant="primary" v-b-modal.new  >新建设备</b-button>
                     </b-button-group>
                     <importFile></importFile>
-
                   </b-button-toolbar>
           </b-col>
         </b-row>
           </div>
           
           <div class="widget-content" >
-        <b-row>
-          <b-col col cols="2"  v-for="p in items" :key="p.id">
-            <b-card  :title="p.name" class="mt-2 product_card" @click="detail(p)" >
-              <b-card-text>
-                {{p.description}} 
-              </b-card-text>
-            </b-card>
-          </b-col>
-        </b-row>
+            <b-row>
+              <b-col col cols="2"  v-for="p in items" :key="p.id">
+                <b-card  :title="p.name" class="mt-2 product_card" @click="detail(p)" >
+                  <b-card-text>
+                    {{p.description}} 
+                  </b-card-text>
+                </b-card>
+              </b-col>
+            </b-row>
           </div>
 
         <b-row class="mt-2" v-if="helper.total>10">

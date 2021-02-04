@@ -2,17 +2,17 @@
   <b-container fluid>
   <b-row>
     <b-col>
-      <h5>Device# {{form.name}}</h5>
+      <h3>设备信息# {{form.name}}</h3>
       <p>{{form.description}}</p>
     </b-col>
   </b-row>
   <b-row>
     <b-col>
       <b-nav tabs>
-        <b-nav-item to="base"  active-class="active" >Base</b-nav-item>
-        <b-nav-item to="control"  active-class="active" > Control</b-nav-item>
-        <b-nav-item to="metric"  active-class="active" > Metric</b-nav-item>
-        <b-nav-item to="log"   active-class="active" >Log</b-nav-item>
+        <b-nav-item to="base"  active-class="active" >基础信息</b-nav-item>
+        <b-nav-item to="control"  active-class="active" >设备控制</b-nav-item>
+        <b-nav-item to="metric"  active-class="active" > 数据指标</b-nav-item>
+        <b-nav-item to="log"   active-class="active" >设备日志</b-nav-item>
       </b-nav>
       <router-view class="content" :form=form></router-view>
     </b-col>

@@ -2,16 +2,16 @@
   <b-container fluid>
   <b-row>
     <b-col>
-      <h5>Product# {{form.name}}</h5>
+      <h5>产品# {{form.name}}</h5>
       <p>{{form.description}}</p>
     </b-col>
   </b-row>
   <b-row>
     <b-col>
       <b-nav tabs>
-        <b-nav-item to="base"  active-class="active" >Base</b-nav-item>
-        <b-nav-item to="model"  active-class="active" ><b-icon icon="code"  /> Model</b-nav-item>
-        <!-- <b-nav-item to="version"  >Version</b-nav-item> -->
+        <b-nav-item to="base"  active-class="active" >基本信息</b-nav-item>
+        <b-nav-item to="model"  active-class="active" ><b-icon icon="code"  /> 物模型</b-nav-item>
+        <b-nav-item to="device"  >设备</b-nav-item>
       </b-nav>
       <router-view  class="content" :form=form></router-view>
     </b-col>

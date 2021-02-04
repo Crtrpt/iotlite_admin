@@ -2,8 +2,10 @@ package com.dj.iotlite.api;
 
 import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.DeviceActionForm;
+import com.dj.iotlite.api.form.DeviceLogQueryForm;
 import com.dj.iotlite.api.form.DeviceQueryForm;
 import com.dj.iotlite.entity.device.Device;
+import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.service.DeviceService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,20 @@ public class DeviceController extends BaseController {
         res.forEach(s -> {
             DeviceListDto t = new DeviceListDto();
             BeanUtils.copyProperties(s, t);
-            deviceService.getProduct(s.getProductId(),t.getProduct());
+            deviceService.getProduct(s.getProductId(), t.getProduct());
+            ret.getList().add(t);
+        });
+        ret.setTotal(res.getTotalElements());
+        return success(ret);
+    }
+
+    @GetMapping("/log")
+    public ResDto<Page<DeviceLogDto>> getLogList(DeviceLogQueryForm query) {
+        Page<DeviceLogDto> ret = new Page<>();
+        org.springframework.data.domain.Page<DeviceLog> res = deviceService.getDeviceLogList(query);
+        res.forEach(s -> {
+            DeviceLogDto t = new DeviceLogDto();
+            BeanUtils.copyProperties(s, t);
             ret.getList().add(t);
         });
         ret.setTotal(res.getTotalElements());
@@ -46,8 +61,8 @@ public class DeviceController extends BaseController {
         return success(deviceService.queryDevice(id));
     }
 
-    @GetMapping("/action")
-    public ResDto<AsynPage> action(DeviceActionForm action) {
+    @PostMapping("/action")
+    public ResDto<AsynPage> action(@RequestBody DeviceActionForm action) {
         return success(deviceService.action(action));
     }
 

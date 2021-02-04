@@ -49,7 +49,7 @@
       </b-table>
        
        <b-pagination
-
+         v-if="total>10"
          first-text="第一页"
       prev-text="上一页"
       next-text="下一页"

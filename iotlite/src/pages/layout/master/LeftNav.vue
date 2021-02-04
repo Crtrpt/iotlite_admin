@@ -6,13 +6,13 @@
 
                 <ul class="list-unstyled menu-categories ps ps--active-y" >
 
-                     <li class="menu">
+                     <!-- <li class="menu">
                         <router-link :to='{"name":"dashboard"}'  class="dropdown-toggle">
                             <div class="">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>                                <span>首页</span>
                             </div>
                         </router-link>
-                    </li>
+                    </li> -->
 
 
                      <li class="menu">
@@ -57,7 +57,7 @@
                         </b-collapse>
                     </li>
 
-                    <li class="menu">
+                    <!-- <li class="menu">
                         <a href="#product"  v-b-toggle.accordion-7 class="dropdown-toggle">
                             <div class="">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>                               
@@ -74,10 +74,10 @@
                             </li>
                           </ul>
                         </b-collapse>
-                    </li>
+                    </li> -->
 
 
-                    <li class="menu">
+                    <!-- <li class="menu">
                         <a href="#system"  v-b-toggle.accordion-4 class="dropdown-toggle">
                             <div class="">
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-terminal"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>                                <span></span>
@@ -95,7 +95,7 @@
                             </li>
                           </ul>
                         </b-collapse>
-                    </li>
+                    </li> -->
 
                     
 

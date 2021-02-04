@@ -47,7 +47,7 @@ public class MysqlDataSource {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(false); //hibernate基本配置
         vendorAdapter.setDatabase(Database.MYSQL);
-        vendorAdapter.setShowSql(false);
+        vendorAdapter.setShowSql(true);
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
@@ -56,6 +56,7 @@ public class MysqlDataSource {
 
         Map<String, Object> hibernateProperties = hibernateProperties1.determineHibernateProperties(
                 jpaProperties.getProperties(), new HibernateSettings());
+
         factory.setJpaPropertyMap(hibernateProperties);
         return factory;
 

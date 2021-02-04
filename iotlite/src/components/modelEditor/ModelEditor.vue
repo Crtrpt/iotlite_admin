@@ -10,7 +10,7 @@
 import CodeMirror from 'codemirror'
   // 核心样式
 import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/idea.css'
+import 'codemirror/theme/monokai.css'
 
 
 import 'codemirror/mode/javascript/javascript.js'

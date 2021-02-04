@@ -10,7 +10,7 @@ public class ProductListDto implements BaseDto {
 
     String description;
 
-    String Uuid;
+    String sn;
 
     Integer onlineCount;
 

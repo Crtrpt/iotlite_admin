@@ -25,6 +25,8 @@ public class Product extends Base {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    String sn;
+    
     String name;
 
     String description;
@@ -49,4 +51,6 @@ public class Product extends Base {
     @Type(type = "json")
     @Column(columnDefinition = "json")
     Object spec;
+
+    String secKey;
 }

@@ -3,30 +3,30 @@
     <b-form @submit="onSubmit" >
       <b-form-group
         
-        label="Name:"
-        description="Organization name"
+        label="名称:"
+        description="机构名称"
       >
         <b-form-input
           v-model="form.name"
           type="text"
           required
-          placeholder="Enter Organization Name"
+          placeholder="机构名称"
         ></b-form-input>
       </b-form-group>
 
       <b-form-group
         
-        label="Desc:"
-        description="Organization desc"
+        label="机构描述:"
+        description="描述"
       >
         <b-form-input
           v-model="form.description"
           type="text"
-          placeholder="enter Organization description"
+          placeholder="组织机构的描述信息"
         ></b-form-input>
       </b-form-group>
      
-       <b-button type="submit" variant="primary">Submit</b-button>
+       <b-button type="submit" variant="primary">保存</b-button>
     </b-form>
   </div>
 </template>
@@ -56,8 +56,14 @@ export default {
   },
   methods:{
     onSubmit(){
+      var _this=this;
         organization.save(this.form).then((res)=>{
-          
+          console.log(_this.$bvModal.hide("new"));
+            if(res.code==0){
+              _this.$bvModal.msgBoxOk("保存成功")
+            }else{
+              _this.$bvModal.msgBoxOk(res.msg)
+            }
         })
     }
   }

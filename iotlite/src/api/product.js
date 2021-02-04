@@ -16,6 +16,9 @@ const product={
     save:(ctx)=>{
       return request.post("product/save",ctx)
     },
+    deviceList:(ctx)=>{
+      return request.get("product/deviceList",ctx)
+    }
 }
 
 export {

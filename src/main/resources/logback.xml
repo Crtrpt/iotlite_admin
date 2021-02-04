@@ -26,6 +26,7 @@
 
     <root level="info">
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="baselog"/>
     </root>
 
 </configuration>

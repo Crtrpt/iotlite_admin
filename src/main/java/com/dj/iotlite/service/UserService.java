@@ -111,6 +111,9 @@ public class UserService {
                         criteriaBuilder.like(root.get("account").as(String.class), "%" + query.getWords() + "%")
                 ));
             }
+            if(!ObjectUtils.isEmpty(query.getOrganizationId())){
+                list.add(criteriaBuilder.equal(root.get("organizationId").as(Long.class),query.getOrganizationId()));
+            }
             Predicate[] p = new Predicate[list.size()];
             criteriaQuery.where(criteriaBuilder.and(list.toArray(p)));
             return null;

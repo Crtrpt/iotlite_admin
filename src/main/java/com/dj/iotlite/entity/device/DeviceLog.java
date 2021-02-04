@@ -37,4 +37,8 @@ public class DeviceLog extends Base {
      * raw data
      */
     String rawData;
+
+    String productSn;
+
+    String deviceSn;
 }

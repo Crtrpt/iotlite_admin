@@ -3,6 +3,7 @@ package com.dj.iotlite.api.form;
 import lombok.Data;
 
 @Data
-public class DeviceQueryForm extends PageForm {
+public class DeviceLogQueryForm extends PageForm {
+    String deviceSn;
     String productSn;
 }
