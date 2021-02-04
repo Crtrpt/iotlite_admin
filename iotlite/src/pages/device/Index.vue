@@ -4,21 +4,9 @@
           <div class="widget-header">
               <b-row>
                 <b-col>
-                  <h4>设备</h4>
+                  <h4>设备({{helper.total||0}})</h4>
                 </b-col>
-                <b-col cols="12" class="mt-2 mb-2">
-                  <b-button-toolbar>
-                    <b-button-group  class="mr-2">
-                      <b-modal id="new" title="新建设备" hide-footer>
-                        <New />
-                      </b-modal>
-                      <b-button variant="primary" v-b-modal.new  >新建设备</b-button>
-                    </b-button-group>
-
-                    <importFile></importFile>
-
-                  </b-button-toolbar>
-                </b-col>
+                <Toolbar />
               </b-row>
           </div>
            <div class="widget-content" >
@@ -41,15 +29,15 @@
 </template>
 
 <script>
-import importFile from "../../components/export/ImportFile"
-
+import Toolbar from "./ToolBar"
 import {device} from "../../api/device"
-import New from "./New"
+
 export default {
   name:"Device",
-  components:{New,importFile},
+  components:{Toolbar},
   data(){
     return {
+      helper:{},
        query:{
         organizationId:0,
         words:"",
@@ -68,7 +56,7 @@ export default {
       var _this=this;
       device.list(this.query).then((res)=>{
           _this.items=res.data.list;
-          _this.helper.total=res.total;
+          _this.helper.total=res.data.total;
       })
     },
     detail(row){

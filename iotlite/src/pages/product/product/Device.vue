@@ -1,5 +1,6 @@
 <template>
   <div>
+      <Toolbar />
       <b-table hover :items="items" :fields="fields"  @row-dblclicked="gotoDevice">
 
       </b-table>
@@ -17,8 +18,10 @@
 
 <script>
 import {product} from "../../../api/product"
+import Toolbar from "../../device/ToolBar"
 export default {
   name:"Device",
+  components:{Toolbar},
   props:{
     form:Object
   },

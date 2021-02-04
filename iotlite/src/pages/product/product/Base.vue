@@ -4,7 +4,7 @@
        <b-row>
           <b-col>
             <b-row>
-              <b-col><h4>产品信息</h4></b-col>
+              <b-col><h5>产品信息</h5></b-col>
             </b-row>
             <b-row>
               <b-col>

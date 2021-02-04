@@ -11,8 +11,9 @@
       <b-nav tabs>
         <b-nav-item to="base"  active-class="active" >基础信息</b-nav-item>
         <b-nav-item to="control"  active-class="active" >设备控制</b-nav-item>
-        <b-nav-item to="metric"  active-class="active" > 数据指标</b-nav-item>
+        <b-nav-item to="metric"  active-class="active" >数据指标</b-nav-item>
         <b-nav-item to="log"   active-class="active" >设备日志</b-nav-item>
+         <b-nav-item to="map"   active-class="active" >设备位置</b-nav-item>
       </b-nav>
       <router-view class="content" :form=form></router-view>
     </b-col>

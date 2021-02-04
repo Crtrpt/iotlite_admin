@@ -13,7 +13,7 @@
                       <b-modal id="new" title="新建产品" hide-footer>
                         <New />
                       </b-modal>
-                      <b-button variant="primary" v-b-modal.new  >新建设备</b-button>
+                      <b-button variant="primary" v-b-modal.new  >新建产品</b-button>
                     </b-button-group>
                     <importFile></importFile>
                   </b-button-toolbar>

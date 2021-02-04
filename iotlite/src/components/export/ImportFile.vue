@@ -42,8 +42,8 @@
 
 
           </b-modal>
-          <b-button variant="outline-primary"  v-b-modal.import >导入</b-button>
-          <b-button variant="outline-primary" v-b-modal.export  >导出</b-button>
+          <b-button size="sm" variant="outline-primary"  v-b-modal.import >导入</b-button>
+          <b-button size="sm" variant="outline-primary" v-b-modal.export  >导出</b-button>
       </b-button-group>
    
 

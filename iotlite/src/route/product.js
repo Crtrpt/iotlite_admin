@@ -34,6 +34,14 @@ const product  =[
       }
     },
     {
+      path: 'map',
+      component: require('../pages/product/product/Map').default,
+      name: 'productDetailMap',
+      meta:{
+        name:"productDetailMap"
+      }
+    },
+    {
       path: 'device',
       component: require('../pages/product/product/Device').default,
       name: 'productDeviceList',

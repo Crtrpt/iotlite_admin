@@ -47,7 +47,15 @@ const device  =[
       meta:{
         name:"deviceLog"
       }
-    }
+    },
+    {
+      path: 'map',
+      component: require('../pages/device/device/Map').default,
+      name: 'deviceDetailMap',
+      meta:{
+        name:"deviceDetailMap"
+      }
+    },
   ]
 }
 ]
