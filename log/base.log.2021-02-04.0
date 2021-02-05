@@ -1,0 +1,716 @@
+2021-02-04 17:49:04,245 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 52492 (D:\iotlite\target\classes started by Admin in D:\iotlite)
+2021-02-04 17:49:04,249 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
+2021-02-04 17:49:05,941 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 17:49:05,955 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 4ms. Found 0 JPA repository interfaces.
+2021-02-04 17:49:05,955 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 17:49:06,085 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 129ms. Found 15 JPA repository interfaces.
+2021-02-04 17:49:07,239 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
+2021-02-04 17:49:07,253 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
+2021-02-04 17:49:07,253 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
+2021-02-04 17:49:07,253 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-02-04 17:49:07,389 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
+2021-02-04 17:49:07,389 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 2650 ms
+2021-02-04 17:49:07,722 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 17:49:07,785 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
+2021-02-04 17:49:07,940 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-02-04 17:49:08,029 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
+2021-02-04 17:49:08,063 INFO [main] (ClickHouseDriver.java:42)- Driver registered
+2021-02-04 17:49:08,250 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
+2021-02-04 17:49:08,265 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 17:49:08,466 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@2eb0932c] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-02-04 17:49:08,484 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 17:49:08,493 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 17:49:08,554 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 17:49:08,560 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
+2021-02-04 17:49:08,901 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
+2021-02-04 17:49:08,903 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 17:49:09,141 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
+2021-02-04 17:49:09,141 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
+2021-02-04 17:49:09,142 INFO [main] (Configuration.java:285)- 
+ _    _                           _     _
+| |  | |                         (_)   | |
+| |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
+|  __  | | | | '_ \ / _ \ '__/ __| / __| __/ _ \ '_ \ / __/ _ \
+| |  | | |_| | |_) |  __/ |  \__ \ \__ \ ||  __/ | | | (_|  __/
+|_|  |_|\__, | .__/ \___|_|  |___/_|___/\__\___|_| |_|\___\___|
+         __/ | |
+        |___/|_|
+
+           ____        _   _           _
+          / __ \      | | (_)         (_)
+         | |  | |_ __ | |_ _ _ __ ___  _ _______ _ __
+         | |  | | '_ \| __| | '_ ` _ \| |_  / _ \ '__|
+         | |__| | |_) | |_| | | | | | | |/ /  __/ |
+          \____/| .__/ \__|_|_| |_| |_|_/___\___|_|
+                | |
+                |_|
+
+2021-02-04 17:49:09,142 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
+2021-02-04 17:49:09,914 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 17:49:09,919 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 17:49:10,535 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
+2021-02-04 17:49:12,415 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-02-04 17:49:13,512 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-02-04 17:49:13,658 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
+2021-02-04 17:49:13,832 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2021-02-04 17:49:14,055 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
+2021-02-04 17:49:14,072 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
+2021-02-04 17:49:14,073 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
+2021-02-04 17:49:14,089 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
+2021-02-04 17:49:14,118 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
+2021-02-04 17:49:14,290 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
+2021-02-04 17:49:14,313 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
+2021-02-04 17:49:14,319 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
+2021-02-04 17:49:14,324 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
+2021-02-04 17:49:14,326 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
+2021-02-04 17:49:14,329 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
+2021-02-04 17:49:14,345 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
+2021-02-04 17:49:14,350 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
+2021-02-04 17:49:14,353 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
+2021-02-04 17:49:14,357 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
+2021-02-04 17:49:14,371 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
+2021-02-04 17:49:14,375 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
+2021-02-04 17:49:14,378 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
+2021-02-04 17:49:14,382 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
+2021-02-04 17:49:14,385 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
+2021-02-04 17:49:14,387 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
+2021-02-04 17:49:14,389 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
+2021-02-04 17:49:14,391 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
+2021-02-04 17:49:14,403 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
+2021-02-04 17:49:14,407 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
+2021-02-04 17:49:14,408 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
+2021-02-04 17:49:14,412 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
+2021-02-04 17:49:14,429 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 10.582 seconds (JVM running for 13.995)
+2021-02-04 17:49:35,663 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- A cookie header was received [1591414925,1592186801] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2021-02-04 17:49:35,676 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-02-04 17:49:35,677 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
+2021-02-04 17:49:35,687 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:547)- Completed initialization in 10 ms
+2021-02-04 17:51:13,984 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 22440 (D:\iotlite\target\classes started by Admin in D:\iotlite)
+2021-02-04 17:51:13,986 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
+2021-02-04 17:51:15,028 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 17:51:15,043 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 5ms. Found 0 JPA repository interfaces.
+2021-02-04 17:51:15,044 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 17:51:15,262 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 216ms. Found 15 JPA repository interfaces.
+2021-02-04 17:51:16,325 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
+2021-02-04 17:51:16,335 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
+2021-02-04 17:51:16,336 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
+2021-02-04 17:51:16,336 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-02-04 17:51:16,467 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
+2021-02-04 17:51:16,467 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 2127 ms
+2021-02-04 17:51:17,020 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 17:51:17,055 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
+2021-02-04 17:51:17,167 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-02-04 17:51:17,264 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
+2021-02-04 17:51:17,280 INFO [main] (ClickHouseDriver.java:42)- Driver registered
+2021-02-04 17:51:17,388 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
+2021-02-04 17:51:17,399 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 17:51:17,553 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@4cf1bd4a] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-02-04 17:51:17,569 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 17:51:17,578 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 17:51:17,672 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 17:51:17,679 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
+2021-02-04 17:51:17,877 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
+2021-02-04 17:51:17,879 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 17:51:18,096 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
+2021-02-04 17:51:18,096 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
+2021-02-04 17:51:18,098 INFO [main] (Configuration.java:285)- 
+ _    _                           _     _
+| |  | |                         (_)   | |
+| |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
+|  __  | | | | '_ \ / _ \ '__/ __| / __| __/ _ \ '_ \ / __/ _ \
+| |  | | |_| | |_) |  __/ |  \__ \ \__ \ ||  __/ | | | (_|  __/
+|_|  |_|\__, | .__/ \___|_|  |___/_|___/\__\___|_| |_|\___\___|
+         __/ | |
+        |___/|_|
+
+           ____        _   _           _
+          / __ \      | | (_)         (_)
+         | |  | |_ __ | |_ _ _ __ ___  _ _______ _ __
+         | |  | | '_ \| __| | '_ ` _ \| |_  / _ \ '__|
+         | |__| | |_) | |_| | | | | | | |/ /  __/ |
+          \____/| .__/ \__|_|_| |_| |_|_/___\___|_|
+                | |
+                |_|
+
+2021-02-04 17:51:18,098 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
+2021-02-04 17:51:18,893 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 17:51:18,897 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 17:51:19,472 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
+2021-02-04 17:51:20,833 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-02-04 17:51:21,866 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-02-04 17:51:22,006 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
+2021-02-04 17:51:22,169 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2021-02-04 17:51:22,359 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
+2021-02-04 17:51:22,378 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
+2021-02-04 17:51:22,380 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
+2021-02-04 17:51:22,404 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
+2021-02-04 17:51:22,434 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
+2021-02-04 17:51:22,585 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
+2021-02-04 17:51:22,610 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
+2021-02-04 17:51:22,616 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
+2021-02-04 17:51:22,621 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
+2021-02-04 17:51:22,624 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
+2021-02-04 17:51:22,627 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
+2021-02-04 17:51:22,647 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
+2021-02-04 17:51:22,652 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
+2021-02-04 17:51:22,655 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
+2021-02-04 17:51:22,660 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
+2021-02-04 17:51:22,678 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
+2021-02-04 17:51:22,680 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
+2021-02-04 17:51:22,683 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
+2021-02-04 17:51:22,687 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
+2021-02-04 17:51:22,691 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
+2021-02-04 17:51:22,694 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
+2021-02-04 17:51:22,696 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
+2021-02-04 17:51:22,698 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
+2021-02-04 17:51:22,710 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
+2021-02-04 17:51:22,713 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
+2021-02-04 17:51:22,715 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
+2021-02-04 17:51:22,718 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
+2021-02-04 17:51:22,733 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 9.13 seconds (JVM running for 10.972)
+2021-02-04 17:51:31,174 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- A cookie header was received [1591414925,1592186801] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2021-02-04 17:51:31,188 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-02-04 17:51:31,188 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
+2021-02-04 17:51:31,198 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:547)- Completed initialization in 10 ms
+2021-02-04 17:56:31,013 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 59420 (D:\iotlite\target\classes started by Admin in D:\iotlite)
+2021-02-04 17:56:31,015 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
+2021-02-04 17:56:33,068 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 17:56:33,082 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 5ms. Found 0 JPA repository interfaces.
+2021-02-04 17:56:33,082 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 17:56:33,198 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 115ms. Found 15 JPA repository interfaces.
+2021-02-04 17:56:34,521 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
+2021-02-04 17:56:34,534 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
+2021-02-04 17:56:34,535 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
+2021-02-04 17:56:34,535 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-02-04 17:56:34,677 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
+2021-02-04 17:56:34,677 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 3223 ms
+2021-02-04 17:56:35,203 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 17:56:35,255 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
+2021-02-04 17:56:35,417 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-02-04 17:56:35,504 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
+2021-02-04 17:56:35,599 INFO [main] (ClickHouseDriver.java:42)- Driver registered
+2021-02-04 17:56:35,758 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
+2021-02-04 17:56:35,790 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 17:56:35,984 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@2db82155] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-02-04 17:56:36,000 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 17:56:36,009 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 17:56:36,062 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 17:56:36,069 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
+2021-02-04 17:56:36,687 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
+2021-02-04 17:56:36,689 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 17:56:36,874 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
+2021-02-04 17:56:36,874 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
+2021-02-04 17:56:36,875 INFO [main] (Configuration.java:285)- 
+ _    _                           _     _
+| |  | |                         (_)   | |
+| |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
+|  __  | | | | '_ \ / _ \ '__/ __| / __| __/ _ \ '_ \ / __/ _ \
+| |  | | |_| | |_) |  __/ |  \__ \ \__ \ ||  __/ | | | (_|  __/
+|_|  |_|\__, | .__/ \___|_|  |___/_|___/\__\___|_| |_|\___\___|
+         __/ | |
+        |___/|_|
+
+           ____        _   _           _
+          / __ \      | | (_)         (_)
+         | |  | |_ __ | |_ _ _ __ ___  _ _______ _ __
+         | |  | | '_ \| __| | '_ ` _ \| |_  / _ \ '__|
+         | |__| | |_) | |_| | | | | | | |/ /  __/ |
+          \____/| .__/ \__|_|_| |_| |_|_/___\___|_|
+                | |
+                |_|
+
+2021-02-04 17:56:36,875 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
+2021-02-04 17:56:37,676 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 17:56:37,860 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 17:56:38,468 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
+2021-02-04 17:56:39,778 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-02-04 17:56:40,995 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-02-04 17:56:41,191 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
+2021-02-04 17:56:41,381 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2021-02-04 17:56:41,640 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
+2021-02-04 17:56:41,659 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
+2021-02-04 17:56:41,660 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
+2021-02-04 17:56:41,684 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
+2021-02-04 17:56:41,713 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
+2021-02-04 17:56:42,094 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
+2021-02-04 17:56:42,118 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
+2021-02-04 17:56:42,123 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
+2021-02-04 17:56:42,128 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
+2021-02-04 17:56:42,130 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
+2021-02-04 17:56:42,133 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
+2021-02-04 17:56:42,149 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
+2021-02-04 17:56:42,153 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
+2021-02-04 17:56:42,156 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
+2021-02-04 17:56:42,161 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
+2021-02-04 17:56:42,176 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
+2021-02-04 17:56:42,180 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
+2021-02-04 17:56:42,183 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
+2021-02-04 17:56:42,186 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
+2021-02-04 17:56:42,193 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
+2021-02-04 17:56:42,195 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
+2021-02-04 17:56:42,198 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
+2021-02-04 17:56:42,200 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
+2021-02-04 17:56:42,212 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
+2021-02-04 17:56:42,215 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
+2021-02-04 17:56:42,218 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
+2021-02-04 17:56:42,221 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
+2021-02-04 17:56:42,238 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 11.662 seconds (JVM running for 15.381)
+2021-02-04 17:56:48,791 INFO [http-nio-4201-exec-3] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-02-04 17:56:48,792 INFO [http-nio-4201-exec-3] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
+2021-02-04 17:56:48,803 INFO [http-nio-4201-exec-3] (FrameworkServlet.java:547)- Completed initialization in 11 ms
+2021-02-04 17:58:41,845 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 17200 (D:\iotlite\target\classes started by Admin in D:\iotlite)
+2021-02-04 17:58:41,856 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
+2021-02-04 17:58:43,112 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 17:58:43,131 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 6ms. Found 0 JPA repository interfaces.
+2021-02-04 17:58:43,131 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 17:58:43,244 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 112ms. Found 15 JPA repository interfaces.
+2021-02-04 17:58:44,280 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
+2021-02-04 17:58:44,291 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
+2021-02-04 17:58:44,292 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
+2021-02-04 17:58:44,292 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-02-04 17:58:44,428 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
+2021-02-04 17:58:44,429 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 2109 ms
+2021-02-04 17:58:44,770 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 17:58:44,808 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
+2021-02-04 17:58:44,919 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-02-04 17:58:45,013 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
+2021-02-04 17:58:45,031 INFO [main] (ClickHouseDriver.java:42)- Driver registered
+2021-02-04 17:58:45,145 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
+2021-02-04 17:58:45,156 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 17:58:45,321 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@3328db4f] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-02-04 17:58:45,337 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 17:58:45,347 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 17:58:45,456 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 17:58:45,462 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
+2021-02-04 17:58:45,663 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
+2021-02-04 17:58:45,665 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 17:58:45,880 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
+2021-02-04 17:58:45,881 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
+2021-02-04 17:58:45,882 INFO [main] (Configuration.java:285)- 
+ _    _                           _     _
+| |  | |                         (_)   | |
+| |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
+|  __  | | | | '_ \ / _ \ '__/ __| / __| __/ _ \ '_ \ / __/ _ \
+| |  | | |_| | |_) |  __/ |  \__ \ \__ \ ||  __/ | | | (_|  __/
+|_|  |_|\__, | .__/ \___|_|  |___/_|___/\__\___|_| |_|\___\___|
+         __/ | |
+        |___/|_|
+
+           ____        _   _           _
+          / __ \      | | (_)         (_)
+         | |  | |_ __ | |_ _ _ __ ___  _ _______ _ __
+         | |  | | '_ \| __| | '_ ` _ \| |_  / _ \ '__|
+         | |__| | |_) | |_| | | | | | | |/ /  __/ |
+          \____/| .__/ \__|_|_| |_| |_|_/___\___|_|
+                | |
+                |_|
+
+2021-02-04 17:58:45,882 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
+2021-02-04 17:58:46,556 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 17:58:46,560 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 17:58:47,196 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
+2021-02-04 17:58:48,595 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-02-04 17:58:49,789 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-02-04 17:58:49,931 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
+2021-02-04 17:58:50,104 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2021-02-04 17:58:50,293 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
+2021-02-04 17:58:50,309 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
+2021-02-04 17:58:50,310 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
+2021-02-04 17:58:50,324 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
+2021-02-04 17:58:50,353 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
+2021-02-04 17:58:50,510 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
+2021-02-04 17:58:50,534 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
+2021-02-04 17:58:50,539 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
+2021-02-04 17:58:50,544 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
+2021-02-04 17:58:50,546 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
+2021-02-04 17:58:50,550 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
+2021-02-04 17:58:50,567 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
+2021-02-04 17:58:50,571 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
+2021-02-04 17:58:50,574 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
+2021-02-04 17:58:50,578 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
+2021-02-04 17:58:50,595 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
+2021-02-04 17:58:50,599 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
+2021-02-04 17:58:50,602 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
+2021-02-04 17:58:50,606 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
+2021-02-04 17:58:50,610 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
+2021-02-04 17:58:50,613 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
+2021-02-04 17:58:50,616 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
+2021-02-04 17:58:50,618 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
+2021-02-04 17:58:50,638 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
+2021-02-04 17:58:50,641 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
+2021-02-04 17:58:50,643 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
+2021-02-04 17:58:50,647 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
+2021-02-04 17:58:50,663 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 9.445 seconds (JVM running for 12.989)
+2021-02-04 18:00:08,016 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-02-04 18:00:08,017 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
+2021-02-04 18:00:08,025 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:547)- Completed initialization in 8 ms
+2021-02-04 18:01:29,313 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 104024 (D:\iotlite\target\classes started by Admin in D:\iotlite)
+2021-02-04 18:01:29,316 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
+2021-02-04 18:01:31,127 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 18:01:31,139 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 4ms. Found 0 JPA repository interfaces.
+2021-02-04 18:01:31,140 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 18:01:31,434 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 293ms. Found 15 JPA repository interfaces.
+2021-02-04 18:01:33,224 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
+2021-02-04 18:01:33,269 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
+2021-02-04 18:01:33,270 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
+2021-02-04 18:01:33,270 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-02-04 18:01:33,411 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
+2021-02-04 18:01:33,411 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 3509 ms
+2021-02-04 18:01:33,860 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 18:01:33,910 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
+2021-02-04 18:01:34,064 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-02-04 18:01:34,176 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
+2021-02-04 18:01:34,297 INFO [main] (ClickHouseDriver.java:42)- Driver registered
+2021-02-04 18:01:34,434 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
+2021-02-04 18:01:34,449 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 18:01:34,639 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@6d6ddeb5] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-02-04 18:01:34,656 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 18:01:34,665 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 18:01:34,827 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 18:01:34,833 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
+2021-02-04 18:01:35,299 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
+2021-02-04 18:01:35,301 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 18:01:35,947 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
+2021-02-04 18:01:35,948 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
+2021-02-04 18:01:35,948 INFO [main] (Configuration.java:285)- 
+ _    _                           _     _
+| |  | |                         (_)   | |
+| |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
+|  __  | | | | '_ \ / _ \ '__/ __| / __| __/ _ \ '_ \ / __/ _ \
+| |  | | |_| | |_) |  __/ |  \__ \ \__ \ ||  __/ | | | (_|  __/
+|_|  |_|\__, | .__/ \___|_|  |___/_|___/\__\___|_| |_|\___\___|
+         __/ | |
+        |___/|_|
+
+           ____        _   _           _
+          / __ \      | | (_)         (_)
+         | |  | |_ __ | |_ _ _ __ ___  _ _______ _ __
+         | |  | | '_ \| __| | '_ ` _ \| |_  / _ \ '__|
+         | |__| | |_) | |_| | | | | | | |/ /  __/ |
+          \____/| .__/ \__|_|_| |_| |_|_/___\___|_|
+                | |
+                |_|
+
+2021-02-04 18:01:35,948 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
+2021-02-04 18:01:36,736 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 18:01:36,741 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 18:01:37,367 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
+2021-02-04 18:01:38,822 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-02-04 18:01:40,085 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-02-04 18:01:40,226 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
+2021-02-04 18:01:40,393 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2021-02-04 18:01:40,616 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
+2021-02-04 18:01:40,635 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
+2021-02-04 18:01:40,635 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
+2021-02-04 18:01:40,648 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
+2021-02-04 18:01:40,676 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
+2021-02-04 18:01:40,833 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
+2021-02-04 18:01:40,857 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
+2021-02-04 18:01:40,862 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
+2021-02-04 18:01:40,867 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
+2021-02-04 18:01:40,870 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
+2021-02-04 18:01:40,872 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
+2021-02-04 18:01:40,891 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
+2021-02-04 18:01:40,894 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
+2021-02-04 18:01:40,898 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
+2021-02-04 18:01:40,901 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
+2021-02-04 18:01:40,918 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
+2021-02-04 18:01:40,922 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
+2021-02-04 18:01:40,925 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
+2021-02-04 18:01:40,929 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
+2021-02-04 18:01:40,940 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
+2021-02-04 18:01:40,942 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
+2021-02-04 18:01:40,944 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
+2021-02-04 18:01:40,946 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
+2021-02-04 18:01:40,958 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
+2021-02-04 18:01:40,962 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
+2021-02-04 18:01:40,963 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
+2021-02-04 18:01:40,966 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
+2021-02-04 18:01:40,982 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 12.113 seconds (JVM running for 15.418)
+2021-02-04 18:01:53,484 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 18:01:53,485 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 0ms. Found 0 JPA repository interfaces.
+2021-02-04 18:01:53,486 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 18:01:53,491 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 3ms. Found 0 JPA repository interfaces.
+2021-02-04 18:01:53,506 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-02-04 18:01:53,506 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
+2021-02-04 18:01:53,515 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:547)- Completed initialization in 9 ms
+2021-02-04 18:03:45,324 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 73796 (D:\iotlite\target\classes started by Admin in D:\iotlite)
+2021-02-04 18:03:45,327 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
+2021-02-04 18:03:47,443 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 18:03:47,461 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 7ms. Found 0 JPA repository interfaces.
+2021-02-04 18:03:47,462 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 18:03:47,677 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 214ms. Found 15 JPA repository interfaces.
+2021-02-04 18:03:49,238 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
+2021-02-04 18:03:49,249 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
+2021-02-04 18:03:49,251 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
+2021-02-04 18:03:49,251 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-02-04 18:03:49,384 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
+2021-02-04 18:03:49,385 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 3416 ms
+2021-02-04 18:03:49,860 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 18:03:49,917 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
+2021-02-04 18:03:50,052 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-02-04 18:03:50,160 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
+2021-02-04 18:03:50,179 INFO [main] (ClickHouseDriver.java:42)- Driver registered
+2021-02-04 18:03:50,314 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
+2021-02-04 18:03:50,337 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 18:03:50,568 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@930911e] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-02-04 18:03:50,617 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 18:03:50,629 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 18:03:50,689 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 18:03:50,696 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
+2021-02-04 18:03:50,901 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
+2021-02-04 18:03:50,903 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 18:03:51,147 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
+2021-02-04 18:03:51,147 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
+2021-02-04 18:03:51,148 INFO [main] (Configuration.java:285)- 
+ _    _                           _     _
+| |  | |                         (_)   | |
+| |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
+|  __  | | | | '_ \ / _ \ '__/ __| / __| __/ _ \ '_ \ / __/ _ \
+| |  | | |_| | |_) |  __/ |  \__ \ \__ \ ||  __/ | | | (_|  __/
+|_|  |_|\__, | .__/ \___|_|  |___/_|___/\__\___|_| |_|\___\___|
+         __/ | |
+        |___/|_|
+
+           ____        _   _           _
+          / __ \      | | (_)         (_)
+         | |  | |_ __ | |_ _ _ __ ___  _ _______ _ __
+         | |  | | '_ \| __| | '_ ` _ \| |_  / _ \ '__|
+         | |__| | |_) | |_| | | | | | | |/ /  __/ |
+          \____/| .__/ \__|_|_| |_| |_|_/___\___|_|
+                | |
+                |_|
+
+2021-02-04 18:03:51,148 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
+2021-02-04 18:03:51,940 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 18:03:51,944 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 18:03:52,603 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
+2021-02-04 18:03:53,894 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-02-04 18:03:54,977 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-02-04 18:03:55,135 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
+2021-02-04 18:03:55,315 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2021-02-04 18:03:55,553 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
+2021-02-04 18:03:55,571 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
+2021-02-04 18:03:55,572 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
+2021-02-04 18:03:55,587 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
+2021-02-04 18:03:55,628 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
+2021-02-04 18:03:55,793 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
+2021-02-04 18:03:55,819 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
+2021-02-04 18:03:55,823 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
+2021-02-04 18:03:55,830 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
+2021-02-04 18:03:55,833 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
+2021-02-04 18:03:55,836 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
+2021-02-04 18:03:55,859 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
+2021-02-04 18:03:55,864 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
+2021-02-04 18:03:55,867 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
+2021-02-04 18:03:55,870 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
+2021-02-04 18:03:55,886 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
+2021-02-04 18:03:55,890 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
+2021-02-04 18:03:55,892 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
+2021-02-04 18:03:55,896 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
+2021-02-04 18:03:55,900 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
+2021-02-04 18:03:55,901 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
+2021-02-04 18:03:55,904 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
+2021-02-04 18:03:55,906 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
+2021-02-04 18:03:55,917 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
+2021-02-04 18:03:55,920 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
+2021-02-04 18:03:55,923 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
+2021-02-04 18:03:55,926 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
+2021-02-04 18:03:55,941 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 11.225 seconds (JVM running for 15.073)
+2021-02-04 18:04:13,477 INFO [http-nio-4201-exec-2] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-02-04 18:04:13,478 INFO [http-nio-4201-exec-2] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
+2021-02-04 18:04:13,502 INFO [http-nio-4201-exec-2] (FrameworkServlet.java:547)- Completed initialization in 23 ms
+2021-02-04 18:04:40,904 INFO [http-nio-4201-exec-7] (DirectJDKLog.java:173)- A cookie header was received [1591414925,1592186801] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2021-02-04 18:05:19,593 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 104848 (D:\iotlite\target\classes started by Admin in D:\iotlite)
+2021-02-04 18:05:19,595 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
+2021-02-04 18:05:20,609 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 18:05:20,620 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 4ms. Found 0 JPA repository interfaces.
+2021-02-04 18:05:20,622 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 18:05:20,733 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 111ms. Found 15 JPA repository interfaces.
+2021-02-04 18:05:21,867 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
+2021-02-04 18:05:21,877 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
+2021-02-04 18:05:21,885 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
+2021-02-04 18:05:21,886 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-02-04 18:05:22,040 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
+2021-02-04 18:05:22,041 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 2116 ms
+2021-02-04 18:05:22,394 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 18:05:22,437 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
+2021-02-04 18:05:22,543 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-02-04 18:05:22,634 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
+2021-02-04 18:05:22,653 INFO [main] (ClickHouseDriver.java:42)- Driver registered
+2021-02-04 18:05:22,790 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
+2021-02-04 18:05:22,801 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 18:05:22,974 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@753c7411] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-02-04 18:05:22,988 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 18:05:22,997 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 18:05:23,053 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 18:05:23,059 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
+2021-02-04 18:05:23,496 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
+2021-02-04 18:05:23,498 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 18:05:23,642 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
+2021-02-04 18:05:23,642 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
+2021-02-04 18:05:23,643 INFO [main] (Configuration.java:285)- 
+ _    _                           _     _
+| |  | |                         (_)   | |
+| |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
+|  __  | | | | '_ \ / _ \ '__/ __| / __| __/ _ \ '_ \ / __/ _ \
+| |  | | |_| | |_) |  __/ |  \__ \ \__ \ ||  __/ | | | (_|  __/
+|_|  |_|\__, | .__/ \___|_|  |___/_|___/\__\___|_| |_|\___\___|
+         __/ | |
+        |___/|_|
+
+           ____        _   _           _
+          / __ \      | | (_)         (_)
+         | |  | |_ __ | |_ _ _ __ ___  _ _______ _ __
+         | |  | | '_ \| __| | '_ ` _ \| |_  / _ \ '__|
+         | |__| | |_) | |_| | | | | | | |/ /  __/ |
+          \____/| .__/ \__|_|_| |_| |_|_/___\___|_|
+                | |
+                |_|
+
+2021-02-04 18:05:23,643 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
+2021-02-04 18:05:24,305 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 18:05:24,309 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 18:05:24,914 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
+2021-02-04 18:05:26,127 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-02-04 18:05:27,218 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-02-04 18:05:27,367 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
+2021-02-04 18:05:27,543 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2021-02-04 18:05:27,738 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
+2021-02-04 18:05:27,755 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
+2021-02-04 18:05:27,756 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
+2021-02-04 18:05:27,770 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
+2021-02-04 18:05:27,799 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
+2021-02-04 18:05:27,982 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
+2021-02-04 18:05:28,005 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
+2021-02-04 18:05:28,010 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
+2021-02-04 18:05:28,015 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
+2021-02-04 18:05:28,018 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
+2021-02-04 18:05:28,021 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
+2021-02-04 18:05:28,036 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
+2021-02-04 18:05:28,040 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
+2021-02-04 18:05:28,043 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
+2021-02-04 18:05:28,047 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
+2021-02-04 18:05:28,062 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
+2021-02-04 18:05:28,066 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
+2021-02-04 18:05:28,068 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
+2021-02-04 18:05:28,073 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
+2021-02-04 18:05:28,077 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
+2021-02-04 18:05:28,079 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
+2021-02-04 18:05:28,082 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
+2021-02-04 18:05:28,083 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
+2021-02-04 18:05:28,094 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
+2021-02-04 18:05:28,096 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
+2021-02-04 18:05:28,099 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
+2021-02-04 18:05:28,103 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
+2021-02-04 18:05:28,118 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 8.942 seconds (JVM running for 10.782)
+2021-02-04 18:05:34,787 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- A cookie header was received [1591414925,1592186801] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2021-02-04 18:05:34,798 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-02-04 18:05:34,799 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
+2021-02-04 18:05:34,808 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:547)- Completed initialization in 9 ms
+2021-02-04 18:06:05,356 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 13680 (D:\iotlite\target\classes started by Admin in D:\iotlite)
+2021-02-04 18:06:05,361 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
+2021-02-04 18:06:06,478 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 18:06:06,492 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 5ms. Found 0 JPA repository interfaces.
+2021-02-04 18:06:06,492 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-04 18:06:06,601 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 107ms. Found 15 JPA repository interfaces.
+2021-02-04 18:06:07,690 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
+2021-02-04 18:06:07,701 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
+2021-02-04 18:06:07,701 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
+2021-02-04 18:06:07,702 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-02-04 18:06:07,835 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
+2021-02-04 18:06:07,835 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 2117 ms
+2021-02-04 18:06:08,157 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 18:06:08,200 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
+2021-02-04 18:06:08,301 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-02-04 18:06:08,382 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
+2021-02-04 18:06:08,399 INFO [main] (ClickHouseDriver.java:42)- Driver registered
+2021-02-04 18:06:08,502 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
+2021-02-04 18:06:08,513 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 18:06:08,665 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@535aa7c7] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-02-04 18:06:08,679 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 18:06:08,688 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 18:06:08,743 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-04 18:06:08,750 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
+2021-02-04 18:06:08,900 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
+2021-02-04 18:06:08,902 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-04 18:06:09,041 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
+2021-02-04 18:06:09,041 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
+2021-02-04 18:06:09,041 INFO [main] (Configuration.java:285)- 
+ _    _                           _     _
+| |  | |                         (_)   | |
+| |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
+|  __  | | | | '_ \ / _ \ '__/ __| / __| __/ _ \ '_ \ / __/ _ \
+| |  | | |_| | |_) |  __/ |  \__ \ \__ \ ||  __/ | | | (_|  __/
+|_|  |_|\__, | .__/ \___|_|  |___/_|___/\__\___|_| |_|\___\___|
+         __/ | |
+        |___/|_|
+
+           ____        _   _           _
+          / __ \      | | (_)         (_)
+         | |  | |_ __ | |_ _ _ __ ___  _ _______ _ __
+         | |  | | '_ \| __| | '_ ` _ \| |_  / _ \ '__|
+         | |__| | |_) | |_| | | | | | | |/ /  __/ |
+          \____/| .__/ \__|_|_| |_| |_|_/___\___|_|
+                | |
+                |_|
+
+2021-02-04 18:06:09,041 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
+2021-02-04 18:06:09,655 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-04 18:06:09,659 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-04 18:06:10,239 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
+2021-02-04 18:06:11,493 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-02-04 18:06:12,530 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-02-04 18:06:12,681 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
+2021-02-04 18:06:12,852 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2021-02-04 18:06:13,043 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
+2021-02-04 18:06:13,059 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
+2021-02-04 18:06:13,060 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
+2021-02-04 18:06:13,073 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
+2021-02-04 18:06:13,101 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
+2021-02-04 18:06:13,254 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
+2021-02-04 18:06:13,277 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
+2021-02-04 18:06:13,284 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
+2021-02-04 18:06:13,288 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
+2021-02-04 18:06:13,291 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
+2021-02-04 18:06:13,294 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
+2021-02-04 18:06:13,311 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
+2021-02-04 18:06:13,315 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
+2021-02-04 18:06:13,318 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
+2021-02-04 18:06:13,321 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
+2021-02-04 18:06:13,338 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
+2021-02-04 18:06:13,341 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
+2021-02-04 18:06:13,344 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
+2021-02-04 18:06:13,348 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
+2021-02-04 18:06:13,352 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
+2021-02-04 18:06:13,354 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
+2021-02-04 18:06:13,357 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
+2021-02-04 18:06:13,359 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
+2021-02-04 18:06:13,381 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
+2021-02-04 18:06:13,385 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
+2021-02-04 18:06:13,388 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
+2021-02-04 18:06:13,392 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
+2021-02-04 18:06:13,406 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 8.396 seconds (JVM running for 10.185)
+2021-02-04 18:06:20,327 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- A cookie header was received [1591414925,1592186801] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2021-02-04 18:06:20,340 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-02-04 18:06:20,340 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
+2021-02-04 18:06:20,351 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:547)- Completed initialization in 11 ms
+2021-02-04 18:23:04,108 INFO [http-nio-4201-exec-1] (DeviceListener.java:24)- device modify
+2021-02-04 19:02:21,783 INFO [http-nio-4201-exec-4] (DeviceListener.java:24)- device modify
+2021-02-04 19:04:31,142 INFO [http-nio-4201-exec-9] (DeviceLogServiceImpl.java:22)- 1612436671130 Down admin default/3/1 turn off {"v":5}
+2021-02-04 19:04:31,142 INFO [http-nio-4201-exec-1] (DeviceLogServiceImpl.java:22)- 1612436671130 Down admin default/3/1 turn off {"v":5}
+2021-02-04 19:04:31,142 INFO [http-nio-4201-exec-6] (DeviceLogServiceImpl.java:22)- 1612436671130 Down admin default/3/1 turn off {"v":5}
+2021-02-04 19:04:31,202 INFO [http-nio-4201-exec-1] (DeviceInstance.java:78)- topic default/3/1  data: {}
+2021-02-04 19:04:31,203 INFO [http-nio-4201-exec-9] (DeviceInstance.java:78)- topic default/3/1  data: {}
+2021-02-04 19:04:31,286 INFO [http-nio-4201-exec-6] (DeviceInstance.java:78)- topic default/3/1  data: {}
+2021-02-04 19:04:56,685 INFO [http-nio-4201-exec-10] (DeviceLogServiceImpl.java:22)- 1612436696685 Down admin default/3/1 turn up {"v":6,"temperature":20}
+2021-02-04 19:04:56,688 INFO [http-nio-4201-exec-10] (DeviceInstance.java:78)- topic default/3/1  data: {"temperature":20}
+2021-02-04 19:04:57,308 INFO [http-nio-4201-exec-7] (DeviceLogServiceImpl.java:22)- 1612436697308 Down admin default/3/1 turn up {"v":7,"temperature":20}
+2021-02-04 19:04:57,311 INFO [http-nio-4201-exec-7] (DeviceInstance.java:78)- topic default/3/1  data: {"temperature":20}
+2021-02-04 19:06:43,508 INFO [http-nio-4201-exec-3] (DeviceLogServiceImpl.java:22)- 1612436803508 Down admin default/3/1 turn off {"v":8}
+2021-02-04 19:06:43,588 INFO [http-nio-4201-exec-3] (DeviceInstance.java:78)- topic default/3/1  data: {}

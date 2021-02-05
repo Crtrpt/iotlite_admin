@@ -1,6 +1,8 @@
 package com.dj.iotlite.service;
 
+import com.dj.iotlite.RedisKey;
 import com.dj.iotlite.api.dto.DeviceDto;
+import com.dj.iotlite.api.dto.DeviceLocationDto;
 import com.dj.iotlite.api.dto.OptionDto;
 import com.dj.iotlite.api.dto.ProductDto;
 import com.dj.iotlite.api.form.*;
@@ -17,6 +19,7 @@ import com.dj.iotlite.event.ChangeUser;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.spec.SpecV1;
 import com.google.gson.Gson;
+import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -223,5 +226,21 @@ public class DeviceService {
             return null;
         };
         return deviceLogRepository.findAll(specification, deviceQueryForm.getPage());
+    }
+
+    @Autowired
+    RedisCommands<String,String> redisCommands;
+
+    public Object location(DeviceLocationForm action) {
+        String key = String.format(RedisKey.DeviceLOCATION, "default");
+        String member = String.format(RedisKey.DeviceLOCATION_MEMBER, action.getProductSn(), action.getDeviceSn());
+        log.info("{} {} ",key,member);
+
+        DeviceLocationDto deviceLocationDto=new DeviceLocationDto();
+
+        deviceLocationDto.setLocation(redisCommands.geopos(key, member));
+
+        
+        return deviceLocationDto;
     }
 }

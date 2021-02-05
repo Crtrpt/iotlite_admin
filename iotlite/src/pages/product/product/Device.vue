@@ -5,12 +5,11 @@
 
       </b-table>
 
-      <b-row class="mt-2">
+      <b-row class="mt-2" v-if="helper.total>10">
           <b-col> <b-pagination 
             v-model="query.pageNum"
             :per-page="query.pageSize"
             :total-rows="helper.total"
-           
             ></b-pagination></b-col>
       </b-row>
   </div>
@@ -45,9 +44,24 @@ export default {
             label: '设备名称',
             sortable: true
           },
-           {
+          {
+            key: 'description',
+            label: '设备描述',
+            sortable: true
+          },
+          {
+            key: 'location',
+            label: '设备位置',
+            sortable: true
+          },
+          {
             key: 'createdAt',
             label: '创建时间',
+            sortable: true
+          },
+           {
+            key: 'action',
+            label: '操作',
             sortable: true
           },
         ],
@@ -75,7 +89,7 @@ export default {
     getList(){
       var _this=this;
        product.deviceList(Object.assign(
-        {
+       {
           productSn:this.form.sn,
        },this.query
        )).then((res)=>{

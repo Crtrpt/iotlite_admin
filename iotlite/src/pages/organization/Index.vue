@@ -47,7 +47,7 @@
         </b-dropdown>
         </template>
       </b-table>
-       <b-pagination  v-if="total>10" v-model ="query.page_num"  :total-rows="helper.total"></b-pagination>
+       <b-pagination  v-if="helper.total>10" v-model ="query.page_num"  :total-rows="helper.total"></b-pagination>
     </b-col>
     </b-row>
   </b-container>

@@ -18,6 +18,15 @@ const product={
     },
     deviceList:(ctx)=>{
       return request.get("product/deviceList",ctx)
+    },
+    mapDeviceList:(ctx)=>{
+      return request.get("product/mapDeviceList",ctx)
+    },
+    getSetting:(ctx)=>{
+      return request.get("product/getSetting",ctx)
+    },
+    saveSetting:(ctx)=>{
+      return request.post("product/saveSetting",ctx)
     }
 }
 

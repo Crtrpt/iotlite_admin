@@ -42,6 +42,14 @@ const product  =[
       }
     },
     {
+      path: 'setting',
+      component: require('../pages/product/product/Setting').default,
+      name: 'productDetailSetting',
+      meta:{
+        name:"productDetailSetting"
+      }
+    },
+    {
       path: 'device',
       component: require('../pages/product/product/Device').default,
       name: 'productDeviceList',

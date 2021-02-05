@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="orgTree">
     <nav aria-label="breadcrumb" class="breadcrumb-two">
       <ol class="breadcrumb">
         <li class="breadcrumb-item "  ><a @click="goRoot" href="javascript:void(0);">根</a></li>
@@ -14,19 +14,26 @@
       </ol>
     </nav>
     <b-list-group class="mt-2 mb-2">
-      <b-list-group-item v-for="i in list" :key="i.id">
-        <a   href="javascript:void(0);" v-on:click="click(i)" >
-          {{i.name}}({{i.childrenNum||0}})
-        </a>
-      </b-list-group-item>
+      <VuePerfectScrollbar class="scroll-area">
+        <b-list-group-item v-for="i in list" :key="i.id">
+          <a   href="javascript:void(0);" v-on:click="click(i)" >
+            {{i.name}}({{i.childrenNum||0}})
+          </a>
+        </b-list-group-item>
+      </VuePerfectScrollbar>
     </b-list-group>
   </div>
 </template>
 <script>
 
 import {organization} from "../../api/organization.js"
+import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+
 export default {
   name:"OrganizationTree",
+  components:{
+    VuePerfectScrollbar
+  },
   props:{
     value:{
         type:Number,
@@ -103,4 +110,11 @@ export default {
 
 <style scoped>
 
+
+.scroll-area {
+  position: relative;
+  margin: auto;
+  width:100%;
+  height: 60vh;
+}
 </style>

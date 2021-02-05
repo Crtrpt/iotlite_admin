@@ -18,6 +18,9 @@ const device={
     },
     action:(ctx)=>{
       return request.post("device/action",ctx)
+    },
+    location:(ctx)=>{
+      return request.get("device/location",ctx)
     }
 }
 

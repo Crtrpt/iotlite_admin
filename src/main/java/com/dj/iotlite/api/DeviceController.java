@@ -2,6 +2,7 @@ package com.dj.iotlite.api;
 
 import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.DeviceActionForm;
+import com.dj.iotlite.api.form.DeviceLocationForm;
 import com.dj.iotlite.api.form.DeviceLogQueryForm;
 import com.dj.iotlite.api.form.DeviceQueryForm;
 import com.dj.iotlite.entity.device.Device;
@@ -64,6 +65,11 @@ public class DeviceController extends BaseController {
     @PostMapping("/action")
     public ResDto<AsynPage> action(@RequestBody DeviceActionForm action) {
         return success(deviceService.action(action));
+    }
+
+    @GetMapping("/location")
+    public ResDto<DeviceLocationDto> location(DeviceLocationForm action) {
+        return success(deviceService.location(action));
     }
 
     @GetMapping("/enable")
