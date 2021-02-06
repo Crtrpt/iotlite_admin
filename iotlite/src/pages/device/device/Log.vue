@@ -1,5 +1,18 @@
 <template>
   <div>
+      <b-row class="mt-2 mb-2">
+        <b-col> 
+           <b-button-toolbar>
+                   
+                    <b-button-group  class="mr-2">
+                      <b-form-input class="tool_input" v-model="query.words" placeholder="搜索"></b-form-input>
+                    </b-button-group>
+                     <b-button-group  class="mr-2 col-3">
+                        <DateTimePicker  v-model="query.date" DateTimePicker />
+                    </b-button-group>
+            </b-button-toolbar>
+        </b-col>
+      </b-row>
       <b-table hover :items="items"></b-table>
 
       <b-row class="mt-2">
@@ -13,9 +26,13 @@
 </template>
 
 <script>
+import DateTimePicker from "../../../components/date/DateTimePicker"
+
+
 import {device} from "../../../api/device"
 export default {
   name:"Log",
+  components:{DateTimePicker},
   props:{
     form:Object
   },
@@ -23,6 +40,7 @@ export default {
     return {
       helper:{total:0},
       query:{
+        date:{},
         words:"",
         pageNum:1,
         pageSize:10,

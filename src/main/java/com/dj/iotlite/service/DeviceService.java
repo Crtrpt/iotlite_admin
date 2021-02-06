@@ -75,7 +75,6 @@ public class DeviceService {
                 ));
             }
             if (!StringUtils.isEmpty(deviceQueryForm.getProductSn())) {
-
                 list.add(criteriaBuilder.equal(root.get("productSn").as(String.class), deviceQueryForm.getProductSn()));
             }
             Predicate[] p = new Predicate[list.size()];
@@ -240,7 +239,7 @@ public class DeviceService {
 
         deviceLocationDto.setLocation(redisCommands.geopos(key, member));
 
-        
+
         return deviceLocationDto;
     }
 }

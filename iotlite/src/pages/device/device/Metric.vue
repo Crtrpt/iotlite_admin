@@ -1,6 +1,6 @@
 <template>
   <b-row class="mt-2">
-      <b-col cols="3" v-for="(ctr,i) in  form.product.spec.property" :key="i">
+      <b-col cols="3" v-for="(ctr,i) in  form.product.spec.metric" :key="i">
         <b-card :title="ctr.name" >
           <b-card-text>{{ctr.desc}}</b-card-text>
             <LineChart ref="cav"  :chart-data="datacollection" :styles="{

@@ -16,6 +16,16 @@ import 'codemirror/theme/monokai.css'
 import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/addon/hint/javascript-hint.js';
 
+import 'codemirror/addon/search/search.js';
+import 'codemirror/addon/search/searchcursor.js';
+import 'codemirror/addon/search/jump-to-line.js'; 
+import 'codemirror/addon/dialog/dialog.js'; 
+import 'codemirror/addon/dialog/dialog.css'; 
+import 'codemirror/addon/fold/foldgutter.css'; 
+import 'codemirror/addon/fold/foldcode.js';
+import 'codemirror/addon/fold/foldgutter.js';  
+import 'codemirror/addon/fold/brace-fold.js';  
+
 
 export default {
     name:"ModelEditor",
@@ -40,6 +50,9 @@ export default {
             mode:  this.data.mode,
             theme: "monokai",
             lineNumbers: true,
+            lineWrapping: true,
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
         console.log(this.instance);
     }

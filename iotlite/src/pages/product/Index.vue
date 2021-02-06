@@ -7,17 +7,7 @@
           <b-col>
             <h4>产品 ({{helper.total||0}})</h4>
           </b-col>
-          <b-col cols="12" class="mt-2 mb-2">
-            <b-button-toolbar>
-                    <b-button-group  class="mr-2">
-                      <b-modal id="new" title="新建产品" hide-footer>
-                        <New />
-                      </b-modal>
-                      <b-button size="sm" variant="primary" v-b-modal.new  >新建产品</b-button>
-                    </b-button-group>
-                    <importFile></importFile>
-                  </b-button-toolbar>
-          </b-col>
+          <Toolbar :query=query />
         </b-row>
           </div>
           
@@ -42,13 +32,14 @@
 </template>
 
 <script>
+import Toolbar from "./ToolBar"
 import {product} from "../../api/product"
-import importFile from "../../components/export/ImportFile"
-import exportFile from "../../components/export/ExportFile"
+
+
 import New from "./New"
 export default {
   name:"Product",
-  components:{New,importFile,exportFile},
+  components:{New,Toolbar},
   data(){
     return {
       total:0,
@@ -56,6 +47,7 @@ export default {
         total:0,
       },
       query:{
+        date:{},
         organizationId:0,
         words:"",
         pageNum:1,

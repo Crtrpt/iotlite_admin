@@ -2037,3 +2037,7 @@ table .badge-info, table .badge-secondary, table .badge-dark  {
     border-bottom: 1px solid #ccc;
     margin: 5px 0;
 }
+
+.tool_input {
+    font-size: 8px;
+}

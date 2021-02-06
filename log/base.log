@@ -1,352 +1,44 @@
-2021-02-05 12:09:14,813 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 3752 (D:\iotlite\target\classes started by Admin in D:\iotlite)
-2021-02-05 12:09:14,841 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
-2021-02-05 12:09:16,728 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 12:09:16,760 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 8ms. Found 0 JPA repository interfaces.
-2021-02-05 12:09:16,760 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 12:09:16,929 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 147ms. Found 15 JPA repository interfaces.
-2021-02-05 12:09:18,260 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
-2021-02-05 12:09:18,277 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
-2021-02-05 12:09:18,278 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
-2021-02-05 12:09:18,278 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
-2021-02-05 12:09:18,433 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
-2021-02-05 12:09:18,433 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 3092 ms
-2021-02-05 12:09:18,790 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-02-05 12:09:18,847 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
-2021-02-05 12:09:19,041 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
-2021-02-05 12:09:19,152 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
-2021-02-05 12:09:19,182 INFO [main] (ClickHouseDriver.java:42)- Driver registered
-2021-02-05 12:09:23,382 INFO [main] (ClickHouseStatementImpl.java:630)- Error during connection to ru.yandex.clickhouse.settings.ClickHouseProperties@6e53bb4f, reporting failure to data source, message: Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-2021-02-05 12:09:23,383 INFO [main] (ClickHouseStatementImpl.java:632)- Error sql: select timezone()
-FORMAT TabSeparatedWithNamesAndTypes;
-2021-02-05 12:09:24,407 ERROR [main] (HikariPool.java:593)- HikariPool-1 - Exception during pool initialization.
-java.lang.RuntimeException: ru.yandex.clickhouse.except.ClickHouseException: ClickHouse exception, code: 210, host: localhost, port: 8123; Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at ru.yandex.clickhouse.ClickHouseConnectionImpl.initTimeZone(ClickHouseConnectionImpl.java:99)
-	at ru.yandex.clickhouse.ClickHouseConnectionImpl.<init>(ClickHouseConnectionImpl.java:80)
-	at ru.yandex.clickhouse.ClickHouseDriver.connect(ClickHouseDriver.java:55)
-	at ru.yandex.clickhouse.ClickHouseDriver.connect(ClickHouseDriver.java:47)
-	at ru.yandex.clickhouse.ClickHouseDriver.connect(ClickHouseDriver.java:29)
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
-	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:358)
-	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
-	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:477)
-	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:560)
-	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
-	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
-	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122)
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180)
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:68)
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:35)
-	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:101)
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:237)
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214)
-	at org.hibernate.id.factory.internal.DefaultIdentifierGeneratorFactory.injectServices(DefaultIdentifierGeneratorFactory.java:152)
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.injectDependencies(AbstractServiceRegistryImpl.java:286)
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:243)
-	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:214)
-	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:176)
-	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:118)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1224)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.__build(EntityManagerFactoryBuilderImpl.java:1255)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:40002)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.__createEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:40002)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.__createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:43002)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:378)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1790)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1109)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869)
-	at org.springframework.context.support.AbstractApplicationContext.__refresh(AbstractApplicationContext.java:551)
-	at org.springframework.context.support.AbstractApplicationContext.jrLockAndRefresh(AbstractApplicationContext.java:40002)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:41008)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
-	at com.dj.iotlite.IotliteApplication.main(IotliteApplication.java:21)
-Caused by: ru.yandex.clickhouse.except.ClickHouseException: ClickHouse exception, code: 210, host: localhost, port: 8123; Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at ru.yandex.clickhouse.except.ClickHouseExceptionSpecifier.getException(ClickHouseExceptionSpecifier.java:89)
-	at ru.yandex.clickhouse.except.ClickHouseExceptionSpecifier.specify(ClickHouseExceptionSpecifier.java:55)
-	at ru.yandex.clickhouse.except.ClickHouseExceptionSpecifier.specify(ClickHouseExceptionSpecifier.java:24)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.getInputStream(ClickHouseStatementImpl.java:633)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:117)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:100)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:95)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:90)
-	at ru.yandex.clickhouse.ClickHouseConnectionImpl.initTimeZone(ClickHouseConnectionImpl.java:94)
-	... 56 common frames omitted
-Caused by: org.apache.http.conn.HttpHostConnectException: Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:156)
-	at org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:376)
-	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:393)
-	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:236)
-	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:186)
-	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)
-	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)
-	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:83)
-	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:108)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.getInputStream(ClickHouseStatementImpl.java:614)
-	... 61 common frames omitted
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
-	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
-	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
-	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
-	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:224)
-	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:403)
-	at java.base/java.net.Socket.connect(Socket.java:608)
-	at org.apache.http.conn.socket.PlainConnectionSocketFactory.connectSocket(PlainConnectionSocketFactory.java:75)
-	at org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:142)
-	... 70 common frames omitted
-2021-02-05 12:09:24,411 WARN [main] (JdbcEnvironmentInitiator.java:132)- HHH000342: Could not obtain connection to query metadata : Failed to initialize pool: ru.yandex.clickhouse.except.ClickHouseException: ClickHouse exception, code: 210, host: localhost, port: 8123; Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-2021-02-05 12:09:24,423 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
-2021-02-05 12:09:24,632 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
-2021-02-05 12:09:28,652 INFO [main] (ClickHouseStatementImpl.java:630)- Error during connection to ru.yandex.clickhouse.settings.ClickHouseProperties@12d28106, reporting failure to data source, message: Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-2021-02-05 12:09:28,652 INFO [main] (ClickHouseStatementImpl.java:632)- Error sql: select timezone()
-FORMAT TabSeparatedWithNamesAndTypes;
-2021-02-05 12:09:29,656 ERROR [main] (HikariPool.java:593)- HikariPool-1 - Exception during pool initialization.
-java.lang.RuntimeException: ru.yandex.clickhouse.except.ClickHouseException: ClickHouse exception, code: 210, host: localhost, port: 8123; Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at ru.yandex.clickhouse.ClickHouseConnectionImpl.initTimeZone(ClickHouseConnectionImpl.java:99)
-	at ru.yandex.clickhouse.ClickHouseConnectionImpl.<init>(ClickHouseConnectionImpl.java:80)
-	at ru.yandex.clickhouse.ClickHouseDriver.connect(ClickHouseDriver.java:55)
-	at ru.yandex.clickhouse.ClickHouseDriver.connect(ClickHouseDriver.java:47)
-	at ru.yandex.clickhouse.ClickHouseDriver.connect(ClickHouseDriver.java:29)
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
-	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:358)
-	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
-	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:477)
-	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:560)
-	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
-	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
-	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122)
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180)
-	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:43)
-	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:60)
-	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcDatabaseMetaData(ImprovedExtractionContextImpl.java:67)
-	at org.hibernate.tool.schema.extract.internal.InformationExtractorJdbcDatabaseMetaDataImpl.getTables(InformationExtractorJdbcDatabaseMetaDataImpl.java:333)
-	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.getTablesInformation(DatabaseInformationImpl.java:120)
-	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:65)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:207)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.__build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:41009)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.__build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:40002)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.__createEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:40002)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.__createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:43002)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:378)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1790)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1109)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869)
-	at org.springframework.context.support.AbstractApplicationContext.__refresh(AbstractApplicationContext.java:551)
-	at org.springframework.context.support.AbstractApplicationContext.jrLockAndRefresh(AbstractApplicationContext.java:40002)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:41008)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
-	at com.dj.iotlite.IotliteApplication.main(IotliteApplication.java:21)
-Caused by: ru.yandex.clickhouse.except.ClickHouseException: ClickHouse exception, code: 210, host: localhost, port: 8123; Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at ru.yandex.clickhouse.except.ClickHouseExceptionSpecifier.getException(ClickHouseExceptionSpecifier.java:89)
-	at ru.yandex.clickhouse.except.ClickHouseExceptionSpecifier.specify(ClickHouseExceptionSpecifier.java:55)
-	at ru.yandex.clickhouse.except.ClickHouseExceptionSpecifier.specify(ClickHouseExceptionSpecifier.java:24)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.getInputStream(ClickHouseStatementImpl.java:633)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:117)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:100)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:95)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:90)
-	at ru.yandex.clickhouse.ClickHouseConnectionImpl.initTimeZone(ClickHouseConnectionImpl.java:94)
-	... 56 common frames omitted
-Caused by: org.apache.http.conn.HttpHostConnectException: Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:156)
-	at org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:376)
-	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:393)
-	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:236)
-	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:186)
-	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)
-	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)
-	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:83)
-	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:108)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.getInputStream(ClickHouseStatementImpl.java:614)
-	... 61 common frames omitted
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
-	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
-	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
-	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
-	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:224)
-	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:403)
-	at java.base/java.net.Socket.connect(Socket.java:608)
-	at org.apache.http.conn.socket.PlainConnectionSocketFactory.connectSocket(PlainConnectionSocketFactory.java:75)
-	at org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:142)
-	... 70 common frames omitted
-2021-02-05 12:09:29,671 WARN [main] (AbstractApplicationContext.java:559)- Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactorySecondary' defined in class path resource [com/dj/iotlite/config/ClickHouseDataSource.class]: Invocation of init method failed; nested exception is javax.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: ru.yandex.clickhouse.except.ClickHouseException: ClickHouse exception, code: 210, host: localhost, port: 8123; Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-2021-02-05 12:09:29,716 INFO [main] (DirectJDKLog.java:173)- Stopping service [Tomcat]
-2021-02-05 12:09:29,768 INFO [main] (ConditionEvaluationReportLoggingListener.java:136)- 
-
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-2021-02-05 12:09:29,786 ERROR [main] (SpringApplication.java:837)- Application run failed
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactorySecondary' defined in class path resource [com/dj/iotlite/config/ClickHouseDataSource.class]: Invocation of init method failed; nested exception is javax.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: ru.yandex.clickhouse.except.ClickHouseException: ClickHouse exception, code: 210, host: localhost, port: 8123; Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1794)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:324)
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
-	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1109)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:869)
-	at org.springframework.context.support.AbstractApplicationContext.__refresh(AbstractApplicationContext.java:551)
-	at org.springframework.context.support.AbstractApplicationContext.jrLockAndRefresh(AbstractApplicationContext.java:40002)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:41008)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
-	at com.dj.iotlite.IotliteApplication.main(IotliteApplication.java:21)
-Caused by: javax.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: ru.yandex.clickhouse.except.ClickHouseException: ClickHouse exception, code: 210, host: localhost, port: 8123; Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:403)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:378)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1790)
-	... 19 common frames omitted
-Caused by: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: ru.yandex.clickhouse.except.ClickHouseException: ClickHouse exception, code: 210, host: localhost, port: 8123; Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at com.zaxxer.hikari.pool.HikariPool.throwPoolInitializationException(HikariPool.java:595)
-	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:581)
-	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
-	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112)
-	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122)
-	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:180)
-	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:43)
-	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:60)
-	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcDatabaseMetaData(ImprovedExtractionContextImpl.java:67)
-	at org.hibernate.tool.schema.extract.internal.InformationExtractorJdbcDatabaseMetaDataImpl.getTables(InformationExtractorJdbcDatabaseMetaDataImpl.java:333)
-	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.getTablesInformation(DatabaseInformationImpl.java:120)
-	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:65)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:207)
-	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:114)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:184)
-	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:73)
-	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:316)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.__build(SessionFactoryBuilderImpl.java:469)
-	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:41009)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.__build(EntityManagerFactoryBuilderImpl.java:1259)
-	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:40002)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.__createEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
-	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:40002)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.__createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
-	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:43002)
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:391)
-	... 23 common frames omitted
-Caused by: java.lang.RuntimeException: ru.yandex.clickhouse.except.ClickHouseException: ClickHouse exception, code: 210, host: localhost, port: 8123; Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at ru.yandex.clickhouse.ClickHouseConnectionImpl.initTimeZone(ClickHouseConnectionImpl.java:99)
-	at ru.yandex.clickhouse.ClickHouseConnectionImpl.<init>(ClickHouseConnectionImpl.java:80)
-	at ru.yandex.clickhouse.ClickHouseDriver.connect(ClickHouseDriver.java:55)
-	at ru.yandex.clickhouse.ClickHouseDriver.connect(ClickHouseDriver.java:47)
-	at ru.yandex.clickhouse.ClickHouseDriver.connect(ClickHouseDriver.java:29)
-	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
-	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:358)
-	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
-	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:477)
-	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:560)
-	... 47 common frames omitted
-Caused by: ru.yandex.clickhouse.except.ClickHouseException: ClickHouse exception, code: 210, host: localhost, port: 8123; Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at ru.yandex.clickhouse.except.ClickHouseExceptionSpecifier.getException(ClickHouseExceptionSpecifier.java:89)
-	at ru.yandex.clickhouse.except.ClickHouseExceptionSpecifier.specify(ClickHouseExceptionSpecifier.java:55)
-	at ru.yandex.clickhouse.except.ClickHouseExceptionSpecifier.specify(ClickHouseExceptionSpecifier.java:24)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.getInputStream(ClickHouseStatementImpl.java:633)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:117)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:100)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:95)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.executeQuery(ClickHouseStatementImpl.java:90)
-	at ru.yandex.clickhouse.ClickHouseConnectionImpl.initTimeZone(ClickHouseConnectionImpl.java:94)
-	... 56 common frames omitted
-Caused by: org.apache.http.conn.HttpHostConnectException: Connect to localhost:8123 [localhost/0:0:0:0:0:0:0:1, localhost/127.0.0.1] failed: Connection refused: connect
-	at org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:156)
-	at org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:376)
-	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:393)
-	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:236)
-	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:186)
-	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)
-	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)
-	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:83)
-	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:108)
-	at ru.yandex.clickhouse.ClickHouseStatementImpl.getInputStream(ClickHouseStatementImpl.java:614)
-	... 61 common frames omitted
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method)
-	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107)
-	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:399)
-	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:242)
-	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:224)
-	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:403)
-	at java.base/java.net.Socket.connect(Socket.java:608)
-	at org.apache.http.conn.socket.PlainConnectionSocketFactory.connectSocket(PlainConnectionSocketFactory.java:75)
-	at org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:142)
-	... 70 common frames omitted
-2021-02-05 12:11:24,971 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 69536 (D:\iotlite\target\classes started by Admin in D:\iotlite)
-2021-02-05 12:11:24,974 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
-2021-02-05 12:11:27,461 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 12:11:27,489 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 6ms. Found 0 JPA repository interfaces.
-2021-02-05 12:11:27,489 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 12:11:27,630 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 140ms. Found 15 JPA repository interfaces.
-2021-02-05 12:11:29,093 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
-2021-02-05 12:11:29,118 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
-2021-02-05 12:11:29,120 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
-2021-02-05 12:11:29,121 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
-2021-02-05 12:11:29,291 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
-2021-02-05 12:11:29,291 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 3763 ms
-2021-02-05 12:11:29,619 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-02-05 12:11:29,676 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
-2021-02-05 12:11:29,875 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
-2021-02-05 12:11:30,005 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
-2021-02-05 12:11:30,107 INFO [main] (ClickHouseDriver.java:42)- Driver registered
-2021-02-05 12:11:30,439 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
-2021-02-05 12:11:30,461 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
-2021-02-05 12:11:30,681 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@5c648e38] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
-2021-02-05 12:11:30,707 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2021-02-05 12:11:30,722 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
-2021-02-05 12:11:30,776 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-02-05 12:11:30,782 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
-2021-02-05 12:11:32,113 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
-2021-02-05 12:11:32,115 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
-2021-02-05 12:11:32,763 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
-2021-02-05 12:11:32,763 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
-2021-02-05 12:11:32,764 INFO [main] (Configuration.java:285)- 
+2021-02-06 09:47:43,901 INFO [http-nio-4201-exec-5] (DeviceService.java:237)- LOCATION:default 4,共享单车001 
+2021-02-06 09:48:17,947 INFO [http-nio-4201-exec-4] (DeviceService.java:237)- LOCATION:default 4,共享单车001 
+2021-02-06 09:48:19,120 INFO [http-nio-4201-exec-8] (DeviceService.java:237)- LOCATION:default 4,共享单车001 
+2021-02-06 09:48:19,672 INFO [http-nio-4201-exec-5] (DeviceService.java:237)- LOCATION:default 4,共享单车001 
+2021-02-06 09:48:34,979 INFO [http-nio-4201-exec-5] (DeviceService.java:237)- LOCATION:default 4,00003 
+2021-02-06 09:51:16,859 INFO [http-nio-4201-exec-6] (DeviceListener.java:24)- device modify
+2021-02-06 10:07:39,499 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 3,0004 
+2021-02-06 10:18:21,885 INFO [http-nio-4201-exec-10] (DeviceService.java:237)- LOCATION:default 3,0004 
+2021-02-06 10:18:29,707 INFO [http-nio-4201-exec-10] (DeviceService.java:237)- LOCATION:default 3,0004 
+2021-02-06 10:52:04,403 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 3,0004 
+2021-02-06 10:54:26,395 INFO [http-nio-4201-exec-1] (DeviceLogServiceImpl.java:22)- 1612580066395 Down admin default/3/0004 turn on {"v":2,"power":100}
+2021-02-06 10:54:26,674 INFO [http-nio-4201-exec-1] (DeviceInstance.java:78)- topic default/3/0004  data: {"power":100}
+2021-02-06 10:59:44,050 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 96492 (D:\iotlite\target\classes started by Admin in D:\iotlite)
+2021-02-06 10:59:44,054 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
+2021-02-06 10:59:47,427 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-06 10:59:47,444 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 5ms. Found 0 JPA repository interfaces.
+2021-02-06 10:59:47,445 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-06 10:59:47,625 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 179ms. Found 15 JPA repository interfaces.
+2021-02-06 10:59:49,314 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
+2021-02-06 10:59:49,334 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
+2021-02-06 10:59:49,334 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
+2021-02-06 10:59:49,334 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
+2021-02-06 10:59:49,516 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
+2021-02-06 10:59:49,516 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 4554 ms
+2021-02-06 10:59:49,953 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-06 10:59:50,014 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
+2021-02-06 10:59:50,194 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-02-06 10:59:50,335 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
+2021-02-06 10:59:50,386 INFO [main] (ClickHouseDriver.java:42)- Driver registered
+2021-02-06 10:59:50,630 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
+2021-02-06 10:59:50,648 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-06 10:59:50,884 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@2b69ff13] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2021-02-06 10:59:51,026 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-06 10:59:51,042 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-06 10:59:51,123 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-02-06 10:59:51,130 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
+2021-02-06 10:59:51,773 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
+2021-02-06 10:59:51,774 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2021-02-06 10:59:52,567 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
+2021-02-06 10:59:52,568 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
+2021-02-06 10:59:52,568 INFO [main] (Configuration.java:285)- 
  _    _                           _     _
 | |  | |                         (_)   | |
 | |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
@@ -365,497 +57,61 @@ Caused by: java.net.ConnectException: Connection refused: connect
                 | |
                 |_|
 
-2021-02-05 12:11:32,764 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
-2021-02-05 12:11:34,775 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2021-02-05 12:11:34,780 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
-2021-02-05 12:11:35,498 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
-2021-02-05 12:11:36,844 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2021-02-05 12:11:38,318 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2021-02-05 12:11:38,491 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
-2021-02-05 12:11:38,704 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
-2021-02-05 12:11:38,959 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
-2021-02-05 12:11:38,979 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
-2021-02-05 12:11:38,980 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
-2021-02-05 12:11:39,000 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
-2021-02-05 12:11:39,033 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
-2021-02-05 12:11:39,305 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
-2021-02-05 12:11:39,337 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
-2021-02-05 12:11:39,342 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
-2021-02-05 12:11:39,351 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
-2021-02-05 12:11:39,354 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
-2021-02-05 12:11:39,357 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
-2021-02-05 12:11:39,381 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
-2021-02-05 12:11:39,386 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
-2021-02-05 12:11:39,389 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
-2021-02-05 12:11:39,393 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
-2021-02-05 12:11:39,408 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
-2021-02-05 12:11:39,413 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
-2021-02-05 12:11:39,416 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
-2021-02-05 12:11:39,422 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
-2021-02-05 12:11:39,426 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
-2021-02-05 12:11:39,432 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
-2021-02-05 12:11:39,434 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
-2021-02-05 12:11:39,436 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
-2021-02-05 12:11:39,453 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
-2021-02-05 12:11:39,456 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
-2021-02-05 12:11:39,459 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
-2021-02-05 12:11:39,464 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
-2021-02-05 12:11:39,487 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 15.06 seconds (JVM running for 17.286)
-2021-02-05 12:12:04,552 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
-2021-02-05 12:12:04,552 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
-2021-02-05 12:12:04,563 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:547)- Completed initialization in 11 ms
-2021-02-05 12:48:44,993 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 12:48:45,133 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 52ms. Found 0 JPA repository interfaces.
-2021-02-05 12:48:45,133 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 12:48:45,137 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 3ms. Found 0 JPA repository interfaces.
-2021-02-05 13:07:32,929 INFO [http-nio-4201-exec-1] (DeviceListener.java:24)- device modify
-2021-02-05 13:07:46,203 INFO [http-nio-4201-exec-9] (DeviceListener.java:24)- device modify
-2021-02-05 13:07:48,057 INFO [http-nio-4201-exec-3] (DeviceListener.java:24)- device modify
-2021-02-05 13:07:48,533 INFO [http-nio-4201-exec-2] (DeviceListener.java:24)- device modify
-2021-02-05 13:07:48,681 INFO [http-nio-4201-exec-6] (DeviceListener.java:24)- device modify
-2021-02-05 13:07:48,802 INFO [http-nio-4201-exec-4] (DeviceListener.java:24)- device modify
-2021-02-05 13:07:48,947 INFO [http-nio-4201-exec-5] (DeviceListener.java:24)- device modify
-2021-02-05 13:38:55,814 INFO [http-nio-4201-exec-10] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 13:38:55,858 INFO [http-nio-4201-exec-10] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 1ms. Found 0 JPA repository interfaces.
-2021-02-05 13:38:55,858 INFO [http-nio-4201-exec-10] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 13:38:55,872 INFO [http-nio-4201-exec-10] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 13ms. Found 0 JPA repository interfaces.
-2021-02-05 13:38:57,670 INFO [http-nio-4201-exec-7] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2021-02-05 13:39:14,023 INFO [http-nio-4201-exec-8] (DirectJDKLog.java:173)- A cookie header was received [1591414925,1592186801] that contained an invalid cookie. That cookie will be ignored.
- Note: further occurrences of this error will be logged at DEBUG level.
-2021-02-05 13:39:49,465 INFO [http-nio-4201-exec-4] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 13:39:49,466 INFO [http-nio-4201-exec-4] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 0ms. Found 0 JPA repository interfaces.
-2021-02-05 13:39:49,466 INFO [http-nio-4201-exec-4] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 13:39:49,470 INFO [http-nio-4201-exec-4] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 3ms. Found 0 JPA repository interfaces.
-2021-02-05 13:39:49,581 INFO [http-nio-4201-exec-4] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2021-02-05 13:42:53,700 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 13:42:53,701 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 0ms. Found 0 JPA repository interfaces.
-2021-02-05 13:42:53,701 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 13:42:53,704 INFO [http-nio-4201-exec-1] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 3ms. Found 0 JPA repository interfaces.
-2021-02-05 13:42:53,771 INFO [http-nio-4201-exec-1] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2021-02-05 13:45:03,284 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 39640 (D:\iotlite\target\classes started by Admin in D:\iotlite)
-2021-02-05 13:45:03,286 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
-2021-02-05 13:45:05,335 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 13:45:05,354 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 6ms. Found 0 JPA repository interfaces.
-2021-02-05 13:45:05,354 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 13:45:05,491 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 136ms. Found 15 JPA repository interfaces.
-2021-02-05 13:45:07,127 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
-2021-02-05 13:45:07,144 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
-2021-02-05 13:45:07,144 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
-2021-02-05 13:45:07,144 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
-2021-02-05 13:45:07,308 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
-2021-02-05 13:45:07,309 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 3432 ms
-2021-02-05 13:45:07,730 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-02-05 13:45:07,791 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
-2021-02-05 13:45:08,027 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
-2021-02-05 13:45:08,143 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
-2021-02-05 13:45:08,252 INFO [main] (ClickHouseDriver.java:42)- Driver registered
-2021-02-05 13:45:08,596 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
-2021-02-05 13:45:08,613 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
-2021-02-05 13:45:08,837 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@796a7c9] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
-2021-02-05 13:45:08,908 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2021-02-05 13:45:08,920 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
-2021-02-05 13:45:08,974 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-02-05 13:45:08,980 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
-2021-02-05 13:45:09,351 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
-2021-02-05 13:45:09,353 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
-2021-02-05 13:45:09,882 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
-2021-02-05 13:45:09,883 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
-2021-02-05 13:45:09,883 INFO [main] (Configuration.java:285)- 
- _    _                           _     _
-| |  | |                         (_)   | |
-| |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
-|  __  | | | | '_ \ / _ \ '__/ __| / __| __/ _ \ '_ \ / __/ _ \
-| |  | | |_| | |_) |  __/ |  \__ \ \__ \ ||  __/ | | | (_|  __/
-|_|  |_|\__, | .__/ \___|_|  |___/_|___/\__\___|_| |_|\___\___|
-         __/ | |
-        |___/|_|
-
-           ____        _   _           _
-          / __ \      | | (_)         (_)
-         | |  | |_ __ | |_ _ _ __ ___  _ _______ _ __
-         | |  | | '_ \| __| | '_ ` _ \| |_  / _ \ '__|
-         | |__| | |_) | |_| | | | | | | |/ /  __/ |
-          \____/| .__/ \__|_|_| |_| |_|_/___\___|_|
-                | |
-                |_|
-
-2021-02-05 13:45:09,883 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
-2021-02-05 13:45:11,128 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2021-02-05 13:45:11,135 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
-2021-02-05 13:45:11,799 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
-2021-02-05 13:45:14,290 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2021-02-05 13:45:14,725 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2021-02-05 13:45:15,140 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
-2021-02-05 13:45:15,546 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
-2021-02-05 13:45:16,155 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
-2021-02-05 13:45:16,219 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
-2021-02-05 13:45:16,221 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
-2021-02-05 13:45:16,266 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
-2021-02-05 13:45:16,333 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
-2021-02-05 13:45:16,669 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
-2021-02-05 13:45:16,731 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
-2021-02-05 13:45:16,742 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
-2021-02-05 13:45:16,750 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
-2021-02-05 13:45:16,768 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
-2021-02-05 13:45:16,791 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
-2021-02-05 13:45:16,831 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
-2021-02-05 13:45:16,843 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
-2021-02-05 13:45:16,851 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
-2021-02-05 13:45:16,866 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
-2021-02-05 13:45:16,903 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
-2021-02-05 13:45:16,915 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
-2021-02-05 13:45:16,919 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
-2021-02-05 13:45:16,927 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
-2021-02-05 13:45:16,931 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
-2021-02-05 13:45:16,934 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
-2021-02-05 13:45:16,937 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
-2021-02-05 13:45:16,942 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
-2021-02-05 13:45:17,029 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
-2021-02-05 13:45:17,089 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
-2021-02-05 13:45:17,130 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
-2021-02-05 13:45:17,136 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
-2021-02-05 13:45:17,341 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 15.109 seconds (JVM running for 19.645)
-2021-02-05 13:45:25,669 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- A cookie header was received [1591414925,1592186801] that contained an invalid cookie. That cookie will be ignored.
- Note: further occurrences of this error will be logged at DEBUG level.
-2021-02-05 13:45:25,684 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
-2021-02-05 13:45:25,684 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
-2021-02-05 13:45:25,746 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:547)- Completed initialization in 62 ms
-2021-02-05 13:45:46,890 INFO [main] (StartupInfoLogger.java:55)- Starting IotliteApplication on DESKTOP-L7BH4I1 with PID 54204 (D:\iotlite\target\classes started by Admin in D:\iotlite)
-2021-02-05 13:45:46,893 INFO [main] (SpringApplication.java:651)- No active profile set, falling back to default profiles: default
-2021-02-05 13:45:48,132 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 13:45:48,145 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 5ms. Found 0 JPA repository interfaces.
-2021-02-05 13:45:48,146 INFO [main] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 13:45:48,252 INFO [main] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 105ms. Found 15 JPA repository interfaces.
-2021-02-05 13:45:49,260 INFO [main] (TomcatWebServer.java:108)- Tomcat initialized with port(s): 4201 (http)
-2021-02-05 13:45:49,269 INFO [main] (DirectJDKLog.java:173)- Initializing ProtocolHandler ["http-nio-4201"]
-2021-02-05 13:45:49,270 INFO [main] (DirectJDKLog.java:173)- Starting service [Tomcat]
-2021-02-05 13:45:49,270 INFO [main] (DirectJDKLog.java:173)- Starting Servlet engine: [Apache Tomcat/9.0.37]
-2021-02-05 13:45:49,390 INFO [main] (DirectJDKLog.java:173)- Initializing Spring embedded WebApplicationContext
-2021-02-05 13:45:49,390 INFO [main] (ServletWebServerApplicationContext.java:285)- Root WebApplicationContext: initialization completed in 2161 ms
-2021-02-05 13:45:49,744 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-02-05 13:45:49,783 INFO [main] (Version.java:44)- HHH000412: Hibernate ORM core version 5.4.20.Final
-2021-02-05 13:45:49,886 INFO [main] (JavaReflectionManager.java:49)- HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
-2021-02-05 13:45:49,969 INFO [main] (HikariDataSource.java:110)- HikariPool-1 - Starting...
-2021-02-05 13:45:49,986 INFO [main] (ClickHouseDriver.java:42)- Driver registered
-2021-02-05 13:45:50,091 INFO [main] (HikariDataSource.java:123)- HikariPool-1 - Start completed.
-2021-02-05 13:45:50,102 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
-2021-02-05 13:45:50,260 INFO [main] (DdlTransactionIsolatorNonJtaImpl.java:47)- HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@22942eff] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
-2021-02-05 13:45:50,283 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2021-02-05 13:45:50,292 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
-2021-02-05 13:45:50,360 INFO [main] (LogHelper.java:31)- HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-02-05 13:45:50,367 INFO [main] (HikariDataSource.java:110)- HikariPool-2 - Starting...
-2021-02-05 13:45:50,574 INFO [main] (HikariDataSource.java:123)- HikariPool-2 - Start completed.
-2021-02-05 13:45:50,576 INFO [main] (Dialect.java:170)- HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
-2021-02-05 13:45:50,747 WARN [main] (Configuration.java:282)- You should use Hypersistence Optimizer to speed up your Hibernate application!
-2021-02-05 13:45:50,747 WARN [main] (Configuration.java:283)- For more details, go to https://vladmihalcea.com/hypersistence-optimizer/
-2021-02-05 13:45:50,747 INFO [main] (Configuration.java:285)- 
- _    _                           _     _
-| |  | |                         (_)   | |
-| |__| |_   _ _ __   ___ _ __ ___ _ ___| |_ ___ _ __   ___ ___
-|  __  | | | | '_ \ / _ \ '__/ __| / __| __/ _ \ '_ \ / __/ _ \
-| |  | | |_| | |_) |  __/ |  \__ \ \__ \ ||  __/ | | | (_|  __/
-|_|  |_|\__, | .__/ \___|_|  |___/_|___/\__\___|_| |_|\___\___|
-         __/ | |
-        |___/|_|
-
-           ____        _   _           _
-          / __ \      | | (_)         (_)
-         | |  | |_ __ | |_ _ _ __ ___  _ _______ _ __
-         | |  | | '_ \| __| | '_ ` _ \| |_  / _ \ '__|
-         | |__| | |_) | |_| | | | | | | |/ /  __/ |
-          \____/| .__/ \__|_|_| |_| |_|_/___\___|_|
-                | |
-                |_|
-
-2021-02-05 13:45:50,747 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
-2021-02-05 13:45:51,587 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2021-02-05 13:45:51,590 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
-2021-02-05 13:45:52,197 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
-2021-02-05 13:45:54,368 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2021-02-05 13:45:54,774 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2021-02-05 13:45:55,220 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
-2021-02-05 13:45:55,454 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
-2021-02-05 13:45:55,679 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
-2021-02-05 13:45:55,697 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
-2021-02-05 13:45:55,698 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
-2021-02-05 13:45:55,712 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
-2021-02-05 13:45:55,754 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
-2021-02-05 13:45:55,914 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
-2021-02-05 13:45:55,948 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
-2021-02-05 13:45:55,953 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
-2021-02-05 13:45:55,961 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
-2021-02-05 13:45:55,964 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
-2021-02-05 13:45:55,966 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
-2021-02-05 13:45:55,983 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
-2021-02-05 13:45:55,987 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
-2021-02-05 13:45:55,990 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
-2021-02-05 13:45:55,994 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
-2021-02-05 13:45:56,008 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
-2021-02-05 13:45:56,012 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
-2021-02-05 13:45:56,015 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
-2021-02-05 13:45:56,019 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
-2021-02-05 13:45:56,022 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
-2021-02-05 13:45:56,025 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
-2021-02-05 13:45:56,027 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
-2021-02-05 13:45:56,029 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
-2021-02-05 13:45:56,041 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
-2021-02-05 13:45:56,044 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
-2021-02-05 13:45:56,046 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
-2021-02-05 13:45:56,050 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
-2021-02-05 13:45:56,065 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 9.567 seconds (JVM running for 11.309)
-2021-02-05 13:45:56,204 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- A cookie header was received [1591414925,1592186801] that contained an invalid cookie. That cookie will be ignored.
- Note: further occurrences of this error will be logged at DEBUG level.
-2021-02-05 13:45:56,219 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
-2021-02-05 13:45:56,220 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
-2021-02-05 13:45:56,232 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:547)- Completed initialization in 12 ms
-2021-02-05 13:45:56,279 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default null,null 
-2021-02-05 13:46:41,278 INFO [http-nio-4201-exec-3] (DeviceService.java:236)- LOCATION:default 00003,3 
-2021-02-05 13:48:37,687 INFO [http-nio-4201-exec-7] (DeviceService.java:236)- LOCATION:default 00003,3 
-2021-02-05 13:48:44,282 INFO [http-nio-4201-exec-8] (DeviceService.java:236)- LOCATION:default 00003,3 
-2021-02-05 13:48:44,747 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 00003,3 
-2021-02-05 13:48:44,883 INFO [http-nio-4201-exec-10] (DeviceService.java:236)- LOCATION:default 00003,3 
-2021-02-05 13:48:45,027 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default 00003,3 
-2021-02-05 13:50:43,467 INFO [http-nio-4201-exec-3] (DeviceService.java:236)- LOCATION:default 00003,3 
-2021-02-05 13:50:49,217 INFO [http-nio-4201-exec-6] (DeviceService.java:236)- LOCATION:default 00003,3 
-2021-02-05 13:51:11,553 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default undefined,undefined 
-2021-02-05 13:51:24,342 INFO [http-nio-4201-exec-6] (DeviceService.java:236)- LOCATION:default 00003,00003 
-2021-02-05 13:51:29,742 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 00003,00003 
-2021-02-05 13:51:32,984 INFO [http-nio-4201-exec-10] (DeviceService.java:236)- LOCATION:default undefined,undefined 
-2021-02-05 13:51:43,594 INFO [http-nio-4201-exec-7] (DeviceService.java:236)- LOCATION:default 00003,00003 
-2021-02-05 13:52:14,430 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default 00003,00003 
-2021-02-05 13:52:17,613 INFO [http-nio-4201-exec-3] (DeviceService.java:236)- LOCATION:default undefined,undefined 
-2021-02-05 13:52:35,992 INFO [http-nio-4201-exec-8] (DeviceService.java:236)- LOCATION:default 00003,00003 
-2021-02-05 13:52:39,037 INFO [http-nio-4201-exec-4] (DeviceService.java:236)- LOCATION:default undefined,undefined 
-2021-02-05 13:53:14,937 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 13:53:27,638 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 13:55:24,960 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 13:55:45,931 INFO [http-nio-4201-exec-3] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 13:56:59,600 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 13:58:41,789 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 13:59:03,851 INFO [http-nio-4201-exec-10] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 13:59:18,771 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 13:59:33,491 INFO [http-nio-4201-exec-4] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:00:00,997 INFO [http-nio-4201-exec-5] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:00:11,893 INFO [http-nio-4201-exec-7] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:00:35,649 INFO [http-nio-4201-exec-8] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:01:02,408 INFO [http-nio-4201-exec-10] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:01:09,186 INFO [http-nio-4201-exec-4] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:08:28,090 INFO [http-nio-4201-exec-5] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 14:08:28,187 INFO [http-nio-4201-exec-5] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 73ms. Found 0 JPA repository interfaces.
-2021-02-05 14:08:28,362 INFO [http-nio-4201-exec-5] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 14:08:28,366 INFO [http-nio-4201-exec-5] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 4ms. Found 0 JPA repository interfaces.
-2021-02-05 14:08:28,711 INFO [http-nio-4201-exec-2] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:08:32,764 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:08:39,542 INFO [http-nio-4201-exec-4] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:09:03,984 INFO [http-nio-4201-exec-2] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:09:05,431 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:09:08,694 INFO [http-nio-4201-exec-4] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:09:11,548 INFO [http-nio-4201-exec-5] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:09:19,249 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:09:28,289 INFO [http-nio-4201-exec-4] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:09:35,622 INFO [http-nio-4201-exec-5] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:09:43,729 INFO [http-nio-4201-exec-6] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:10:16,908 INFO [http-nio-4201-exec-3] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:10:20,664 INFO [http-nio-4201-exec-2] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:10:49,279 INFO [http-nio-4201-exec-8] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:11:21,730 INFO [http-nio-4201-exec-6] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:11:52,400 INFO [http-nio-4201-exec-5] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:12:05,501 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:13:11,944 INFO [http-nio-4201-exec-10] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:13:21,289 INFO [http-nio-4201-exec-3] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:13:30,230 INFO [http-nio-4201-exec-7] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:13:40,264 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:13:51,328 INFO [http-nio-4201-exec-4] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:13:55,917 INFO [http-nio-4201-exec-2] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:14:02,555 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:14:42,608 INFO [http-nio-4201-exec-4] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:14:51,319 INFO [http-nio-4201-exec-2] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:15:00,683 INFO [http-nio-4201-exec-8] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:15:16,231 INFO [http-nio-4201-exec-6] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:15:22,467 INFO [http-nio-4201-exec-5] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:15:39,885 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:16:11,988 INFO [http-nio-4201-exec-10] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:18:04,046 INFO [http-nio-4201-exec-3] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:19:17,717 INFO [http-nio-4201-exec-7] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:20:40,282 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:21:12,688 INFO [http-nio-4201-exec-6] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:21:47,924 INFO [http-nio-4201-exec-3] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:22:19,183 INFO [http-nio-4201-exec-2] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:23:00,595 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:23:44,792 INFO [http-nio-4201-exec-1] (DeviceService.java:236)- LOCATION:default 4,00003 
-2021-02-05 14:24:48,036 INFO [http-nio-4201-exec-6] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 14:24:48,064 INFO [http-nio-4201-exec-6] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 17ms. Found 0 JPA repository interfaces.
-2021-02-05 14:24:48,178 INFO [http-nio-4201-exec-6] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 14:24:48,186 INFO [http-nio-4201-exec-6] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 8ms. Found 0 JPA repository interfaces.
-2021-02-05 14:24:49,719 INFO [http-nio-4201-exec-6] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
-2021-02-05 14:24:50,072 INFO [http-nio-4201-exec-4] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:25:31,225 INFO [http-nio-4201-exec-10] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:25:35,693 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:25:59,934 INFO [http-nio-4201-exec-7] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:26:07,526 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:26:29,793 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:26:53,833 INFO [http-nio-4201-exec-10] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:27:08,719 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:27:31,762 INFO [http-nio-4201-exec-8] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:27:45,111 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:28:11,917 INFO [http-nio-4201-exec-5] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:30:11,702 INFO [http-nio-4201-exec-10] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:31:51,809 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:22,126 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:39,979 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:50,249 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:52,509 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:52,768 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:52,895 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:57,967 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:58,218 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:58,345 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:59,314 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:59,444 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:59,548 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:32:59,752 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:00,065 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:00,201 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:01,210 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:01,374 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:01,442 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:01,642 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:01,901 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:02,044 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:02,948 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:03,091 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:03,234 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:03,392 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:03,728 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:03,860 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:04,618 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:04,766 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:04,896 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:05,148 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:05,223 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:16,557 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:16,776 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:16,907 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:24,648 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:25,134 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:46,256 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:47,616 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:33:53,846 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:34:03,177 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:34:06,616 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:34:07,472 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:34:50,510 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:04,648 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:06,350 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:07,886 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:12,323 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:14,490 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:15,344 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:17,415 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:18,448 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:26,062 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:45,630 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:49,226 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:56,084 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:58,086 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:35:59,593 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:36:14,896 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:36:34,605 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:36:40,848 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:36:42,744 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:36:43,352 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:36:45,633 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:36:47,926 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:36:54,591 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:37:16,690 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:37:22,956 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:37:27,359 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:37:28,927 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:38:11,579 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:38:44,531 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:38:47,063 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:38:47,901 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:38:50,734 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:39:23,614 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:39:30,511 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:39:35,254 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:39:35,773 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:39:45,987 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:39:51,054 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:40:12,130 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:40:51,953 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:41:23,303 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:41:57,570 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:42:14,403 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:49:16,986 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:49:18,358 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:49:18,981 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:49:40,498 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:49:42,533 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:49:45,996 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:49:50,279 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:51:11,799 INFO [http-nio-4201-exec-7] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:51:32,408 INFO [http-nio-4201-exec-8] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:52:28,413 INFO [http-nio-4201-exec-5] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:52:51,483 INFO [http-nio-4201-exec-7] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 14:58:56,416 INFO [http-nio-4201-exec-8] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 14:58:56,431 INFO [http-nio-4201-exec-8] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 13ms. Found 0 JPA repository interfaces.
-2021-02-05 14:58:56,498 INFO [http-nio-4201-exec-8] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 14:58:56,502 INFO [http-nio-4201-exec-8] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 3ms. Found 0 JPA repository interfaces.
-2021-02-05 14:59:18,262 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:04:03,782 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:04:05,019 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:05:52,584 INFO [http-nio-4201-exec-5] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:11:23,403 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:11:24,598 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:12:20,181 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:12:21,075 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:12:21,966 INFO [http-nio-4201-exec-8] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:12:22,611 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:12:23,130 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:12:29,318 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:12:29,805 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:12:31,692 INFO [http-nio-4201-exec-10] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:13:28,442 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:13:29,547 INFO [http-nio-4201-exec-10] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:13:31,324 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:49:02,327 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:49:03,991 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:49:04,831 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:50:35,609 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:50:37,195 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:50:37,999 INFO [http-nio-4201-exec-8] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:50:40,495 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:50:41,239 INFO [http-nio-4201-exec-5] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:50:42,245 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:50:44,247 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:51:33,132 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:52:13,988 INFO [http-nio-4201-exec-5] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:52:43,219 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:52:56,096 INFO [http-nio-4201-exec-8] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:57:38,819 INFO [http-nio-4201-exec-10] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:57:48,717 INFO [http-nio-4201-exec-7] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:58:19,196 INFO [http-nio-4201-exec-5] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:05,138 INFO [http-nio-4201-exec-10] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:06,068 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:06,578 INFO [http-nio-4201-exec-7] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:06,949 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:07,109 INFO [http-nio-4201-exec-1] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:07,453 INFO [http-nio-4201-exec-8] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:07,634 INFO [http-nio-4201-exec-6] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:08,022 INFO [http-nio-4201-exec-3] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:08,235 INFO [http-nio-4201-exec-4] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:08,420 INFO [http-nio-4201-exec-5] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:08,603 INFO [http-nio-4201-exec-10] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:08,787 INFO [http-nio-4201-exec-2] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:08,972 INFO [http-nio-4201-exec-7] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 15:59:09,156 INFO [http-nio-4201-exec-9] (DeviceService.java:237)- LOCATION:default 4,00003 
-2021-02-05 16:14:40,379 INFO [http-nio-4201-exec-3] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 16:14:40,402 INFO [http-nio-4201-exec-3] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 12ms. Found 0 JPA repository interfaces.
-2021-02-05 16:14:40,581 INFO [http-nio-4201-exec-3] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-02-05 16:14:40,585 INFO [http-nio-4201-exec-3] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 3ms. Found 0 JPA repository interfaces.
-2021-02-05 16:15:51,065 INFO [http-nio-4201-exec-7] (DeviceService.java:237)- LOCATION:default 3,0001 
-2021-02-05 16:15:52,255 INFO [http-nio-4201-exec-4] (DeviceLogServiceImpl.java:22)- 1612512952255 Down admin default/3/0001 turn off {"v":49}
-2021-02-05 16:15:52,286 INFO [http-nio-4201-exec-10] (DeviceLogServiceImpl.java:22)- 1612512952285 Down admin default/3/0001 turn off {"v":49}
-2021-02-05 16:15:52,463 INFO [http-nio-4201-exec-4] (DeviceInstance.java:78)- topic default/3/0001  data: {}
-2021-02-05 16:15:52,463 INFO [http-nio-4201-exec-10] (DeviceInstance.java:78)- topic default/3/0001  data: {}
+2021-02-06 10:59:52,569 INFO [main] (Configuration.java:309)- Check out the README page for more info about the Hypersistence Optimizer banner https://github.com/vladmihalcea/hibernate-types#how-to-remove-the-hypersistence-optimizer-banner-from-the-log
+2021-02-06 10:59:53,868 INFO [main] (JtaPlatformInitiator.java:52)- HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-02-06 10:59:53,873 INFO [main] (AbstractEntityManagerFactoryBean.java:416)- Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-02-06 10:59:54,657 INFO [main] (MqttClientConfig.java:23)- 启动mqtt客户端
+2021-02-06 10:59:57,645 WARN [main] (JpaBaseConfiguration.java:220)- spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-02-06 10:59:58,162 INFO [main] (PropertySourcedRequestMappingHandlerMapping.java:69)- Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-02-06 10:59:58,386 INFO [main] (ExecutorConfigurationSupport.java:181)- Initializing ExecutorService 'applicationTaskExecutor'
+2021-02-06 10:59:58,587 WARN [main] (GroovyTemplateAutoConfiguration.java:87)- Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2021-02-06 10:59:58,897 INFO [main] (DirectJDKLog.java:173)- Starting ProtocolHandler ["http-nio-4201"]
+2021-02-06 10:59:58,936 INFO [main] (TomcatWebServer.java:220)- Tomcat started on port(s): 4201 (http) with context path ''
+2021-02-06 10:59:58,937 INFO [main] (DocumentationPluginsBootstrapper.java:147)- Context refreshed
+2021-02-06 10:59:58,956 INFO [main] (DocumentationPluginsBootstrapper.java:150)- Found 1 custom documentation plugin(s)
+2021-02-06 10:59:58,994 INFO [main] (ApiListingReferenceScanner.java:41)- Scanning for api listing references
+2021-02-06 10:59:59,182 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_1
+2021-02-06 10:59:59,214 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_2
+2021-02-06 10:59:59,219 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_1
+2021-02-06 10:59:59,223 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_2
+2021-02-06 10:59:59,226 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_1
+2021-02-06 10:59:59,228 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_1
+2021-02-06 10:59:59,249 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_3
+2021-02-06 10:59:59,253 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_3
+2021-02-06 10:59:59,256 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_2
+2021-02-06 10:59:59,260 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_2
+2021-02-06 10:59:59,274 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_4
+2021-02-06 10:59:59,277 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_4
+2021-02-06 10:59:59,280 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_3
+2021-02-06 10:59:59,284 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_3
+2021-02-06 10:59:59,288 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_5
+2021-02-06 10:59:59,290 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_5
+2021-02-06 10:59:59,292 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_4
+2021-02-06 10:59:59,294 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_4
+2021-02-06 10:59:59,305 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: listUsingGET_6
+2021-02-06 10:59:59,308 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: queryUsingGET_6
+2021-02-06 10:59:59,310 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: removeUsingPOST_5
+2021-02-06 10:59:59,314 INFO [main] (CachingOperationNameGenerator.java:40)- Generating unique operation named: saveUsingPOST_5
+2021-02-06 10:59:59,339 INFO [main] (StartupInfoLogger.java:61)- Started IotliteApplication in 16.487 seconds (JVM running for 24.851)
+2021-02-06 11:00:17,764 INFO [http-nio-4201-exec-1] (DirectJDKLog.java:173)- Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-02-06 11:00:17,765 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:525)- Initializing Servlet 'dispatcherServlet'
+2021-02-06 11:00:17,808 INFO [http-nio-4201-exec-1] (FrameworkServlet.java:547)- Completed initialization in 43 ms
+2021-02-06 11:16:06,756 INFO [http-nio-4201-exec-2] (DeviceService.java:236)- LOCATION:default 3,0004 
+2021-02-06 11:42:51,339 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 3,0004 
+2021-02-06 11:53:37,610 INFO [http-nio-4201-exec-7] (DeviceService.java:236)- LOCATION:default 3,0004 
+2021-02-06 11:53:39,910 INFO [http-nio-4201-exec-6] (DeviceLogServiceImpl.java:22)- 1612583619909 Down admin default/3/0004 turn on {"v":3,"temperature":2,"power":100}
+2021-02-06 11:53:39,916 INFO [http-nio-4201-exec-2] (DeviceLogServiceImpl.java:22)- 1612583619916 Down admin default/3/0004 turn on {"v":3,"temperature":2,"power":100}
+2021-02-06 11:53:39,917 INFO [http-nio-4201-exec-8] (DeviceLogServiceImpl.java:22)- 1612583619916 Down admin default/3/0004 turn on {"v":3,"temperature":2,"power":100}
+2021-02-06 11:53:40,378 INFO [http-nio-4201-exec-6] (DeviceInstance.java:78)- topic default/3/0004  data: {"temperature":2,"power":100}
+2021-02-06 11:53:40,379 INFO [http-nio-4201-exec-2] (DeviceInstance.java:78)- topic default/3/0004  data: {"temperature":2,"power":100}
+2021-02-06 11:53:40,906 INFO [http-nio-4201-exec-8] (DeviceInstance.java:78)- topic default/3/0004  data: {"temperature":2,"power":100}
+2021-02-06 11:54:26,490 INFO [http-nio-4201-exec-3] (DeviceService.java:236)- LOCATION:default 3,0004 
+2021-02-06 11:54:34,914 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 3,0004 
+2021-02-06 11:54:36,083 INFO [http-nio-4201-exec-2] (DeviceService.java:236)- LOCATION:default 3,0004 
+2021-02-06 11:55:50,625 INFO [http-nio-4201-exec-9] (DeviceService.java:236)- LOCATION:default 3,0004 
+2021-02-06 12:29:42,841 INFO [http-nio-4201-exec-9] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-06 12:29:42,894 INFO [http-nio-4201-exec-9] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 29ms. Found 0 JPA repository interfaces.
+2021-02-06 12:29:42,894 INFO [http-nio-4201-exec-9] (RepositoryConfigurationDelegate.java:127)- Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-02-06 12:29:43,016 INFO [http-nio-4201-exec-9] (RepositoryConfigurationDelegate.java:187)- Finished Spring Data repository scanning in 122ms. Found 0 JPA repository interfaces.
+2021-02-06 12:40:49,515 INFO [http-nio-4201-exec-9] (DeviceLogServiceImpl.java:22)- 1612586449515 Down admin default/3/0004 turn up {"v":4,"temperature":22,"power":0}
+2021-02-06 12:40:49,595 INFO [http-nio-4201-exec-9] (DeviceInstance.java:78)- topic default/3/0004  data: {"temperature":22,"power":0}

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Toolbar />
+      <Toolbar :query=query />
       <b-table hover :items="items" :fields="fields"  @row-dblclicked="gotoDevice">
 
       </b-table>

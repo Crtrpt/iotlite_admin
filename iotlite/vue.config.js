@@ -1,6 +1,5 @@
 
 module.exports = {
-  productionSourceMap: false,
   runtimeCompiler: true,
   configureWebpack: {
     externals: {

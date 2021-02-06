@@ -10,6 +10,6 @@ public class DeviceDto {
     String description;
     String sn;
     String uuid;
-
+    Object spec;
     ProductDto product;
 }

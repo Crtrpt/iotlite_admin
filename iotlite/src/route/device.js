@@ -41,6 +41,14 @@ const device  =[
       }
     },
     {
+      path: 'model',
+      component: require('../pages/device/device/Model').default,
+      name: 'deviceDetailModel',
+      meta:{
+        name:"deviceDetailModel"
+      }
+    },
+    {
       path: 'log',
       component: require('../pages/device/device/Log').default,
       name: 'deviceLog',
