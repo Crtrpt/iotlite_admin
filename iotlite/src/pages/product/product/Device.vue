@@ -2,7 +2,9 @@
   <div>
       <Toolbar :query=query />
       <b-table hover :items="items" :fields="fields"  @row-dblclicked="gotoDevice">
-
+          <template v-slot:cell(tags)="data">
+                     <Tag v-model="data.item.tags" />
+        </template>
       </b-table>
 
       <b-row class="mt-2" v-if="helper.total>10">
@@ -10,17 +12,18 @@
             v-model="query.pageNum"
             :per-page="query.pageSize"
             :total-rows="helper.total"
-            ></b-pagination></b-col>
+          ></b-pagination></b-col>
       </b-row>
   </div>
 </template>
 
 <script>
 import {product} from "../../../api/product"
+import Tag from '../../../components/tags/Tag.vue'
 import Toolbar from "../../device/ToolBar"
 export default {
   name:"Device",
-  components:{Toolbar},
+  components:{Toolbar,Tag},
   props:{
     form:Object
   },
@@ -28,6 +31,7 @@ export default {
     return {
       helper:{total:0},
       query:{
+        date:{},
         words:"",
         pageNum:1,
         pageSize:10,
@@ -52,6 +56,16 @@ export default {
           {
             key: 'location',
             label: '设备位置',
+            sortable: true
+          },
+          {
+            key: 'ver',
+            label: '产品版本',
+            sortable: true
+          },
+           {
+            key: 'tags',
+            label: '标签',
             sortable: true
           },
           {

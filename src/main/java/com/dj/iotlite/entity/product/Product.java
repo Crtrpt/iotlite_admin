@@ -50,7 +50,18 @@ public class Product extends Base {
      */
     @Type(type = "json")
     @Column(columnDefinition = "json")
+    Object tags;
+    /**
+     * 产品标签
+     */
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
     Object spec;
 
     String secKey;
+
+    /**
+     * 每次修改版本加一
+     */
+    String ver;
 }

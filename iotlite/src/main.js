@@ -5,9 +5,9 @@ import store from './store'
 import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
 import lang from './i18n'
-
+import VueLoading from 'vue-loading-template'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
+Vue.use(VueLoading)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 

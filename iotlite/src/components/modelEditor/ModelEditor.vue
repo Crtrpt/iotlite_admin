@@ -46,7 +46,7 @@ export default {
         console.log(this.$refs.editor)
         console.log(this.data);
         this.instance= CodeMirror(this.$refs.editor, {
-            value: this.data.value,
+            value: this.data.value||"",
             mode:  this.data.mode,
             theme: "monokai",
             lineNumbers: true,

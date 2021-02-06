@@ -1,9 +1,15 @@
 <template>
   <b-container fluid>
-  <b-row>
-    <b-col>
+  <b-row class="mb-2">
+    <b-col cols="12">
       <h3>设备信息# {{form.name}} </h3>
+      <p class="small">{{form.ver}} 
+        <b-icon v-if="form.ver!=form.product.ver" icon="arrow-up-square"></b-icon>
+      </p>
       <p>{{form.description}} <b-link  class="link" href="javascript:void();" v-b-toggle.more> {{"更多"}}</b-link></p>
+    </b-col>
+    <b-col cols="12">
+        <Tag v-model="form.tags"/>
     </b-col>
   </b-row>
    <b-collapse id="more" class="mt-2">
@@ -52,8 +58,12 @@
 
 <script>
 import {device} from "../../api/device"
+import Tag from "../../components/tags/Tag"
 export default {
   name:"deviceDetail",
+  components:{
+    Tag
+  },
   mounted(){
     this.getInfo()
   },

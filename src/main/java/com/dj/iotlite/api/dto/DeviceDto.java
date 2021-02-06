@@ -3,7 +3,7 @@ package com.dj.iotlite.api.dto;
 import lombok.Data;
 
 @Data
-public class DeviceDto {
+public class DeviceDto extends DeviceListDto {
     Long id;
     String name;
     Long productId;
@@ -11,5 +11,6 @@ public class DeviceDto {
     String sn;
     String uuid;
     Object spec;
+    Object tags;
     ProductDto product;
 }

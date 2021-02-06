@@ -12,4 +12,6 @@ public class DeviceListDto implements BaseDto {
     String sn;
     @JsonSerialize(using = LongToDateSerialize.class)
     Long createdAt;
+    Object tags;
+    String ver;
 }

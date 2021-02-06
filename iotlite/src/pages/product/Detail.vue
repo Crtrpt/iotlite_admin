@@ -1,9 +1,13 @@
 <template>
   <b-container fluid>
-  <b-row>
-    <b-col>
+  <b-row class="mb-2">
+    <b-col cols="12">
       <h3>产品# {{form.name}}</h3>
+      <p class="small">{{form.ver}} </p>
       <p>{{form.description}}</p>
+    </b-col>
+    <b-col cols="12">
+        <Tag v-model="form.tags"/>
     </b-col>
   </b-row>
   <b-row>
@@ -13,7 +17,6 @@
         <b-nav-item to="model"  active-class="active" ><b-icon icon="code"  /> 物模型</b-nav-item>
         <b-nav-item to="device"  active-class="active"> 设备</b-nav-item>
         <b-nav-item to="map"  active-class="active" >设备地图</b-nav-item>
-        <!-- <b-nav-item to="setting"  active-class="active" >设置</b-nav-item> -->
       </b-nav>
       <router-view  class="content" :form=form></router-view>
     </b-col>
@@ -23,8 +26,12 @@
 
 <script>
 import {product} from "../../api/product"
+import Tag from "../../components/tags/Tag"
 export default {
   name:"ProductDetail",
+  components:{
+    Tag
+  },
   mounted(){
     this.getInfo()
   },

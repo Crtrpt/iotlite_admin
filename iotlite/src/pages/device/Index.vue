@@ -12,14 +12,36 @@
            <div class="widget-content" >
               <b-row>
                 <b-col col cols="2"  v-for="p in items" :key="p.id">
-                   <router-link  active-class="active" :to="{name: 'deviceDetail',params: { id: p.id }}">
-                      <b-card  :title="p.name"  class="mt-2">
+                  
+                      <b-card  class="mt-2">
+                      <template>
+                          <router-link  active-class="active" :to="{name: 'deviceDetail',params: { id: p.id }}">
+                             <h5  class="mb-1">{{p.name}}</h5>
+                         </router-link>
+                      </template>
+
                         <b-card-text>
+
+                          <div class="card_sub_script_left_top">
+                            <b-link v-b-tooltip.hover :title="'产品版本:'+p.product.sn"   >
+                              <b-icon   icon="app-indicator"></b-icon>  {{p.sn}}
+                            </b-link>
+                          </div>
+
+                          <div class="card_sub_script">
+                            <b-link v-b-tooltip.hover :title="'新版本'+p.product.ver"  v-if="p.ver!=p.product.ver" >
+                               {{p.ver}}  <b-icon   icon="arrow-up-square"></b-icon>
+                            </b-link>
+                             <b-link v-if="p.ver==p.product.ver" >
+                               {{p.ver}}  <b-icon   icon="bookmark"></b-icon>
+                            </b-link>
+                          </div>
                           {{p.description}} 
                           {{p.product.name}}
+                          <Tag v-model="p.tags" />
                         </b-card-text>
                       </b-card>
-                  </router-link>
+                 
                 </b-col>
               </b-row>
               <b-pagination 
@@ -37,14 +59,13 @@
 
 <script>
 import Toolbar from "./ToolBar"
-import DateTimePicker from "../../components/date/DateTimePicker"
 
-
+import Tag from "../../components/tags/Tag"
 import {device} from "../../api/device"
 
 export default {
   name:"Device",
-  components:{Toolbar,DateTimePicker},
+  components:{Toolbar,Tag},
   data(){
     return {
       helper:{
@@ -55,7 +76,7 @@ export default {
         organizationId:0,
         words:"",
         pageNum:1,
-        pageSize:10,
+        pageSize:36,
       },
       items:[        
       ],

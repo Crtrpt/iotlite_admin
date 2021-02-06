@@ -72,4 +72,9 @@ public class ProductController extends BaseController {
     public ResDto<ProductDto> query(@RequestParam("id") Long id) {
         return success(deviceService.queryProduct(id));
     }
+
+    @PostMapping("/saveModel")
+    public ResDto<Boolean> saveModel(@RequestBody ProductSaveModelForm form) {
+        return success(deviceService.saveModel(form));
+    }
 }

@@ -1,11 +1,14 @@
 package com.dj.iotlite.config;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.cglib.proxy.MethodInterceptor;
+import org.springframework.cglib.proxy.MethodProxy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -18,6 +21,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 @Configuration
@@ -26,6 +30,7 @@ import java.util.Map;
         entityManagerFactoryRef="entityManagerFactoryPrimary",
         transactionManagerRef="transactionManagerPrimary",
         basePackages= { "com.dj.iotlite.entity" })
+@Slf4j
 public class MysqlDataSource {
 
 
@@ -49,11 +54,17 @@ public class MysqlDataSource {
         vendorAdapter.setDatabase(Database.MYSQL);
         vendorAdapter.setShowSql(true);
 
+
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("com.dj.iotlite.entity"); //实体扫描
         factory.setDataSource(primaryDataSource);
+        jpaProperties.getProperties().put("hibernate.jdbc.batch_size", "100");
+        jpaProperties.getProperties().put("hibernate.jdbc.batch_versioned_data", "true");
+        jpaProperties.getProperties().put("hibernate.order_inserts", "true");
+        jpaProperties.getProperties().put("hibernate.order_updates ", "true");
 
+        log.info("{} ",jpaProperties.getProperties().get("hibernate.jdbc.batch_size"));
         Map<String, Object> hibernateProperties = hibernateProperties1.determineHibernateProperties(
                 jpaProperties.getProperties(), new HibernateSettings());
 

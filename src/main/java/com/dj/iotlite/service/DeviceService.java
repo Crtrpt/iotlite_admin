@@ -1,10 +1,7 @@
 package com.dj.iotlite.service;
 
 import com.dj.iotlite.RedisKey;
-import com.dj.iotlite.api.dto.DeviceDto;
-import com.dj.iotlite.api.dto.DeviceLocationDto;
-import com.dj.iotlite.api.dto.OptionDto;
-import com.dj.iotlite.api.dto.ProductDto;
+import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.device.DeviceLog;
@@ -12,10 +9,8 @@ import com.dj.iotlite.entity.device.DeviceLogRepository;
 import com.dj.iotlite.entity.device.DeviceRepository;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
-import com.dj.iotlite.entity.user.User;
 import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
-import com.dj.iotlite.event.ChangeUser;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.spec.SpecV1;
 import com.google.gson.Gson;
@@ -25,15 +20,15 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.NumberUtils;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,8 +65,11 @@ public class DeviceService {
                 list.add(criteriaBuilder.or(
                         //名称
                         criteriaBuilder.like(root.get("name").as(String.class), "%" + deviceQueryForm.getWords() + "%"),
+                        criteriaBuilder.like(root.get("sn").as(String.class), "%" + deviceQueryForm.getWords() + "%"),
+                        criteriaBuilder.like(root.get("ver").as(String.class), "%" + deviceQueryForm.getWords() + "%"),
                         //备注
-                        criteriaBuilder.like(root.get("description").as(String.class), "%" + deviceQueryForm.getWords() + "%")
+                        criteriaBuilder.like(root.get("description").as(String.class), "%" + deviceQueryForm.getWords() + "%"),
+                        criteriaBuilder.like(root.get("tags").as(String.class), deviceQueryForm.getWords() + "%")
                 ));
             }
             if (!StringUtils.isEmpty(deviceQueryForm.getProductSn())) {
@@ -88,7 +86,8 @@ public class DeviceService {
         return null;
     }
 
-    public Object saveDevice(DeviceDto deviceDto) {
+    @Transactional(rollbackFor = Exception.class)
+    public Object saveDevice(DeviceSaveForm deviceDto) {
         Device device = new Device();
         BeanUtils.copyProperties(deviceDto, device);
         device.setVersion(1);
@@ -96,13 +95,49 @@ public class DeviceService {
         productRepository.findById(deviceDto.getProductId()).ifPresentOrElse(p -> {
             device.setSpec(p.getSpec());
             device.setProductSn(p.getSn());
+            device.setTags(new ArrayList<>());
+            //创建的时候的版本
+            device.setVer(p.getVer());
         }, () -> {
             throw new BusinessException("设备不存在");
         });
 
+
+        batchCopy(device, deviceDto);
         deviceRepository.save(device);
+
         ep.publishEvent(new ChangeDevice(this, device, ChangeDevice.Action.ADD));
         return true;
+    }
+
+    public List<Device> batchCopy(Device device, DeviceSaveForm deviceDto) {
+        var sn = deviceDto.getSn();
+        //去掉数字
+        String prefix = com.dj.iotlite.utils.StringUtils.parseStr(deviceDto.getSn());
+        Long number = com.dj.iotlite.utils.StringUtils.parseNumber(deviceDto.getSn());
+        Integer padinglength = com.dj.iotlite.utils.StringUtils.parsePadding(deviceDto.getSn());
+
+        Long maxCount = Long.parseLong(String.format("%1$" + padinglength + "s", 9).replace(' ', '9'));
+
+        if (deviceDto.getCount() > maxCount) {
+            throw new BusinessException("数字掩码错误 maxCount:" + maxCount);
+        }
+        var list = Collections.nCopies(deviceDto.getCount() - 1, device);
+        for (Device d : list) {
+            Device deviceCopy = new Device();
+            number = number + 1;
+            BeanUtils.copyProperties(d, deviceCopy, "id");
+            if (padinglength > 0) {
+                deviceCopy.setSn(String.format(prefix + "%1$" + padinglength + "s", number).replace(' ', '0'));
+            } else {
+                deviceCopy.setSn(prefix + number);
+            }
+            log.info("批量创建设备" + d.getSn());
+            d = deviceCopy;
+            deviceRepository.save(d);
+        }
+        log.info("批量创建设备" + list.size());
+        return list;
     }
 
     public Page<Product> getProductList(ProductQueryForm query) {
@@ -112,6 +147,9 @@ public class DeviceService {
                 list.add(criteriaBuilder.or(
                         //名称
                         criteriaBuilder.like(root.get("name").as(String.class), "%" + query.getWords() + "%"),
+                        criteriaBuilder.like(root.get("sn").as(String.class), "%" + query.getWords() + "%"),
+                        criteriaBuilder.like(root.get("ver").as(String.class), "%" + query.getWords() + "%"),
+
                         //uuid
                         criteriaBuilder.like(root.get("uuid").as(String.class), "%" + query.getWords() + "%"),
                         //备注
@@ -228,18 +266,28 @@ public class DeviceService {
     }
 
     @Autowired
-    RedisCommands<String,String> redisCommands;
+    RedisCommands<String, String> redisCommands;
 
     public Object location(DeviceLocationForm action) {
         String key = String.format(RedisKey.DeviceLOCATION, "default");
         String member = String.format(RedisKey.DeviceLOCATION_MEMBER, action.getProductSn(), action.getDeviceSn());
-        log.info("{} {} ",key,member);
 
-        DeviceLocationDto deviceLocationDto=new DeviceLocationDto();
+        log.info("{} {} ", key, member);
+
+        DeviceLocationDto deviceLocationDto = new DeviceLocationDto();
 
         deviceLocationDto.setLocation(redisCommands.geopos(key, member));
 
-
         return deviceLocationDto;
+    }
+
+    public Object saveModel(ProductSaveModelForm form) {
+        var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
+            throw new BusinessException("产品不存在或者已经被删除");
+        });
+        Gson gson = new Gson();
+        product.setSpec(gson.fromJson(form.getSpec(), Object.class));
+        productRepository.save(product);
+        return true;
     }
 }

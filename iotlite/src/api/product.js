@@ -27,6 +27,9 @@ const product={
     },
     saveSetting:(ctx)=>{
       return request.post("product/saveSetting",ctx)
+    },
+    saveModel:(ctx)=>{
+      return request.post("product/saveModel",ctx)
     }
 }
 

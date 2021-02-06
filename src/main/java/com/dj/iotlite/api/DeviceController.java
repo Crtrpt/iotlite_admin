@@ -1,13 +1,11 @@
 package com.dj.iotlite.api;
 
 import com.dj.iotlite.api.dto.*;
-import com.dj.iotlite.api.form.DeviceActionForm;
-import com.dj.iotlite.api.form.DeviceLocationForm;
-import com.dj.iotlite.api.form.DeviceLogQueryForm;
-import com.dj.iotlite.api.form.DeviceQueryForm;
+import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.service.DeviceService;
+import com.google.gson.Gson;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +51,7 @@ public class DeviceController extends BaseController {
     }
 
     @PostMapping("/save")
-    public ResDto<Boolean> save(@RequestBody DeviceDto deviceDto) {
+    public ResDto<Boolean> save(@RequestBody DeviceSaveForm deviceDto) {
         return success(deviceService.saveDevice(deviceDto));
     }
 

@@ -66,4 +66,16 @@ public class Device extends Base {
     @Type(type = "json")
     @Column(columnDefinition = "json")
     Object spec;
+
+    /**
+     * 设备标签
+     */
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    Object tags;
+
+    /**
+     * 产品版本
+     */
+    String ver;
 }

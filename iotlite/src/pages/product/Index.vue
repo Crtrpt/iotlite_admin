@@ -3,20 +3,25 @@
     <b-col cols="12">
       <div class="widget box box-shadow">
           <div class="widget-header">
-        <b-row>
-          <b-col>
-            <h4>产品 ({{helper.total||0}})</h4>
-          </b-col>
-          <Toolbar :query=query />
-        </b-row>
+            <b-row>
+              <b-col>
+                <h4>产品 ({{helper.total||0}})</h4>
+              </b-col>
+              <Toolbar :query=query />
+            </b-row>
           </div>
           
           <div class="widget-content" >
             <b-row>
               <b-col col cols="2"  v-for="p in items" :key="p.id">
-                <b-card  :title="p.name" class="mt-2 product_card" @click="detail(p)" >
+                <b-card   class="mt-2 product_card" >
+                    <template>
+                      <h5  @click="detail(p)" class="mb-1">{{p.name}}</h5>
+                    </template>
                   <b-card-text>
                     {{p.description}} 
+                    <div class="card_sub_script">{{p.ver}}</div>
+                    <Tag v-model="p.tags" />
                   </b-card-text>
                 </b-card>
               </b-col>
@@ -37,9 +42,10 @@ import {product} from "../../api/product"
 
 
 import New from "./New"
+import Tag from "../../components/tags/Tag"
 export default {
   name:"Product",
-  components:{New,Toolbar},
+  components:{New,Toolbar,Tag},
   data(){
     return {
       total:0,
