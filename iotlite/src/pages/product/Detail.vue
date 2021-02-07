@@ -17,6 +17,7 @@
         <b-nav-item to="model"  active-class="active" ><b-icon icon="code"  /> 物模型</b-nav-item>
         <b-nav-item to="device"  active-class="active"> 设备</b-nav-item>
         <b-nav-item to="map"  active-class="active" >设备地图</b-nav-item>
+        <b-nav-item to="3d"  active-class="active" >3d</b-nav-item>
       </b-nav>
       <router-view  class="content" :form=form></router-view>
     </b-col>

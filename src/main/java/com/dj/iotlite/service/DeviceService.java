@@ -149,7 +149,6 @@ public class DeviceService {
                         criteriaBuilder.like(root.get("name").as(String.class), "%" + query.getWords() + "%"),
                         criteriaBuilder.like(root.get("sn").as(String.class), "%" + query.getWords() + "%"),
                         criteriaBuilder.like(root.get("ver").as(String.class), "%" + query.getWords() + "%"),
-
                         //uuid
                         criteriaBuilder.like(root.get("uuid").as(String.class), "%" + query.getWords() + "%"),
                         //备注
@@ -170,6 +169,7 @@ public class DeviceService {
     public Object saveProduct(ProductForm productForm) {
         Product product = new Product();
         BeanUtils.copyProperties(productForm, product);
+        product.setSpec(new Object());
         productRepository.save(product);
         ep.publishEvent(new ChangeProduct(this, product, ChangeProduct.Action.ADD));
         return true;

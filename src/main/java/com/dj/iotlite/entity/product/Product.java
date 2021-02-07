@@ -1,6 +1,7 @@
 package com.dj.iotlite.entity.product;
 
 import com.dj.iotlite.entity.Base;
+import com.dj.iotlite.enums.SpecFileEnum;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
@@ -57,6 +58,10 @@ public class Product extends Base {
     @Type(type = "json")
     @Column(columnDefinition = "json")
     Object spec;
+
+
+    @Column(columnDefinition = "int default 0")
+    SpecFileEnum specFileType;
 
     String secKey;
 

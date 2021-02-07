@@ -56,6 +56,14 @@ const product  =[
       meta:{
         name:"productDeviceList"
       }
+    },
+    {
+      path: '3d',
+      component: require('../pages/product/product/3D').default,
+      name: 'product3D',
+      meta:{
+        name:"product3D"
+      }
     }
   ]
 }
