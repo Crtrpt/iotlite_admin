@@ -1,9 +1,9 @@
 <template>
   <vue-tags-input
       v-model="tag"
-      :tags="value"
+      :tags="tags"
       placeholder="添加标签"
-      @tags-changed="newTags => tags = newTags"
+      @tags-changed="newTags => change(newTags)"
     />
 </template>
 
@@ -19,7 +19,36 @@ export default {
   },
   data(){
     return {
-      tag:""
+      tag: ''
+    }
+  },
+  computed: {
+    tags (){
+      if(this.value!=null){
+        var tags=[];
+        this.value.forEach((e)=>{
+          tags.push({
+            text:e,
+            tiClasses:[
+              "ti-valid"
+            ]
+          })
+        })
+      return tags;
+      }else{
+        return [];
+      }
+     
+    }
+  },
+  methods:{
+    change(newTags){
+       console.log(this.value);
+      var payload=[]
+      newTags.forEach(t => {
+        payload.push(t.text)
+      });
+      this.$emit("input",payload);
     }
   }
 }

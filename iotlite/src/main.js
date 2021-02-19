@@ -7,9 +7,13 @@ import VueI18n from 'vue-i18n'
 import lang from './i18n'
 import VueLoading from 'vue-loading-template'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
+
 Vue.use(VueLoading)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+
+
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'

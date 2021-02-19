@@ -21,6 +21,12 @@ const device={
     },
     location:(ctx)=>{
       return request.get("device/location",ctx)
+    },
+    refreshDeviceKey:(ctx)=>{
+      return request.post("device/refreshDeviceKey",ctx)
+    },
+    changeTags:(ctx)=>{
+      return request.post("device/changeTags",ctx)
     }
 }
 

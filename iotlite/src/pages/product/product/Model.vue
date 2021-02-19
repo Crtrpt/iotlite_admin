@@ -4,20 +4,18 @@
             <b-button-toolbar>
                       <b-button-group  class="mr-2">
                         <b-button size="sm" variant="primary" @click="saveModel" >更新物模型</b-button>
-
-                     
                       </b-button-group>
 
-                      <b-button-group  class="mr-2">
+                      <!-- <b-button-group  class="mr-2">
                         <b-button size="sm" variant="outline-primary" >增加属性</b-button>
                         <b-button size="sm" variant="outline-primary" >增加事件</b-button>
                         <b-button size="sm" variant="outline-primary" >增加控制</b-button>
                         <b-button size="sm" variant="outline-primary" >增加告警</b-button>
-                      </b-button-group>
+                      </b-button-group> -->
 
-                       <b-button-group  class="mr-2">
+                       <!-- <b-button-group  class="mr-2">
                         <b-button size="sm" variant="primary" @click="saveModel" >文档</b-button>
-                      </b-button-group>
+                      </b-button-group> -->
             </b-button-toolbar>
       </b-col>
       <model-editor ref="editor" :data=d />

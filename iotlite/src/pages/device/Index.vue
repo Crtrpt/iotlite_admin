@@ -38,7 +38,7 @@
                           </div>
                           {{p.description}} 
                           {{p.product.name}}
-                          <Tag v-model="p.tags" />
+                          <Tag v-model="p.tags" @input="payload=>changeTags(payload,p)"/>
                         </b-card-text>
                       </b-card>
                  
@@ -94,6 +94,14 @@ export default {
     this.getList();
   },
   methods:{
+    changeTags(payload,d){
+      device.changeTags({
+        sn:d.sn,
+        productSn:d.product.sn,
+        tags:payload
+      }).then(res=>{
+      })
+    },
     getList(){
       var _this=this;
       device.list(this.query).then((res)=>{

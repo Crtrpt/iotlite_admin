@@ -7,7 +7,7 @@
       <p>{{form.description}}</p>
     </b-col>
     <b-col cols="12">
-        <Tag v-model="form.tags"/>
+        <Tag v-model="form.tags" @input="payload=>changeTags(payload)"/>
     </b-col>
   </b-row>
   <b-row>
@@ -37,6 +37,14 @@ export default {
     this.getInfo()
   },
   methods:{
+    changeTags(payload){
+      var _this=this;
+      product.changeTags({
+        productSn:this.form.sn,
+        tags:payload
+      }).then(res=>{
+      })
+    },
     getInfo(){
       var _this=this;
       console.log(this.$route.params.id)

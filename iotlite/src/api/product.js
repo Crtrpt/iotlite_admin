@@ -30,6 +30,12 @@ const product={
     },
     saveModel:(ctx)=>{
       return request.post("product/saveModel",ctx)
+    },
+    refreshProductKey:(ctx)=>{
+      return request.post("product/refreshProductKey",ctx)
+    },
+    changeTags:(ctx)=>{
+      return request.post("product/changeTags",ctx)
     }
 }
 

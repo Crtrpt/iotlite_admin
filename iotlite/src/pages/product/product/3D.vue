@@ -4,8 +4,6 @@
             <b-button-toolbar>
                       <b-button-group  class="mr-2">
                         <b-button size="sm" variant="primary" @click="saveModel" >更新模型</b-button>
-
-                     
                       </b-button-group>
             </b-button-toolbar>
       </b-col>

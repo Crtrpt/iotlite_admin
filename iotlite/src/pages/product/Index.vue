@@ -20,8 +20,8 @@
                     </template>
                   <b-card-text>
                     {{p.description}} 
-                    <div class="card_sub_script">{{p.ver}}</div>
-                    <Tag v-model="p.tags" />
+                    <div class="card_sub_script">{{p.ver}}<b-icon   icon="bookmark"></b-icon></div>
+                    <Tag v-model="p.tags" @input="payload=>changeTags(payload,p)" />
                   </b-card-text>
                 </b-card>
               </b-col>
@@ -67,6 +67,14 @@ export default {
     this.getList();
   },
   methods:{
+     changeTags(payload,p){
+      var _this=this;
+      product.changeTags({
+        productSn:p.sn,
+        tags:payload
+      }).then(res=>{
+      })
+    },
     getList(){
       var _this=this;
       product.list(this.query).then((res)=>{
