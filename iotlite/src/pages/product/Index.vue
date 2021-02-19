@@ -7,7 +7,7 @@
               <b-col>
                 <h4>产品 ({{helper.total||0}})</h4>
               </b-col>
-              <Toolbar :query=query />
+              <Toolbar :query=query  @refresh="getList"/>
             </b-row>
           </div>
           

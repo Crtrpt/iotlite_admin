@@ -18,6 +18,10 @@
                         <DateTimePicker  v-model="query.date" />
                     </b-button-group>
 
+                     <b-button-group class="mr-2">
+                      <b-button size="sm" variant="primary" @click="$emit('refresh',{})" >刷新</b-button>
+                    </b-button-group>
+
                   </b-button-toolbar>
   </b-col>
 </template>

@@ -2,6 +2,7 @@
    <b-col cols="12" class="mt-2 mb-2">
                   <b-button-toolbar>
                     <b-button-group  class="mr-2">
+                      
                       <b-modal id="new" title="新建设备" hide-footer>
                         <New />
                       </b-modal>
@@ -16,6 +17,10 @@
 
                     <b-button-group  class="mr-2 ">
                         <DateTimePicker  v-model="query.date"  />
+                    </b-button-group>
+
+                    <b-button-group class="mr-2">
+                      <b-button size="sm" variant="primary" @click="$emit('refresh',{})" >刷新</b-button>
                     </b-button-group>
                     
                   </b-button-toolbar>

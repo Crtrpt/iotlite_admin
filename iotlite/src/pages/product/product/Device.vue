@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Toolbar :query=query />
+      <Toolbar :query=query @refresh="getList"/>
 
       <b-table hover :items="items" :fields="fields"  @row-contextmenu="(item, index, event)=>{event.preventDefault();$refs.menu.open(event,item)}" @row-dblclicked="gotoDevice"  selectable>
           <template v-slot:cell(tags)="data">
@@ -66,11 +66,11 @@ export default {
             label: '设备名称',
             sortable: true
           },
-          {
-            key: 'description',
-            label: '设备描述',
-            sortable: true
-          },
+          // {
+          //   key: 'description',
+          //   label: '设备描述',
+          //   sortable: true
+          // },
           {
             key: 'location',
             label: '设备位置',
