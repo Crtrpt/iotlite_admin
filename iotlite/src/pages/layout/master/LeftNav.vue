@@ -51,7 +51,9 @@
                           <ul class="collapse submenu list-unstyled show" id="app" data-parent="#accordionExample">
                             <li>
                               <router-link :to='{"name":"product"}' >产品</router-link>
+                               <router-link :to='{"name":"group"}' >分组</router-link>
                               <router-link :to='{"name":"device"}' >设备</router-link>
+                              
                             </li>
                           </ul>
                         </b-collapse>

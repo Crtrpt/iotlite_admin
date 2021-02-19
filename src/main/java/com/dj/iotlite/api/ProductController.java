@@ -1,9 +1,7 @@
 package com.dj.iotlite.api;
 
 import com.dj.iotlite.api.dto.*;
-import com.dj.iotlite.api.form.DeviceQueryForm;
-import com.dj.iotlite.api.form.ProductForm;
-import com.dj.iotlite.api.form.ProductQueryForm;
+import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.service.DeviceService;
@@ -76,5 +74,16 @@ public class ProductController extends BaseController {
     @PostMapping("/saveModel")
     public ResDto<Boolean> saveModel(@RequestBody ProductSaveModelForm form) {
         return success(deviceService.saveModel(form));
+    }
+
+
+    @PostMapping("/refreshProductKey")
+    public ResDto<Boolean> refreshProductKey(@RequestBody ProductRefreshProductKeyForm form) {
+        return success(deviceService.refreshProductKey(form));
+    }
+
+    @PostMapping("/changeTags")
+    public ResDto<Boolean> changeTags(@RequestBody ChangeTagsForm form) {
+        return success(deviceService.changeTags(form));
     }
 }

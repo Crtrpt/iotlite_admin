@@ -18,4 +18,6 @@ public interface DeviceRepository extends CrudRepository<Device, Long>, JpaSpeci
     Page<Device> findAll(Specification spec, Pageable  page);
 
     Optional<Device> findFirstBySnAndProductSn(String deviceSn,String productSn);
+
+    Long countByProductSn(String productSn);
 }

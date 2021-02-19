@@ -3,6 +3,7 @@ package com.dj.iotlite.api;
 import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.Device;
+import com.dj.iotlite.entity.device.DeviceGroup;
 import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.service.DeviceService;
 import com.google.gson.Gson;
@@ -30,6 +31,40 @@ public class DeviceController extends BaseController {
         });
         ret.setTotal(res.getTotalElements());
         return success(ret);
+    }
+
+    @GetMapping("/groupList")
+    public ResDto<Page<DeviceGroupListDto>> grouplist(DeviceQueryForm deviceQueryForm) {
+        Page<DeviceGroupListDto> ret = new Page<DeviceGroupListDto>();
+        org.springframework.data.domain.Page<DeviceGroup> res = deviceService.getDeviceGroupList(deviceQueryForm);
+        res.forEach(s -> {
+            DeviceGroupListDto t = new DeviceGroupListDto();
+            BeanUtils.copyProperties(s, t);
+            ret.getList().add(t);
+        });
+        ret.setTotal(res.getTotalElements());
+        return success(ret);
+    }
+
+    /**
+     * 组内设备列表
+     * @param deviceQueryForm
+     * @return
+     */
+    @GetMapping("/groupDeviceList")
+    public ResDto<Page<DeviceListDto>> groupDevicelist(DeviceQueryForm deviceQueryForm) {
+        Page<DeviceListDto> ret =deviceService.getGroupDeviceList(deviceQueryForm);
+        return success(ret);
+    }
+
+    @GetMapping("/groupInfo")
+    public ResDto<DeviceGroupDto> queryGroupInfo(@RequestParam("id") Long id) {
+        return success(deviceService.queryDeviceGroup(id));
+    }
+
+    @PostMapping("/saveGroup")
+    public ResDto<Boolean> save(@RequestBody DeviceGroupSaveForm deviceDto) {
+        return success(deviceService.deviceGroupSave(deviceDto));
     }
 
     @GetMapping("/log")
@@ -73,5 +108,21 @@ public class DeviceController extends BaseController {
     @GetMapping("/enable")
     public ResDto<AsynPage> enable(@RequestParam("uuid") String uuid) {
         return success(deviceService.enable(uuid));
+    }
+
+    /**
+     * 更新设备key
+     *
+     * @param form
+     * @return
+     */
+    @PostMapping("/refreshDeviceKey")
+    public ResDto<Boolean> refreshDeviceKey(@RequestBody DeviceRefreshDeviceKeyForm form) {
+        return success(deviceService.refreshDeviceKey(form));
+    }
+
+    @PostMapping("/changeTags")
+    public ResDto<Boolean> changeTags(@RequestBody DeviceChangeTagsForm form) {
+        return success(deviceService.deviceChangeTags(form));
     }
 }

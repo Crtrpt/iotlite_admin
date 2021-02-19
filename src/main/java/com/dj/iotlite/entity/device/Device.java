@@ -1,6 +1,8 @@
 package com.dj.iotlite.entity.device;
 
 import com.dj.iotlite.entity.Base;
+import com.dj.iotlite.enums.DeviceCertEnum;
+import com.dj.iotlite.enums.ProductDiscoverEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
@@ -78,4 +80,32 @@ public class Device extends Base {
      * 产品版本
      */
     String ver;
+
+    /**
+     * 设备注册方式
+     */
+    @Column(columnDefinition = "int default 0")
+    ProductDiscoverEnum discover;
+    /**
+     * 设备认证方式默认不需要认证
+     */
+    @Column(columnDefinition = "int default 0")
+    DeviceCertEnum deviceCert;
+
+    /**
+     * 设备key
+     */
+    String deviceKey;
+
+    /**
+     * 设备加入的分组
+     */
+    Long batchId;
+
+
+
+    /**
+     * 设备加入的分组
+     */
+    String deviceGroup;
 }

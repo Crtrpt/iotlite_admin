@@ -27,6 +27,18 @@ const device={
     },
     changeTags:(ctx)=>{
       return request.post("device/changeTags",ctx)
+    },
+    groupSave:(ctx)=>{
+      return request.post("device/saveGroup",ctx)
+    },
+    groupList:(ctx)=>{
+      return request.get("device/groupList",ctx)
+    },
+    groupInfo:(ctx)=>{
+      return request.get("device/groupInfo",ctx)
+    },
+    groupDeviceList:(ctx)=>{
+      return request.get("device/groupDeviceList",ctx)
     }
 }
 

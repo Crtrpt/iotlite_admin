@@ -1,6 +1,8 @@
 package com.dj.iotlite.entity.product;
 
 import com.dj.iotlite.entity.Base;
+import com.dj.iotlite.enums.DeviceCertEnum;
+import com.dj.iotlite.enums.ProductDiscoverEnum;
 import com.dj.iotlite.enums.SpecFileEnum;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Data;
@@ -69,4 +71,15 @@ public class Product extends Base {
      * 每次修改版本加一
      */
     String ver;
+
+    /**
+     * 默认后台手动添加
+     */
+    @Column(columnDefinition = "int default 0")
+    ProductDiscoverEnum discover;
+    /**
+     * 设备认证方式默认不需要认证
+     */
+    @Column(columnDefinition = "int default 0")
+    DeviceCertEnum deviceCert;
 }

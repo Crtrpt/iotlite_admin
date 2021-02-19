@@ -16,7 +16,7 @@ public class ProductListDto implements BaseDto {
 
     Integer onlineCount;
 
-    Integer deviceCount;
+    Long deviceCount;
 
     String ver;
 }

@@ -3,10 +3,12 @@ import  UserLayout  from "../pages/layout/user/UserLayout";
 
 import product from "./product"
 import device from "./device"
+import group from "./group"
 import organization from "./organization"
 import user from "./user"
 import gateway from "./gateway"
 import dashboard from "./dashboard"
+
 
 var routes = [
   {
@@ -26,6 +28,7 @@ var routes = [
       ...dashboard,
       ...device,
       ...product,
+      ...group,
       ...gateway,
       ...organization,
       ...user,

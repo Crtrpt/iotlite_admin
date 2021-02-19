@@ -3,16 +3,16 @@ package com.dj.iotlite.service;
 import com.dj.iotlite.RedisKey;
 import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.*;
-import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.device.DeviceLog;
-import com.dj.iotlite.entity.device.DeviceLogRepository;
-import com.dj.iotlite.entity.device.DeviceRepository;
+import com.dj.iotlite.entity.device.*;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
 import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
 import com.dj.iotlite.exception.BusinessException;
+import com.dj.iotlite.mapper.DeviceMapper;
 import com.dj.iotlite.spec.SpecV1;
+import com.dj.iotlite.utils.UUID;
+import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
 import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +27,7 @@ import org.springframework.util.NumberUtils;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +42,12 @@ public class DeviceService {
 
     @Autowired
     DeviceRepository deviceRepository;
+
+    @Autowired
+    DeviceGroupRepository deviceGroupRepository;
+
+    @Autowired
+    DeviceGroupLinkRepository deviceGroupLinkRepository;
 
     public Object queryDevice(Long id) {
         DeviceDto deviceDto = new DeviceDto();
@@ -102,15 +105,42 @@ public class DeviceService {
             throw new BusinessException("设备不存在");
         });
 
+        var groupIdsMap=new HashMap<String,Long>();
+        Arrays.stream(deviceDto.getDeviceGroup().split(",")).forEach((s)->{
+            if(s.equals("")){
+            }else {
+                deviceGroupRepository.findFirstByName(s).ifPresentOrElse(
+                        (s1)->{
+                            groupIdsMap.put(s1.getName(),s1.getId());
+                        }
+                        ,()->{
+                            var deviceGroup=new DeviceGroup();
+                            deviceGroup.setName(s);
+                            deviceGroup.setDescription(s);
+                            var s2=deviceGroupRepository.save(deviceGroup);
+                            groupIdsMap.put(s2.getName(),s2.getId());
+                        });
+            }
+        });
 
-        batchCopy(device, deviceDto);
+        batchCopy(device, deviceDto,groupIdsMap);
         deviceRepository.save(device);
+        //保存分组关系
+        for (Map.Entry<String, Long> entry : groupIdsMap.entrySet()) {
+            String name = entry.getKey();
+            Long id = entry.getValue();
+            var link = new DeviceGroupLink();
+            link.setDeviceSn(device.getSn());
+            link.setGroupId(id);
+            link.setGroupName(name);
+            deviceGroupLinkRepository.save(link);
+        }
 
         ep.publishEvent(new ChangeDevice(this, device, ChangeDevice.Action.ADD));
         return true;
     }
 
-    public List<Device> batchCopy(Device device, DeviceSaveForm deviceDto) {
+    public List<Device> batchCopy(Device device, DeviceSaveForm deviceDto, HashMap<String, Long> groupIdsMap) {
         var sn = deviceDto.getSn();
         //去掉数字
         String prefix = com.dj.iotlite.utils.StringUtils.parseStr(deviceDto.getSn());
@@ -135,6 +165,17 @@ public class DeviceService {
             log.info("批量创建设备" + d.getSn());
             d = deviceCopy;
             deviceRepository.save(d);
+
+            //保存分组关系
+            for (Map.Entry<String, Long> entry : groupIdsMap.entrySet()) {
+                String name = entry.getKey();
+                Long id = entry.getValue();
+                var link = new DeviceGroupLink();
+                link.setDeviceSn(d.getSn());
+                link.setGroupId(id);
+                link.setGroupName(name);
+                deviceGroupLinkRepository.save(link);
+            }
         }
         log.info("批量创建设备" + list.size());
         return list;
@@ -177,8 +218,11 @@ public class DeviceService {
 
     public Object queryProduct(Long id) {
         ProductDto productDto = new ProductDto();
-        Product product = productRepository.findById(id).orElse(new Product());
+        Product product = productRepository.findById(id).orElseThrow(() -> {
+            throw new BusinessException("设备不存在");
+        });
         BeanUtils.copyProperties(product, productDto);
+        productDto.setDeviceCount(deviceRepository.countByProductSn(product.getSn()));
         return productDto;
     }
 
@@ -289,5 +333,116 @@ public class DeviceService {
         product.setSpec(gson.fromJson(form.getSpec(), Object.class));
         productRepository.save(product);
         return true;
+    }
+
+    public Object refreshProductKey(ProductRefreshProductKeyForm form) {
+        var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
+            throw new BusinessException("产品不存在或者已经被删除");
+        });
+        product.setSecKey(UUID.getUUID());
+        productRepository.save(product);
+        return product.getSecKey();
+    }
+
+    public Object refreshDeviceKey(DeviceRefreshDeviceKeyForm form) {
+        var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
+            throw new BusinessException("产品不存在或者已经被删除");
+        });
+
+        var device = deviceRepository.findFirstBySnAndProductSn(form.getDeviceSn(), form.getProductSn()).orElseThrow(
+                () -> {
+                    throw new BusinessException("设备不存在或者已经被删除");
+                }
+        );
+        device.setDeviceKey(UUID.getUUID());
+        deviceRepository.save(device);
+        return device.getDeviceKey();
+    }
+
+    public Object changeTags(ChangeTagsForm form) {
+        var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
+            throw new BusinessException("产品不存在或者已经被删除");
+        });
+        product.setTags(form.getTags());
+        productRepository.save(product);
+        return true;
+    }
+
+    public Object deviceChangeTags(DeviceChangeTagsForm form) {
+        var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
+            throw new BusinessException("产品不存在或者已经被删除");
+        });
+        var device = deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).orElseThrow(
+                () -> {
+                    throw new BusinessException("设备不存在或者已经被删除");
+                }
+        );
+        device.setTags((form.getTags()));
+        deviceRepository.save(device);
+        return true;
+    }
+
+    public Object deviceGroupSave(DeviceGroupSaveForm deviceDto) {
+        var deviceGroup = new DeviceGroup();
+        deviceGroupRepository.findFirstByName(deviceDto.getName()).ifPresentOrElse((e) -> {
+            throw new BusinessException("设备分组已经存在");
+        }, () -> {
+            BeanUtils.copyProperties(deviceDto, deviceGroup);
+            deviceGroup.setCreatedAt(System.currentTimeMillis());
+            deviceGroupRepository.save(deviceGroup);
+        });
+        return deviceGroup;
+    }
+
+    public Page<DeviceGroup> getDeviceGroupList(DeviceQueryForm deviceQueryForm) {
+        Specification<DeviceGroup> specification = (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new ArrayList<>();
+            if (!StringUtils.isEmpty(deviceQueryForm.getWords())) {
+                list.add(criteriaBuilder.or(
+                        //名称
+                        criteriaBuilder.like(root.get("name").as(String.class), "%" + deviceQueryForm.getWords() + "%"),
+                        criteriaBuilder.like(root.get("description").as(String.class), "%" + deviceQueryForm.getWords() + "%")
+                ));
+            }
+            Predicate[] p = new Predicate[list.size()];
+            criteriaQuery.where(criteriaBuilder.and(list.toArray(p)));
+            return null;
+        };
+        return deviceGroupRepository.findAll(specification, deviceQueryForm.getPage());
+    }
+
+    public Object queryDeviceGroup(Long id) {
+        var deviceGroupDto = new DeviceGroupDto();
+        DeviceGroup device = deviceGroupRepository.findById(id).orElse(new DeviceGroup());
+        BeanUtils.copyProperties(device, deviceGroupDto);
+        BeanUtils.copyProperties(device, deviceGroupDto);
+        return deviceGroupDto;
+    }
+
+    @Autowired(required = false)
+    DeviceMapper deviceMapper;
+
+    /**
+     * 获取组内设备列表
+     * @param deviceQueryForm
+     * @return
+     */
+    public com.dj.iotlite.api.dto.Page<DeviceListDto> getGroupDeviceList(DeviceQueryForm deviceQueryForm) {
+        var ret=new com.dj.iotlite.api.dto.Page<DeviceListDto>();
+        List<DeviceListDto> list=new ArrayList<>();
+        PageHelper.startPage(1, 10);
+
+        var data=  deviceMapper.getGroupDeviceList(deviceQueryForm);
+
+        System.out.println(data);
+
+        data.stream().forEach(d->{
+            var t=new DeviceListDto();
+            BeanUtils.copyProperties(d,t);
+            list.add(t);
+        });
+        ret.setList(list);
+        ret.setTotal(data.getTotal());
+        return ret;
     }
 }

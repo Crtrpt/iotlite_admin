@@ -27,6 +27,7 @@ import "./assets/css/breadcrumb.css"
 import "./assets/css/custom-modal.css"
 import "./assets/css/custom-pagination.css"
 import "./assets/css/custom-list-group.css"
+import "./assets/css/tab.css"
 
 Vue.use(VueRouter)
 

@@ -1,5 +1,10 @@
 package com.dj.iotlite.api.dto;
 
+import com.dj.iotlite.enums.DeviceCertEnum;
+import com.dj.iotlite.enums.ProductDiscoverEnum;
+import com.dj.iotlite.serialize.LongToDateSerialize;
+import com.dj.iotlite.serialize.StringMaskSerialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 @Data
@@ -9,4 +14,10 @@ public class ProductDto extends ProductListDto {
     Object spec;
     String sn;
     Object tags;
+    ProductDiscoverEnum discover;
+
+    DeviceCertEnum deviceCert;
+
+    @JsonSerialize(using = StringMaskSerialize.class)
+    String secKey;
 }

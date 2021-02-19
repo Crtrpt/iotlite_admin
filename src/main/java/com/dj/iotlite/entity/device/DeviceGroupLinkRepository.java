@@ -9,13 +9,9 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface DeviceGroupRepository extends CrudRepository<DeviceGroup, Long>, JpaSpecificationExecutor<DeviceGroup>, JpaRepository<DeviceGroup, Long> {
-
-    Optional<DeviceGroup> findFirstByName(String name);
-
-    Page<DeviceGroup> findAll(Specification spec, Pageable page);
-
+public interface DeviceGroupLinkRepository extends CrudRepository<DeviceGroupLink, Long>,
+        JpaSpecificationExecutor<DeviceGroupLink>,
+        JpaRepository<DeviceGroupLink, Long> {
+    Page<DeviceGroupLink> findAll(Specification spec, Pageable page);
 }

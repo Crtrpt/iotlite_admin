@@ -128,23 +128,15 @@ export default {
     this.getList();
   },
   methods:{
-    changeTags(payload,d){
-      device.changeTags({
-        sn:d.sn,
-        productSn:this.form.sn,
-        tags:payload
-      }).then(res=>{
-      })
-    },
     gotoDevice(item,idx,e){
       console.log(item);
       this.$router.push({name: 'deviceDetail',params: { id: item.id }})
     },
     getList(){
       var _this=this;
-       product.deviceList(Object.assign(
+       device.groupDeviceList(Object.assign(
        {
-          productSn:this.form.sn,
+          id:this.form.id,
        },this.query
        )).then((res)=>{
           _this.items=res.data.list;
