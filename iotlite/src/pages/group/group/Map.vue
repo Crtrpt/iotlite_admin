@@ -17,8 +17,7 @@
 <script>
 
 import {product} from "../../../api/product"
-import FreeDraw from "leaflet-freedraw";
-
+import {device} from "../../../api/device"
 export default {
   name:"Map",
   props:{
@@ -28,7 +27,6 @@ export default {
     return {
       map:null,
       layerContrl:null,
-      freeDraw:new FreeDraw(),
       productLayer:{
 
       }
@@ -49,7 +47,13 @@ export default {
           
         }
 
-        var map= this.map=L.map('map').setView([31.23573822772999, 121.48664474487306], 18)
+        var map= this.map=L.map('map',{}).setView([31.23573822772999, 121.48664474487306], 18)
+
+        map.pm.setLang('zh');  
+        map.pm.addControls({  
+          position: 'topleft',  
+          drawCircle: true,  
+        });  
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -61,18 +65,37 @@ export default {
         .bindPopup('当前位置')
         .openPopup();
 
-        this.map.on("click",(res)=>{
-          console.log(res);
+
+        var fenceLayer=L.geoJSON(this.form.fence, {
+            style: function (feature) {
+                return {
+                  color: "#3388ff",
+                  stroke: true
+                };
+            },
+            onEachFeature:function(f,layer) {
+              console.log("绘制图形")
+              layer.bindPopup("这是什么?")
+            }
         })
+
         this.loadProduct();
-        this.loadDevice();  
-
-        this.freeDraw.on('markers', event => {
-            console.log("更新");
-        });
-        this.map.addLayer(this.freeDraw);
-
-      
+        this.loadDevice();
+        //围栏图层
+        // var fenceLayer=L.layerGroup();
+        map.pm.setGlobalOptions({ pinning: true, snappable: true ,layerGroup:fenceLayer})  
+        fenceLayer.addTo(map);
+        map.on('pm:drawend', (e) => { 
+          console.log("绘制完成")
+          console.log(e);
+          // window.localStorage.setItem("FENCE"+this.form.id,JSON.stringify(fenceLayer.toGeoJSON()));
+          device.groupSaveFence({
+            id:_this.form.id,
+            fence:JSON.stringify(fenceLayer.toGeoJSON()),
+          }).then(res=>{
+            console.log(res);
+          })
+        })
 
     },
     loadProduct(){

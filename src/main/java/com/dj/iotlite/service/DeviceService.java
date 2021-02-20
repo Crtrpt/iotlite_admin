@@ -475,4 +475,12 @@ public class DeviceService {
             );
         });
     }
+
+    public Object saveGroupFence(DeviceGroupFenceSaveForm form) {
+        deviceGroupRepository.findById(form.getId()).ifPresent(d -> {
+            d.setFence(form.getFence());
+            deviceGroupRepository.save(d);
+        });
+        return true;
+    }
 }

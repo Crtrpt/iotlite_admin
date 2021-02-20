@@ -37,5 +37,6 @@ public class DeviceGroup extends Base {
     /**
      * 分组围栏
      */
+    @Column(columnDefinition = "json")
     String fence;
 }

@@ -42,6 +42,9 @@ const device={
     },
     groupDeviceList:(ctx)=>{
       return request.get("device/groupDeviceList",ctx)
+    },
+    groupSaveFence:(ctx)=>{
+      return request.post("device/saveGroupFence",ctx)
     }
 }
 

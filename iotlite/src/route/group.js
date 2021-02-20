@@ -34,6 +34,14 @@ const group  =[
   //     }
   //   },
     {
+      path: 'playground',
+      component: require('../pages/group/group/Playground').default,
+      name: 'groupPlayground',
+      meta:{
+        name:"groupPlayground"
+      }
+    },
+    {
       path: 'map',
       component: require('../pages/group/group/Map').default,
       name: 'groupDetailMap',
