@@ -420,7 +420,6 @@ public class DeviceService {
         var deviceGroupDto = new DeviceGroupDto();
         DeviceGroup device = deviceGroupRepository.findById(id).orElse(new DeviceGroup());
         BeanUtils.copyProperties(device, deviceGroupDto);
-        BeanUtils.copyProperties(device, deviceGroupDto);
         return deviceGroupDto;
     }
 
