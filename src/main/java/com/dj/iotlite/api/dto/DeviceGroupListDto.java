@@ -11,4 +11,5 @@ public class DeviceGroupListDto implements BaseDto {
     String description;
     @JsonSerialize(using = LongToDateSerialize.class)
     Long createdAt;
+    Long deviceCount;
 }

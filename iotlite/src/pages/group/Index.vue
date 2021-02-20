@@ -19,8 +19,9 @@
                       <h5  @click="detail(p)" class="mb-1">{{p.name}}</h5>
                     </template>
                   <b-card-text>
-                    {{p.description}}                    
+                    {{p.description}}
                   </b-card-text>
+                  设备数量({{p.deviceCount||0}})
                 </b-card>
               </b-col>
             </b-row>

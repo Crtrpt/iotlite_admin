@@ -30,6 +30,12 @@ public class DeviceGroup extends Base {
      * 备注
      */
     String description;
-
-
+    /**
+     * 设备数量
+     */
+    Long deviceCount;
+    /**
+     * 分组围栏
+     */
+    String fence;
 }

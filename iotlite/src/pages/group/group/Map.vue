@@ -1,6 +1,13 @@
 <template>
   <div class="mt-1 mx-1">
       <b-row>
+         <b-col cols="12" class="mt-2 mb-2">
+            <b-button-toolbar>
+                <b-button-group  class="mr-2">
+                  <b-button size="sm" variant="primary" @click="setFence" >分组围栏</b-button>
+                </b-button-group>
+            </b-button-toolbar>
+      </b-col>
         <b-col cols="12" id="map">
         </b-col>
       </b-row>
@@ -10,6 +17,8 @@
 <script>
 
 import {product} from "../../../api/product"
+import FreeDraw from "leaflet-freedraw";
+
 export default {
   name:"Map",
   props:{
@@ -19,12 +28,16 @@ export default {
     return {
       map:null,
       layerContrl:null,
+      freeDraw:new FreeDraw(),
       productLayer:{
 
       }
     }
   },
   methods:{
+    setFence(){
+        console.log("设置分组围栏")
+    },
     init(){ 
         var _this=this;
 
@@ -53,6 +66,14 @@ export default {
         })
         this.loadProduct();
         this.loadDevice();  
+
+        this.freeDraw.on('markers', event => {
+            console.log("更新");
+        });
+        this.map.addLayer(this.freeDraw);
+
+      
+
     },
     loadProduct(){
        var _this=this;

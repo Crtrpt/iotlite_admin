@@ -34,6 +34,12 @@ public class DeviceGroupLink extends Base {
      * 备注
      */
     String deviceSn;
+    /**
+     * 产品Sn
+     */
+    String productSn;
+
+    Long deviceId;
 
 
 }

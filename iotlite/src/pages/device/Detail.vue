@@ -11,6 +11,9 @@
     <b-col cols="12">
         <Tag v-model="form.tags"/>
     </b-col>
+    <b-col cols="12">
+      <DeviceGroup v-model="form.deviceGroup" />
+    </b-col>
   </b-row>
    <b-collapse id="more" class="mt-2">
   <b-row>
@@ -59,10 +62,11 @@
 <script>
 import {device} from "../../api/device"
 import Tag from "../../components/tags/Tag"
+import DeviceGroup from "../../components/tags/DeviceGroup";
 export default {
   name:"deviceDetail",
   components:{
-    Tag
+    Tag,DeviceGroup
   },
   mounted(){
     this.getInfo()

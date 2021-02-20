@@ -6,7 +6,6 @@ import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.device.DeviceGroup;
 import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.service.DeviceService;
-import com.google.gson.Gson;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -48,18 +47,24 @@ public class DeviceController extends BaseController {
 
     /**
      * 组内设备列表
+     *
      * @param deviceQueryForm
      * @return
      */
     @GetMapping("/groupDeviceList")
     public ResDto<Page<DeviceListDto>> groupDevicelist(DeviceQueryForm deviceQueryForm) {
-        Page<DeviceListDto> ret =deviceService.getGroupDeviceList(deviceQueryForm);
+        Page<DeviceListDto> ret = deviceService.getGroupDeviceList(deviceQueryForm);
         return success(ret);
     }
 
     @GetMapping("/groupInfo")
     public ResDto<DeviceGroupDto> queryGroupInfo(@RequestParam("id") Long id) {
         return success(deviceService.queryDeviceGroup(id));
+    }
+
+    @GetMapping("/groupInfoByName")
+    public ResDto<DeviceGroupDto> queryGroupInfo(@RequestParam("name") String name) {
+        return success(deviceService.queryDeviceGroup(name));
     }
 
     @PostMapping("/saveGroup")

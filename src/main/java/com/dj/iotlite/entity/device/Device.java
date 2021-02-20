@@ -3,6 +3,8 @@ package com.dj.iotlite.entity.device;
 import com.dj.iotlite.entity.Base;
 import com.dj.iotlite.enums.DeviceCertEnum;
 import com.dj.iotlite.enums.ProductDiscoverEnum;
+import com.dj.iotlite.enums.ProtocolTypeEnum;
+import com.dj.iotlite.enums.WorkTypeEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
@@ -108,4 +110,22 @@ public class Device extends Base {
      * 设备加入的分组
      */
     String deviceGroup;
+
+    /**
+     * 默认终端设备
+     */
+    @Column(columnDefinition = "int default 0")
+    WorkTypeEnum workType;
+
+    /**
+     * 默认mqtt
+     */
+    @Column(columnDefinition = "int default 0")
+    ProtocolTypeEnum protocolType;
+
+
+    /**
+     * 设备围栏
+     */
+    String fence;
 }

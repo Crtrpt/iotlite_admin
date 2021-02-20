@@ -37,6 +37,9 @@ const device={
     groupInfo:(ctx)=>{
       return request.get("device/groupInfo",ctx)
     },
+    groupInfoByName:(ctx)=>{
+      return request.get("device/groupInfoByName",ctx)
+    },
     groupDeviceList:(ctx)=>{
       return request.get("device/groupDeviceList",ctx)
     }

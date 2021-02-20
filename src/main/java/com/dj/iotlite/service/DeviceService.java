@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.NumberUtils;
@@ -105,25 +106,25 @@ public class DeviceService {
             throw new BusinessException("设备不存在");
         });
 
-        var groupIdsMap=new HashMap<String,Long>();
-        Arrays.stream(deviceDto.getDeviceGroup().split(",")).forEach((s)->{
-            if(s.equals("")){
-            }else {
+        var groupIdsMap = new HashMap<String, Long>();
+        Arrays.stream(deviceDto.getDeviceGroup().split(",")).forEach((s) -> {
+            if (s.equals("")) {
+            } else {
                 deviceGroupRepository.findFirstByName(s).ifPresentOrElse(
-                        (s1)->{
-                            groupIdsMap.put(s1.getName(),s1.getId());
+                        (s1) -> {
+                            groupIdsMap.put(s1.getName(), s1.getId());
                         }
-                        ,()->{
-                            var deviceGroup=new DeviceGroup();
+                        , () -> {
+                            var deviceGroup = new DeviceGroup();
                             deviceGroup.setName(s);
                             deviceGroup.setDescription(s);
-                            var s2=deviceGroupRepository.save(deviceGroup);
-                            groupIdsMap.put(s2.getName(),s2.getId());
+                            var s2 = deviceGroupRepository.save(deviceGroup);
+                            groupIdsMap.put(s2.getName(), s2.getId());
                         });
             }
         });
 
-        batchCopy(device, deviceDto,groupIdsMap);
+        batchCopy(device, deviceDto, groupIdsMap);
         deviceRepository.save(device);
         //保存分组关系
         for (Map.Entry<String, Long> entry : groupIdsMap.entrySet()) {
@@ -131,12 +132,14 @@ public class DeviceService {
             Long id = entry.getValue();
             var link = new DeviceGroupLink();
             link.setDeviceSn(device.getSn());
+            link.setProductSn(device.getProductSn());
             link.setGroupId(id);
             link.setGroupName(name);
+            link.setDeviceId(device.getId());
             deviceGroupLinkRepository.save(link);
         }
 
-        ep.publishEvent(new ChangeDevice(this, device, ChangeDevice.Action.ADD));
+        ep.publishEvent(new ChangeDevice(this, device, ChangeDevice.Action.ADD, groupIdsMap));
         return true;
     }
 
@@ -174,6 +177,8 @@ public class DeviceService {
                 link.setDeviceSn(d.getSn());
                 link.setGroupId(id);
                 link.setGroupName(name);
+                link.setProductSn(d.getProductSn());
+                link.setDeviceId(d.getId());
                 deviceGroupLinkRepository.save(link);
             }
         }
@@ -424,25 +429,50 @@ public class DeviceService {
 
     /**
      * 获取组内设备列表
+     *
      * @param deviceQueryForm
      * @return
      */
     public com.dj.iotlite.api.dto.Page<DeviceListDto> getGroupDeviceList(DeviceQueryForm deviceQueryForm) {
-        var ret=new com.dj.iotlite.api.dto.Page<DeviceListDto>();
-        List<DeviceListDto> list=new ArrayList<>();
+        Gson gson = new Gson();
+
+        var ret = new com.dj.iotlite.api.dto.Page<DeviceListDto>();
+        List<DeviceListDto> list = new ArrayList<>();
         PageHelper.startPage(1, 10);
 
-        var data=  deviceMapper.getGroupDeviceList(deviceQueryForm);
+        var data = deviceMapper.getGroupDeviceList(deviceQueryForm);
 
-        System.out.println(data);
-
-        data.stream().forEach(d->{
-            var t=new DeviceListDto();
-            BeanUtils.copyProperties(d,t);
+        data.stream().forEach(d -> {
+            var t = new DeviceListDto();
+            BeanUtils.copyProperties(d, t);
+            var pto = new ProductDto();
+            var p = productRepository.findFirstBySn(d.getProductSn()).orElse(new Product());
+            BeanUtils.copyProperties(p, pto);
+            t.setProduct(pto);
+            t.setTags(gson.fromJson(String.valueOf(d.getTags()), List.class));
             list.add(t);
         });
         ret.setList(list);
         ret.setTotal(data.getTotal());
         return ret;
+    }
+
+    public Object queryDeviceGroup(String name) {
+        var deviceGroupDto = new DeviceGroupDto();
+        DeviceGroup device = deviceGroupRepository.findFirstByName(name).orElse(new DeviceGroup());
+        BeanUtils.copyProperties(device, deviceGroupDto);
+        return deviceGroupDto;
+    }
+
+    @Async
+    public void refreshGroupDeviceCount(Collection<Long> values) {
+        values.stream().forEach(id -> {
+            deviceGroupRepository.findById(id).ifPresent(
+                    d -> {
+                        d.setDeviceCount(deviceGroupLinkRepository.countByGroupId(id));
+                        deviceGroupRepository.save(d);
+                    }
+            );
+        });
     }
 }

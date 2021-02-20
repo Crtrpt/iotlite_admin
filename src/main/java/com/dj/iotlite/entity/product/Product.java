@@ -1,9 +1,7 @@
 package com.dj.iotlite.entity.product;
 
 import com.dj.iotlite.entity.Base;
-import com.dj.iotlite.enums.DeviceCertEnum;
-import com.dj.iotlite.enums.ProductDiscoverEnum;
-import com.dj.iotlite.enums.SpecFileEnum;
+import com.dj.iotlite.enums.*;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
@@ -82,4 +80,16 @@ public class Product extends Base {
      */
     @Column(columnDefinition = "int default 0")
     DeviceCertEnum deviceCert;
+
+    /**
+     * 默认终端设备
+     */
+    @Column(columnDefinition = "int default 0")
+    WorkTypeEnum workType;
+
+    /**
+     * 默认mqtt
+     */
+    @Column(columnDefinition = "int default 0")
+    ProtocolTypeEnum protocolType;
 }

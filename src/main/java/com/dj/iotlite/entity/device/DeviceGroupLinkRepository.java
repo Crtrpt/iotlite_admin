@@ -14,4 +14,6 @@ public interface DeviceGroupLinkRepository extends CrudRepository<DeviceGroupLin
         JpaSpecificationExecutor<DeviceGroupLink>,
         JpaRepository<DeviceGroupLink, Long> {
     Page<DeviceGroupLink> findAll(Specification spec, Pageable page);
+
+    Long countByGroupId(Long groupId);
 }

@@ -7,7 +7,7 @@
                       </b-modal>
                       <b-button size="sm" variant="primary" v-b-modal.new  >新建分组</b-button>
                     </b-button-group>
-                    <importFile></importFile>
+                    <!-- <importFile></importFile> -->
 
                     <b-button-group  class="mr-2">
                       <b-form-input class="tool_input" v-model="query.words" placeholder="搜索"></b-form-input>

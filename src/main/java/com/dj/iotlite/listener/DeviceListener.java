@@ -22,6 +22,7 @@ public class DeviceListener implements ApplicationListener<ChangeDevice> {
     @Override
     public void onApplicationEvent(ChangeDevice changeDevice) {
         log.info("device modify");
+        deviceService.refreshGroupDeviceCount(changeDevice.getGroupIdsMap().values());
 
     }
 }

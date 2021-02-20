@@ -3,8 +3,7 @@
 <mapper namespace="com.dj.iotlite.mapper.DeviceMapper">
 
     <select id="getGroupDeviceList" resultType="com.dj.iotlite.entity.device.Device">
-        select * from device_group_link where group_id= 2
-        order by id desc
+        select * from device where id in (  select device_id from device_group_link where group_id= #{deviceQueryForm.groupId})
     </select>
 
 

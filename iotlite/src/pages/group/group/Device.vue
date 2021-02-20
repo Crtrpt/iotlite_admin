@@ -6,7 +6,7 @@
       @row-contextmenu="(item, index, event)=>{event.preventDefault();$refs.menu.open(event,item)}" 
       @row-dblclicked="gotoDevice"
       selectable>
-          
+
           <template #cell(selected)="{ rowSelected }">
             <template v-if="rowSelected">
               <span aria-hidden="true">&check;</span>
@@ -20,6 +20,10 @@
           
           <template v-slot:cell(tags)="data">
                      <Tag v-model="data.item.tags" @input="payload=>changeTags(payload,data.item)" />
+          </template>
+
+          <template v-slot:cell(deviceGroup)="data">
+                     <DeviceGroup v-model="data.item.deviceGroup" />
           </template>
       </b-table>
         <div style="box-sizing: border-box;">
@@ -51,12 +55,13 @@ import {product} from "../../../api/product"
 import {device} from "../../../api/device"
 import Tag from '../../../components/tags/Tag.vue'
 import Toolbar from "../../device/ToolBar"
+import DeviceGroup from '../../../components/tags/DeviceGroup.vue'
 
 import 'vue-context/dist/css/vue-context.css'
 
 export default {
   name:"Device",
-  components:{Toolbar,Tag,VueContext},
+  components:{Toolbar,Tag,VueContext,DeviceGroup},
   props:{
     form:Object
   },
@@ -81,15 +86,16 @@ export default {
             sortable: true
           },
           {
+            key: 'product.name',
+             label: '产品',
+            sortable: true
+          },
+          {
             key: 'name',
             label: '设备名称',
             sortable: true
           },
-          // {
-          //   key: 'description',
-          //   label: '设备描述',
-          //   sortable: true
-          // },
+         
           {
             key: 'location',
             label: '设备位置',
@@ -100,10 +106,14 @@ export default {
             label: '产品版本',
             sortable: true
           },
-           {
+          {
             key: 'tags',
             label: '标签',
             sortable: true
+          },
+          {
+            key: 'deviceGroup',
+            label: '分组',
           },
           {
             key: 'createdAt',
@@ -128,6 +138,14 @@ export default {
     this.getList();
   },
   methods:{
+     changeTags(payload,d){
+      device.changeTags({
+        sn:d.sn,
+        productSn:d.product.sn,
+        tags:payload
+      }).then(res=>{
+      })
+    },
     gotoDevice(item,idx,e){
       console.log(item);
       this.$router.push({name: 'deviceDetail',params: { id: item.id }})
@@ -136,7 +154,7 @@ export default {
       var _this=this;
        device.groupDeviceList(Object.assign(
        {
-          id:this.form.id,
+          groupId:this.form.id,
        },this.query
        )).then((res)=>{
           _this.items=res.data.list;

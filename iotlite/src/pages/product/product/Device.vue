@@ -21,6 +21,10 @@
           <template v-slot:cell(tags)="data">
                      <Tag v-model="data.item.tags" @input="payload=>changeTags(payload,data.item)" />
           </template>
+
+          <template v-slot:cell(deviceGroup)="data">
+                     <DeviceGroup v-model="data.item.deviceGroup" />
+          </template>
       </b-table>
         <div style="box-sizing: border-box;">
         <vue-context ref="menu">
@@ -51,12 +55,13 @@ import {product} from "../../../api/product"
 import {device} from "../../../api/device"
 import Tag from '../../../components/tags/Tag.vue'
 import Toolbar from "../../device/ToolBar"
+import DeviceGroup from '../../../components/tags/DeviceGroup.vue'
 
 import 'vue-context/dist/css/vue-context.css'
 
 export default {
   name:"Device",
-  components:{Toolbar,Tag,VueContext},
+  components:{Toolbar,Tag,VueContext,DeviceGroup},
   props:{
     form:Object
   },
@@ -106,6 +111,10 @@ export default {
             sortable: true
           },
           {
+            key: 'deviceGroup',
+            label: '分组',
+          },
+          {
             key: 'createdAt',
             label: '创建时间',
             sortable: true
@@ -117,6 +126,12 @@ export default {
     }
   },
   watch:{
+    "form":{
+      handler(){
+        this.getList()
+      },
+      deep:true
+    },
     "query":{
       handler(){
         this.getList()

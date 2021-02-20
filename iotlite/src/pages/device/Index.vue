@@ -39,6 +39,7 @@
                           {{p.description}} 
                           {{p.product.name}}
                           <Tag v-model="p.tags" @input="payload=>changeTags(payload,p)"/>
+                          <DeviceGroup v-model="p.deviceGroup" />
                         </b-card-text>
                       </b-card>
                  
@@ -62,10 +63,11 @@ import Toolbar from "./ToolBar"
 
 import Tag from "../../components/tags/Tag"
 import {device} from "../../api/device"
+import DeviceGroup from "../../components/tags/DeviceGroup";
 
 export default {
   name:"Device",
-  components:{Toolbar,Tag},
+  components:{Toolbar,Tag,DeviceGroup},
   data(){
     return {
       helper:{
