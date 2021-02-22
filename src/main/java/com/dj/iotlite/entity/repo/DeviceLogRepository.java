@@ -1,6 +1,7 @@
-package com.dj.iotlite.entity.device;
+package com.dj.iotlite.entity.repo;
 
 
+import com.dj.iotlite.entity.device.DeviceLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;

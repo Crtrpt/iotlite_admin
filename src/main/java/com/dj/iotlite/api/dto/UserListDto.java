@@ -1,6 +1,5 @@
 package com.dj.iotlite.api.dto;
 
-import com.dj.iotlite.entity.Base;
 import lombok.Data;
 
 @Data

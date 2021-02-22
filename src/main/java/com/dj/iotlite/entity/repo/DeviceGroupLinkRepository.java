@@ -1,6 +1,7 @@
-package com.dj.iotlite.entity.device;
+package com.dj.iotlite.entity.repo;
 
 
+import com.dj.iotlite.entity.device.DeviceGroupLink;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

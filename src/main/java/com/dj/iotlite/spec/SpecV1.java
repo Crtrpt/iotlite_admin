@@ -1,15 +1,12 @@
 package com.dj.iotlite.spec;
 
 
-
-
 import com.dj.iotlite.spec.exception.NotFoundActionException;
 import com.dj.iotlite.spec.exception.NotFoundPropertyException;
 import com.google.gson.Gson;
 import groovy.lang.GroovyShell;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
-
 
 import java.util.List;
 

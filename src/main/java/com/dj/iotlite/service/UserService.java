@@ -8,7 +8,7 @@ import com.dj.iotlite.entity.organization.Organization;
 import com.dj.iotlite.entity.organization.OrganizationRepository;
 import com.dj.iotlite.entity.organization.OrganizationUserRepository;
 import com.dj.iotlite.entity.user.User;
-import com.dj.iotlite.entity.user.UserRepository;
+import com.dj.iotlite.entity.repo.UserRepository;
 import com.dj.iotlite.event.ChangeOrganization;
 import com.dj.iotlite.event.ChangeUser;
 import com.dj.iotlite.utils.UUID;

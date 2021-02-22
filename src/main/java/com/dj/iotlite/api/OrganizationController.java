@@ -1,6 +1,9 @@
 package com.dj.iotlite.api;
 
-import com.dj.iotlite.api.dto.*;
+import com.dj.iotlite.api.dto.OrganizationDto;
+import com.dj.iotlite.api.dto.OrganizationListDto;
+import com.dj.iotlite.api.dto.Page;
+import com.dj.iotlite.api.dto.ResDto;
 import com.dj.iotlite.api.form.OrganizationForm;
 import com.dj.iotlite.api.form.OrganizationQueryForm;
 import com.dj.iotlite.entity.organization.Organization;

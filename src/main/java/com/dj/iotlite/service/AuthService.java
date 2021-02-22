@@ -3,9 +3,8 @@ package com.dj.iotlite.service;
 import com.dj.iotlite.api.dto.LoginDto;
 import com.dj.iotlite.api.dto.UserDto;
 import com.dj.iotlite.api.form.LoginForm;
-import com.dj.iotlite.entity.task.TaskRepository;
 import com.dj.iotlite.entity.user.User;
-import com.dj.iotlite.entity.user.UserRepository;
+import com.dj.iotlite.entity.repo.UserRepository;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.exception.BusinessExceptionEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +12,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-
-import java.util.HashMap;
 
 @Service
 @Slf4j

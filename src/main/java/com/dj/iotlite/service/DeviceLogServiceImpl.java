@@ -1,13 +1,12 @@
 package com.dj.iotlite.service;
 
 import com.dj.iotlite.entity.device.DeviceLog;
-import com.dj.iotlite.entity.device.DeviceLogRepository;
+import com.dj.iotlite.entity.repo.DeviceLogRepository;
 import com.dj.iotlite.enums.DirectionEnum;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.unit.DataUnit;
 
 @Service
 @Slf4j

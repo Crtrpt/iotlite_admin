@@ -1,15 +1,15 @@
 # IOTLITE
 Simple to use IoT platform
 
-
-
 ## required
-JDK11 and above
+- JDK >=  11 
+- clickhouse >= 21.1.2.15
+- mysql >= 8.0
+- mqtt >= 3.1
+- redis >=5.0
 
 ## run
 java -jar iotlite.jar
-
-
 
 ## 设置设备属性
 

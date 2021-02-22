@@ -1,7 +1,6 @@
 package com.dj.iotlite.event;
 
 import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.user.User;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 

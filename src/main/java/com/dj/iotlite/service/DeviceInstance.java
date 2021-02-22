@@ -2,8 +2,7 @@ package com.dj.iotlite.service;
 
 import com.dj.iotlite.RedisKey;
 import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.device.DeviceLogRepository;
-import com.dj.iotlite.entity.device.DeviceRepository;
+import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
 import com.dj.iotlite.enums.DirectionEnum;
@@ -14,7 +13,6 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;

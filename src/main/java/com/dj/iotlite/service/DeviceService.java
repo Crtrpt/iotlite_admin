@@ -10,6 +10,10 @@ import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.mapper.DeviceMapper;
+import com.dj.iotlite.entity.repo.DeviceGroupLinkRepository;
+import com.dj.iotlite.entity.repo.DeviceGroupRepository;
+import com.dj.iotlite.entity.repo.DeviceLogRepository;
+import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.spec.SpecV1;
 import com.dj.iotlite.utils.UUID;
 import com.github.pagehelper.PageHelper;
@@ -24,7 +28,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.NumberUtils;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
@@ -115,7 +118,7 @@ public class DeviceService {
                             groupIdsMap.put(s1.getName(), s1.getId());
                         }
                         , () -> {
-                            var deviceGroup = new DeviceGroup();
+                            var deviceGroup = new com.dj.iotlite.entity.device.DeviceGroup();
                             deviceGroup.setName(s);
                             deviceGroup.setDescription(s);
                             var s2 = deviceGroupRepository.save(deviceGroup);
@@ -416,7 +419,7 @@ public class DeviceService {
         return deviceGroupRepository.findAll(specification, deviceQueryForm.getPage());
     }
 
-    public Object queryDeviceGroup(Long id) {
+    public DeviceGroupDto queryDeviceGroup(Long id) {
         var deviceGroupDto = new DeviceGroupDto();
         DeviceGroup device = deviceGroupRepository.findById(id).orElse(new DeviceGroup());
         BeanUtils.copyProperties(device, deviceGroupDto);

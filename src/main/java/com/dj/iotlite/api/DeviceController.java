@@ -3,7 +3,7 @@ package com.dj.iotlite.api;
 import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.device.DeviceGroup;
+import com.dj.iotlite.entity.device.*;
 import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.service.DeviceService;
 import org.springframework.beans.BeanUtils;

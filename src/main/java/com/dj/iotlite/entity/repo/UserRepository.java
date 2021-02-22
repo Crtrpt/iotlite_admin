@@ -1,7 +1,7 @@
-package com.dj.iotlite.entity.user;
+package com.dj.iotlite.entity.repo;
 
 
-import com.dj.iotlite.entity.task.Task;
+import com.dj.iotlite.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;

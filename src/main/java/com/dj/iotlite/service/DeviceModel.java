@@ -1,7 +1,5 @@
 package com.dj.iotlite.service;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
-
 import java.util.Map;
 
 public interface DeviceModel {
