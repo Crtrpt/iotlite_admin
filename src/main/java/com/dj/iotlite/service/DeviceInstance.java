@@ -7,6 +7,7 @@ import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
 import com.dj.iotlite.enums.DirectionEnum;
 import com.dj.iotlite.exception.BusinessException;
+import com.dj.iotlite.utils.JsonUtils;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -61,17 +62,15 @@ public class DeviceInstance implements DeviceModel {
 
         Gson gson = new Gson();
         String topic = String.format(RedisKey.DeviceProperty, "default", productSn, deviceSn);
+        propertys.put("v", device.getVersion());
         String data = gson.toJson(propertys);
 
         device.setVersion(device.getVersion() + 1);
         deviceRepository.save(device);
         //写入下发日志
-
-        propertys.put("v", device.getVersion());
         MqttMessage mqttMessage = new MqttMessage();
-
         mqttMessage.setPayload(data.getBytes(StandardCharsets.UTF_8));
-        deviceLogService.Log(deviceSn, productSn, DirectionEnum.Down, "admin", topic, desc, propertys);
+        deviceLogService.Log(deviceSn, productSn, DirectionEnum.Down, "admin", topic, desc, JsonUtils.toJson(propertys));
         try {
             log.info("topic {}  data: {}", topic, data);
             mqttClient.publish(topic, mqttMessage);
@@ -82,4 +81,18 @@ public class DeviceInstance implements DeviceModel {
     }
 
 
+    public void deviceResponse(String topic, MqttMessage msg) throws Exception {
+        System.out.println(new String(msg.getPayload(), "UTF-8"));
+        var seg = topic.split("/");
+        var deviceSn = seg[3];
+        var productSn = seg[2];
+        var data = JsonUtils.toMap(new String(msg.getPayload(), "UTF-8"));
+        //TODO 并发问题处理
+        deviceLogService.Log(deviceSn, productSn, DirectionEnum.UP, "device", topic, "response", new String(msg.getPayload(), "UTF-8"));
+        deviceRepository.findFirstBySnAndProductSn(deviceSn, productSn).ifPresent((d) -> {
+            d.setVersion(((Double) data.get("v")).intValue());
+            deviceRepository.save(d);
+            //TODO 下发给所有的设备订阅者
+        });
+    }
 }
