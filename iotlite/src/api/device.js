@@ -45,6 +45,9 @@ const device={
     },
     groupSaveFence:(ctx)=>{
       return request.post("device/saveGroupFence",ctx)
+    },
+    setDeviceMeta:(ctx)=>{
+      return request.post("device/setDeviceMeta",ctx)
     }
 }
 

@@ -32,9 +32,59 @@ export default {
       }
     }
   },
+  watch:{
+    "form.fence":{
+      handler(){
+         this.renderFence()
+      },
+      deep:true
+    }
+  },
   methods:{
     setFence(){
         console.log("设置分组围栏")
+    },
+    renderFence(){
+      var _this=this;
+       var map=this.map;
+        console.log(this.form.fence);
+        var fenceLayer=L.geoJSON(JSON.parse(this.form.fence), {
+            style: function (feature) {
+                return {
+                  color: "#3388ff",
+                  stroke: true
+                };
+            },
+            onEachFeature:function(f,layer) {
+              console.log("绘制图形")
+              layer.bindPopup("这是什么?")
+
+              layer.on("",()=>{
+                
+              })
+            }
+        })
+        
+        //围栏图层
+        // var fenceLayer=L.layerGroup();
+        map.pm.setGlobalOptions({ pinning: true, snappable: true ,layerGroup:fenceLayer})  
+        fenceLayer.addTo(map);
+
+        map.on('pm:drag',(e)=>{
+          console.log("更新")
+        })
+
+        map.on('pm:drawend', (e) => { 
+          console.log("绘制完成")
+          console.log(e);
+          // window.localStorage.setItem("FENCE"+this.form.id,JSON.stringify(fenceLayer.toGeoJSON()));
+          device.groupSaveFence({
+            id:_this.form.id,
+            fence:JSON.stringify(fenceLayer.toGeoJSON()),
+          }).then(res=>{
+            console.log(res);
+          })
+        })
     },
     init(){ 
         var _this=this;
@@ -65,61 +115,9 @@ export default {
         .bindPopup('当前位置')
         .openPopup();
 
+        this.renderFence()
+        
 
-        var fenceLayer=L.geoJSON(this.form.fence, {
-            style: function (feature) {
-                return {
-                  color: "#3388ff",
-                  stroke: true
-                };
-            },
-            onEachFeature:function(f,layer) {
-              console.log("绘制图形")
-              layer.bindPopup("这是什么?")
-            }
-        })
-
-        this.loadProduct();
-        this.loadDevice();
-        //围栏图层
-        // var fenceLayer=L.layerGroup();
-        map.pm.setGlobalOptions({ pinning: true, snappable: true ,layerGroup:fenceLayer})  
-        fenceLayer.addTo(map);
-        map.on('pm:drawend', (e) => { 
-          console.log("绘制完成")
-          console.log(e);
-          // window.localStorage.setItem("FENCE"+this.form.id,JSON.stringify(fenceLayer.toGeoJSON()));
-          device.groupSaveFence({
-            id:_this.form.id,
-            fence:JSON.stringify(fenceLayer.toGeoJSON()),
-          }).then(res=>{
-            console.log(res);
-          })
-        })
-
-    },
-    loadProduct(){
-       var _this=this;
-       product.all({}).then((res)=>{
-          res.data.forEach(e=>{
-            console.log("增加产品图层")
-             var littleton = L.marker([31.23573822772999, 121.48594474487306]).bindPopup(e.label);
-             var a=L.layerGroup([littleton]).addTo(this.map);
-            _this.layerContrl.addOverlay(a,e.label);
-          })
-          _this.layerContrl.expand();
-      })
-    },
-    loadDevice(){
-       var _this=this;
-       product.mapDeviceList(Object.assign(
-       {
-          productSn:this.form.sn,
-       },this.query
-       )).then((res)=>{
-          _this.items=res.data.list;
-          _this.helper.total=res.data.total;
-      })
     }
   },
 

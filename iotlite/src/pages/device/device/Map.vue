@@ -15,10 +15,9 @@
 
             <b-form-checkbox  class="ml-2" size="sm" v-model="query.fence" > 显示围栏 </b-form-checkbox>
 
+            <p class="ml-2 mt-2" v-if="currentMousePostion!=null">当前位置: {{currentMousePostion.latlng.lng}} ,{{currentMousePostion.latlng.lat}} </p>
 
-            <p class="ml-2 mt-2" v-if="currentMousePostion!=null">当前位置: {{currentMousePostion.latlng.lat}} ,{{currentMousePostion.latlng.lng}} </p>
-
-            <p class="ml-2 mt-2" v-if="clickPostion!=null">点击位置: {{clickPostion.latlng.lat}} ,{{clickPostion.latlng.lng}} </p>
+            <p class="ml-2 mt-2" v-if="clickPostion!=null">点击位置: {{clickPostion.latlng.lng}} ,{{clickPostion.latlng.lat}} </p>
 
           </b-form>
         </b-col>
@@ -73,7 +72,7 @@ export default {
   methods:{
     init(){
         var _this=this;
-        
+        console.log(_this.form?.meta)
         var map= this.map=L.map('map',{
           contextmenu: true,
           contextmenuWidth: 140,
@@ -86,8 +85,8 @@ export default {
               }
             ]
         })
-        .setView([31.23573822772999, 121.48664474487306], 18)
-
+        .setView([13.361389338970184, 38.11554879133282], _this.form.meta?.zoom??18)
+       
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(this.map);
@@ -101,6 +100,15 @@ export default {
         // freeDraw.on()
         this.map.on("mousemove",(res)=>{
             _this.currentMousePostion=res
+        })
+
+        this.map.on("zoomanim",(res)=>{
+          device.setDeviceMeta({
+            productSn:_this.form.product.sn,
+            deviceSn:_this.form.sn,
+            "key":"zoom",
+            "value":this.map.getZoom()
+          })
         })
 
         this.loadDevice();
@@ -121,18 +129,19 @@ export default {
            }
         }
        
-       _this.deviceMarker=L.marker([res.data.location[0].y,res.data.location[0].x]).addTo(_this.map)
+       _this.deviceMarker=L.marker([res.data.location.y,res.data.location.x]).addTo(_this.map)
         .bindPopup(`产品名称:${_this.form.product.name} </b><br> 
                   产品序号:${_this.form.product.sn} </b><br> 
                   设备名称:${_this.form.name} </b><br> 
                   设备序号:${_this.form.sn} </b><br>
-                  设备位置: ${res.data.location[0].y},${res.data.location[0].x}`);
-
+                  设备位置: ${res.data.location.y},${res.data.location.x}`);
+                  console.log( _this.map);
+      _this.map.setView([res.data.location.y,res.data.location.x])
         //TODO 不同的产品分层显示
 
         //显示附近的时候才显示附近范围的圆
         if(_this.query.nearby){
-          _this.circle = L.circle([res.data.location[0].y,res.data.location[0].x], {
+          _this.circle = L.circle([res.data.location.y,res.data.location.x], {
               color: '#00000000',
               fillColor: '#0000ff',
               fillOpacity: 0.1,
