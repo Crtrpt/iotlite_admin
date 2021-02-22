@@ -38,6 +38,10 @@ public class PushCallback implements MqttCallbackExtended {
             String topic="/response/#";
             log.info("订阅消息 "+topic);
             client.subscribe(topic, 2, new MessageCallback());
+
+            //修改设备位置信息
+            String location="/location/#";
+            client.subscribe(location,0, new LocationMessageCallback());
         } catch (MqttException e) {
             e.printStackTrace();
         }

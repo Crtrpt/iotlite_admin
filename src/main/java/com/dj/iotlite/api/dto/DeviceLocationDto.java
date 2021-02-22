@@ -7,8 +7,7 @@ import java.util.List;
 @Data
 public class DeviceLocationDto implements BaseDto {
     DeviceDto device;
-    List<Object> nearby;
-
+    Object nearby;
     Object location;
 
 }

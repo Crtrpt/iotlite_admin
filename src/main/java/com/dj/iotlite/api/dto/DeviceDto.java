@@ -18,4 +18,5 @@ public class DeviceDto extends DeviceListDto {
     DeviceCertEnum deviceCert;
     ProductDiscoverEnum discover;
     String deviceKey;
+    Object meta;
 }

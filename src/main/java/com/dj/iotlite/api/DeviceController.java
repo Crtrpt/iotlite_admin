@@ -120,6 +120,17 @@ public class DeviceController extends BaseController {
         return success(deviceService.enable(uuid));
     }
 
+
+    /**
+     * 更新设备key
+     *
+     * @param form
+     * @return
+     */
+    @PostMapping("/setDeviceMeta")
+    public ResDto<Boolean> setDeviceMeta(@RequestBody DeviceMetaForm form) {
+        return success(deviceService.setDeviceMeta(form));
+    }
     /**
      * 更新设备key
      *

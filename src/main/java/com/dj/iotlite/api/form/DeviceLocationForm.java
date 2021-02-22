@@ -9,5 +9,5 @@ public class DeviceLocationForm {
     /**
      * 附近的设备 null 不获取附近的设备
      */
-    String radius;
+    Integer radius;
 }

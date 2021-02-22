@@ -18,6 +18,8 @@ import com.dj.iotlite.spec.SpecV1;
 import com.dj.iotlite.utils.UUID;
 import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
+import io.lettuce.core.GeoArgs;
+import io.lettuce.core.GeoRadiusStoreArgs;
 import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -28,6 +30,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
@@ -328,7 +331,17 @@ public class DeviceService {
 
         DeviceLocationDto deviceLocationDto = new DeviceLocationDto();
 
-        deviceLocationDto.setLocation(redisCommands.geopos(key, member));
+        deviceLocationDto.setLocation(redisCommands.geopos(key, member).get(0));
+        if (redisCommands.geopos(key, member).size() > 0) {
+            var center = redisCommands.geopos(key, member).get(0);
+            if (!ObjectUtils.isEmpty(center)) {
+                //获取附近的
+                var arg = new GeoArgs();
+                arg.withCoordinates();
+                arg.withDistance();
+                deviceLocationDto.setNearby(redisCommands.georadius(key, center.getX().doubleValue(), center.getY().doubleValue(), Integer.valueOf(action.getRadius()), GeoArgs.Unit.km, arg));
+            }
+        }
 
         return deviceLocationDto;
     }
@@ -482,6 +495,20 @@ public class DeviceService {
         deviceGroupRepository.findById(form.getId()).ifPresent(d -> {
             d.setFence(form.getFence());
             deviceGroupRepository.save(d);
+        });
+        return true;
+    }
+
+    public Object setDeviceMeta(DeviceMetaForm form) {
+        deviceRepository.findFirstBySnAndProductSn(form.getDeviceSn(), form.getProductSn()).ifPresent(d -> {
+            var meta = d.getMeta();
+            var hashMeta = new HashMap<String, Object>();
+            if (!ObjectUtils.isEmpty(meta)) {
+                hashMeta = (HashMap<String, Object>) meta;
+            }
+            hashMeta.put(form.getKey(), form.getValue());
+            d.setMeta(hashMeta);
+            deviceRepository.save(d);
         });
         return true;
     }
