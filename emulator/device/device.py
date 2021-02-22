@@ -12,7 +12,6 @@ def on_connect(client, userdata, flags, rc):
     print("connect")
     client.subscribe("default/3/温度计10")
 
-# The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     print("↓"+msg.topic+" "+str(msg.payload))
     
@@ -28,7 +27,8 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect("broker.emqx.io", 1883, 60)
 
-print ("start...")
+client.connect("127.0.0.1", 41883, 60)
+
+print ("start..."+"127.0.0.1"+":"+str(41883))
 client.loop_forever()

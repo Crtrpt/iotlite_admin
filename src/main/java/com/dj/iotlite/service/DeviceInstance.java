@@ -7,6 +7,7 @@ import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
 import com.dj.iotlite.enums.DirectionEnum;
 import com.dj.iotlite.exception.BusinessException;
+import com.dj.iotlite.push.PushService;
 import com.dj.iotlite.utils.JsonUtils;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,9 @@ public class DeviceInstance implements DeviceModel {
 
     @Autowired
     DeviceRepository deviceRepository;
+
+    @Autowired
+    PushService pushService;
 
     @Autowired
     DeviceLogService deviceLogService;
@@ -93,6 +97,13 @@ public class DeviceInstance implements DeviceModel {
             d.setVersion(((Double) data.get("v")).intValue());
             deviceRepository.save(d);
             //TODO 下发给所有的设备订阅者
+            try {
+                //找到设备对应的组 推送给设备组
+                pushService.push("/device/"+productSn+"/"+deviceSn+"/"+"response",new String(msg.getPayload(), "UTF-8"));
+            }catch (Exception e){
+                log.info("推送给前端报错");
+                e.printStackTrace();
+            }
         });
     }
 }

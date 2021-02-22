@@ -6,7 +6,9 @@
       <p class="small">{{form.ver}} 
         <b-icon v-if="form.ver!=form.product.ver" icon="arrow-up-square"></b-icon>
       </p>
-      <p>{{form.description}} <b-link  class="link" href="javascript:void();" v-b-toggle.more> {{"更多"}}</b-link></p>
+      <p>{{form.description}} 
+        <b-link  class="link" href="javascript:void();" v-b-toggle.more> {{"更多"}}</b-link>
+        </p>
     </b-col>
     <b-col cols="12">
         <Tag v-model="form.tags"/>
@@ -47,7 +49,7 @@
     <b-col>
       <b-nav tabs>
         <b-nav-item to="base"  active-class="active" >基础信息</b-nav-item>
-         <b-nav-item to="model"  active-class="active" >物模型</b-nav-item>
+        <b-nav-item to="model"  active-class="active" >物模型</b-nav-item>
         <b-nav-item to="control"  active-class="active" >设备控制</b-nav-item>
         <b-nav-item to="metric"  active-class="active" >数据指标</b-nav-item>
         <b-nav-item to="log"   active-class="active" >设备日志</b-nav-item>
@@ -63,10 +65,22 @@
 import {device} from "../../api/device"
 import Tag from "../../components/tags/Tag"
 import DeviceGroup from "../../components/tags/DeviceGroup";
+import mqttClient from "../../api/mqttClient"
+import eventHub from "../../api/eventhub"
 export default {
   name:"deviceDetail",
   components:{
     Tag,DeviceGroup
+  },
+  destroyed(){
+      var _this=this;
+      mqttClient.unsubscribe(_this.topic,(err)=>{
+          console.log("取消订阅成功: "+_this.topic)
+      })
+      //取消事件订阅
+      eventHub.off(_this.eventSource,(e)=>{
+            console.log("mitt收到"+e)
+      })
   },
   mounted(){
     this.getInfo()
@@ -79,7 +93,25 @@ export default {
         id:this.form.id
       }).then(res=>{
         _this.form=res.data
+        
+        mqttClient.subscribe(_this.topic,(err)=>{
+          console.log("订阅成功: "+_this.topic)
+
+          eventHub.on(_this.eventSource,(e)=>{
+            console.log("mitt收到"+e)
+          })
+        })
+
+     
       })
+    }
+  },
+  computed:{
+    topic(){
+        return "/device/"+this.form.product.sn+"/"+this.form.sn+"/"+"#"
+    },
+    eventSource(){
+        return "/device/"+this.form.product.sn+"/"+this.form.sn+"/"
     }
   },
   data(){

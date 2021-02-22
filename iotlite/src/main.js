@@ -8,6 +8,7 @@ import lang from './i18n'
 import VueLoading from 'vue-loading-template'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
+import mqttClient from "./api/mqttClient"
 
 Vue.use(VueLoading)
 Vue.use(BootstrapVue)

@@ -22,7 +22,7 @@ module.exports = {
           defaultSizes: 'parsed',
           //  在默认浏览器中自动打开报告
           //  如果为true，则Webpack Stats JSON文件将在bundle输出目录中生成
-          generateStatsFile: false, 
+          generateStatsFile: true, 
           //  如果`generateStatsFile`为`true`，将会生成Webpack Stats JSON文件的名字。
           //  相对于捆绑输出目录。
           statsFilename: 'stats.json',
