@@ -50,6 +50,12 @@ public class ProductController extends BaseController {
         return success(ret);
     }
 
+    @GetMapping("/mapDeviceList")
+    public ResDto mapDeviceList(MapDeviceQueryForm query) {
+        return success( deviceService.getMapDeviceList(query));
+    }
+
+
     @GetMapping("/all")
     public ResDto<List<OptionDto>> all() {
         List<OptionDto> ret = deviceService.getAllProduct();

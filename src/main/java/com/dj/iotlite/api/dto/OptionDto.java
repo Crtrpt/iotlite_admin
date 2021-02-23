@@ -6,4 +6,5 @@ import lombok.Data;
 public class OptionDto {
     Long id;
     String label;
+    String sn;
 }

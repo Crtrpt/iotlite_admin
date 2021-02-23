@@ -36,6 +36,12 @@ const product={
     },
     changeTags:(ctx)=>{
       return request.post("product/changeTags",ctx)
+    },
+    setProductMeta:(ctx)=>{
+      return request.post("product/setProductMeta",ctx)
+    },
+    setProductMetas:(ctx)=>{
+      return request.post("product/setProductMetas",ctx)
     }
 }
 

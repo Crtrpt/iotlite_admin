@@ -27,7 +27,8 @@
           </template>
       </b-table>
         <div style="box-sizing: border-box;">
-        <vue-context ref="menu">
+        <vue-context ref="menu" v-slot="{ data }">
+              <li>  <a href="javascript:void(0);" @click="gotoMap(data)" >在地图上显示</a> </li>
               <li class="v-context__sub">
                   <a>控制</a>
                   <ul class="v-context">
@@ -143,6 +144,11 @@ export default {
     this.getList();
   },
   methods:{
+    gotoMap(data){
+      this.$router.push({name: 'productDetailMap',query:{
+        deviceSn:data.sn
+      }})
+    },
     changeTags(payload,d){
       device.changeTags({
         sn:d.sn,

@@ -290,6 +290,7 @@ public class DeviceService {
             OptionDto optionDto = new OptionDto();
             optionDto.setId(p.getId());
             optionDto.setLabel(p.getName());
+            optionDto.setSn(p.getSn());
             return optionDto;
         }).collect(Collectors.toList());
     }
@@ -511,5 +512,25 @@ public class DeviceService {
             deviceRepository.save(d);
         });
         return true;
+    }
+
+    /**
+     *  TODO 修改为只显示视口内的设备
+     * @param query
+     * @return
+     */
+    public Object getMapDeviceList(MapDeviceQueryForm query) {
+        List<DeviceMapLocationDto> ret=new ArrayList<>();
+        String key = String.format(RedisKey.DeviceLOCATION, "default");
+        deviceRepository.findAllByProductSn(query.getProductSn()).stream().forEach(s->{
+            DeviceMapLocationDto t=new DeviceMapLocationDto();
+            String member = String.format(RedisKey.DeviceLOCATION_MEMBER, s.getProductSn(), s.getSn());
+            BeanUtils.copyProperties(s,t);
+            t.setDeviceSn(s.getSn());
+            t.setProductSn(s.getProductSn());
+            t.setLocation( redisCommands.geopos(key, member).get(0));
+            ret.add(t);
+        });
+        return ret;
     }
 }

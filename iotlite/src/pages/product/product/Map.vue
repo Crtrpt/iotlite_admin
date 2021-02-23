@@ -19,9 +19,7 @@ export default {
     return {
       map:null,
       layerContrl:null,
-      productLayer:{
-
-      }
+      productLayer:[],
     }
   },
   methods:{
@@ -38,32 +36,41 @@ export default {
 
         var map= this.map=L.map('map').setView([31.23573822772999, 121.48664474487306], 18)
 
+        this.map.on("zoomanim",(res)=>{
+          product.setProductMetas({
+            productSn:_this.form.sn,
+            "data":{
+              zoom:this.map.getZoom(),
+              center:this.map.getCenter()
+            },
+          })
+        })
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(this.map);
         
         _this.layerContrl=L.control.layers(null, null).addTo(map);
 
-        L.marker([31.23573822772999, 121.48664474487306]).addTo(this.map)
-        .bindPopup('当前位置')
-        .openPopup();
 
         this.map.on("click",(res)=>{
           console.log(res);
         })
         this.loadProduct();
-        this.loadDevice();  
+        
     },
     loadProduct(){
        var _this=this;
        product.all({}).then((res)=>{
           res.data.forEach(e=>{
-            console.log("增加产品图层")
-             var littleton = L.marker([31.23573822772999, 121.48594474487306]).bindPopup(e.label);
-             var a=L.layerGroup([littleton]).addTo(this.map);
+            console.log("增加产品图层"+e.sn)
+            var product= this.productLayer[e.sn]= L.layerGroup([])
+            var a= product.addTo(this.map);
             _this.layerContrl.addOverlay(a,e.label);
           })
           _this.layerContrl.expand();
+
+          this.loadDevice();  
       })
     },
     loadDevice(){
@@ -73,8 +80,19 @@ export default {
           productSn:this.form.sn,
        },this.query
        )).then((res)=>{
-          _this.items=res.data.list;
-          _this.helper.total=res.data.total;
+         res.data.forEach(e=>{
+            if(e.location){
+              console.log("增加设备点")
+              console.log(e)
+              L.marker([e.location.y, e.location.x])
+              .addTo(_this.productLayer[e.productSn])
+              .bindPopup("deviceSn:"+e.deviceSn+" / productSn:"+e.productSn)
+              .openPopup();
+            }else{
+              console.log("显示没有位置信息的设备")
+            }
+         })
+         
       })
     }
   },

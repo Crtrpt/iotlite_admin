@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,6 +20,9 @@ public interface DeviceRepository extends CrudRepository<Device, Long>, JpaSpeci
     Page<Device> findAll(Specification spec, Pageable  page);
 
     Optional<Device> findFirstBySnAndProductSn(String deviceSn,String productSn);
+
+
+    List<Device> findAllByProductSn(String productSn);
 
     Long countByProductSn(String productSn);
 }
