@@ -65,6 +65,9 @@ public class DeviceService {
         Product product = productRepository.findById(device.getProductId()).orElse(new Product());
         BeanUtils.copyProperties(product, productDto);
         deviceDto.setProduct(productDto);
+        //设备当前的状态信息
+        String member = String.format(RedisKey.DeviceLOCATION_MEMBER, device.getProductSn(), device.getSn());
+        deviceDto.setSnap(redisCommands.hgetall(member));
         return deviceDto;
     }
 
@@ -113,6 +116,7 @@ public class DeviceService {
         });
 
         var groupIdsMap = new HashMap<String, Long>();
+
         Arrays.stream(deviceDto.getDeviceGroup().split(",")).forEach((s) -> {
             if (s.equals("")) {
             } else {
@@ -144,6 +148,9 @@ public class DeviceService {
             link.setDeviceId(device.getId());
             deviceGroupLinkRepository.save(link);
         }
+        //缓存设备的设备组信息
+        var deviceKey=  String.format(RedisKey.DEVICE, deviceDto.getProduct().getSn(), deviceDto.getSn());
+        redisCommands.hset(deviceKey, "deviceGroup",deviceDto.getDeviceGroup());
 
         ep.publishEvent(new ChangeDevice(this, device, ChangeDevice.Action.ADD, groupIdsMap));
         return true;
@@ -187,6 +194,9 @@ public class DeviceService {
                 link.setDeviceId(d.getId());
                 deviceGroupLinkRepository.save(link);
             }
+            //缓存每个涉笔的设备组信息
+            var deviceKey=  String.format(RedisKey.DEVICE, deviceDto.getProduct().getSn(), d.getSn());
+            redisCommands.hset(deviceKey, "deviceGroup",deviceDto.getDeviceGroup());
         }
         log.info("批量创建设备" + list.size());
         return list;

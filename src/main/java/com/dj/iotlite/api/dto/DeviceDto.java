@@ -19,4 +19,8 @@ public class DeviceDto extends DeviceListDto {
     ProductDiscoverEnum discover;
     String deviceKey;
     Object meta;
+    /**
+     * 设备快照
+     */
+    Object snap;
 }

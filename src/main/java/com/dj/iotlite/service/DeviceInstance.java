@@ -10,14 +10,19 @@ import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.push.PushService;
 import com.dj.iotlite.utils.JsonUtils;
 import com.google.gson.Gson;
+import com.jayway.jsonpath.JsonPath;
+import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,25 +90,71 @@ public class DeviceInstance implements DeviceModel {
     }
 
 
-    public void deviceResponse(String topic, MqttMessage msg) throws Exception {
-        System.out.println(new String(msg.getPayload(), "UTF-8"));
-        var seg = topic.split("/");
-        var deviceSn = seg[3];
-        var productSn = seg[2];
-        var data = JsonUtils.toMap(new String(msg.getPayload(), "UTF-8"));
+    @Autowired
+    RedisCommands<String, String> redisCommands;
+
+    public void deviceResponse(String productSn, String deviceSn, String topic,  String rawData) throws Exception {
+        Integer v = JsonPath.read(rawData, "$.v");
         //TODO 并发问题处理
-        deviceLogService.Log(deviceSn, productSn, DirectionEnum.UP, "device", topic, "response", new String(msg.getPayload(), "UTF-8"));
         deviceRepository.findFirstBySnAndProductSn(deviceSn, productSn).ifPresent((d) -> {
-            d.setVersion(((Double) data.get("v")).intValue());
+            d.setVersion(v);
             deviceRepository.save(d);
-            //TODO 下发给所有的设备订阅者
-            try {
-                //找到设备对应的组 推送给设备组
-                pushService.push("/device/"+productSn+"/"+deviceSn+"/"+"response",new String(msg.getPayload(), "UTF-8"));
-            }catch (Exception e){
-                log.info("推送给前端报错");
-                e.printStackTrace();
-            }
         });
+    }
+
+    @Autowired
+    GroupInstance groupInstance;
+
+    public void devicePropertyChange(String productSn, String deviceSn, String topic, String data) {
+        log.info("设备属性变化  更新");
+        String name = JsonPath.read(data, "$.name");
+        String value = JsonPath.read(data, "$.value");
+        String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
+        redisCommands.hset(member, name, value);
+        var groupName = redisCommands.hget(member, "deviceGroup");
+        Arrays.stream(groupName.split(",")).forEach(g -> {
+            groupInstance.observed(g, productSn, deviceSn, name, value);
+        });
+    }
+
+
+    public void deviceEventFire(String productSn, String deviceSn, String topic, String rawData) {
+        log.info("设备发生事件  更新");
+        String name = JsonPath.read(rawData, "$.name");
+        Object payload = null;
+        try {
+            payload = JsonPath.read(rawData, "$.payload");
+        } catch (Exception e) {
+            log.info("payload is empty");
+        }
+        String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
+
+        //TODO 设备组编排
+        var groupName = redisCommands.hget(member, "deviceGroup");
+        if (!ObjectUtils.isEmpty(groupName)) {
+            for (String g : groupName.split(",")) {
+                groupInstance.fire(g, productSn, deviceSn, name, payload);
+            }
+        }
+    }
+
+    public void deviceAlarm(String productSn, String deviceSn, String topic, String rawData) {
+        log.info("设备发生告警  更新");
+        String name = JsonPath.read(rawData, "$.name");
+        Object payload = null;
+        try {
+            payload = JsonPath.read(rawData, "$.payload");
+        } catch (Exception e) {
+            log.info("payload is empty");
+        }
+        String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
+        var groupName = redisCommands.hget(member, "deviceGroup");
+        for (String g : groupName.split(",")) {
+            groupInstance.fire(g, productSn, deviceSn, name, payload);
+        }
+    }
+
+    public void deviceLog(String productSn, String deviceSn, String topic, String rawData) {
+        //设备发送来的日志什么都不需要处理
     }
 }

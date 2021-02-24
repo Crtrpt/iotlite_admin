@@ -18,6 +18,6 @@ public class PublisherListener extends AbstractInterceptHandler {
     @Override
     public void onPublish(InterceptPublishMessage msg) {
         final String decodedPayload = new String( ByteBufUtil.getBytes(msg.getPayload()), UTF_8);
-        System.out.println("Received on topic: " + msg.getTopicName() + " content: " + decodedPayload);
+//        System.out.println("Received on topic: " + msg.getTopicName() + " content: " + decodedPayload);
     }
 }
