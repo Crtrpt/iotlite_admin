@@ -45,14 +45,17 @@ public class Product extends Base {
      */
     Integer type;
 
+
     /**
-     * 产品物模型
+     * 产品标签
      */
     @Type(type = "json")
     @Column(columnDefinition = "json")
     Object tags;
+
+
     /**
-     * 产品标签
+     * 产品物模型
      */
     @Type(type = "json")
     @Column(columnDefinition = "json")

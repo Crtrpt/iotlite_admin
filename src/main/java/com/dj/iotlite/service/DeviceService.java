@@ -6,6 +6,8 @@ import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.*;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
+import com.dj.iotlite.enums.DeviceCertEnum;
+import com.dj.iotlite.enums.ProductDiscoverEnum;
 import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
 import com.dj.iotlite.exception.BusinessException;
@@ -116,23 +118,24 @@ public class DeviceService {
         });
 
         var groupIdsMap = new HashMap<String, Long>();
-
-        Arrays.stream(deviceDto.getDeviceGroup().split(",")).forEach((s) -> {
-            if (s.equals("")) {
-            } else {
-                deviceGroupRepository.findFirstByName(s).ifPresentOrElse(
-                        (s1) -> {
-                            groupIdsMap.put(s1.getName(), s1.getId());
-                        }
-                        , () -> {
-                            var deviceGroup = new com.dj.iotlite.entity.device.DeviceGroup();
-                            deviceGroup.setName(s);
-                            deviceGroup.setDescription(s);
-                            var s2 = deviceGroupRepository.save(deviceGroup);
-                            groupIdsMap.put(s2.getName(), s2.getId());
-                        });
-            }
-        });
+        if(!ObjectUtils.isEmpty(deviceDto.getDeviceGroup())){
+            Arrays.stream(deviceDto.getDeviceGroup().split(",")).forEach((s) -> {
+                if (s.equals("")) {
+                } else {
+                    deviceGroupRepository.findFirstByName(s).ifPresentOrElse(
+                            (s1) -> {
+                                groupIdsMap.put(s1.getName(), s1.getId());
+                            }
+                            , () -> {
+                                var deviceGroup = new com.dj.iotlite.entity.device.DeviceGroup();
+                                deviceGroup.setName(s);
+                                deviceGroup.setDescription(s);
+                                var s2 = deviceGroupRepository.save(deviceGroup);
+                                groupIdsMap.put(s2.getName(), s2.getId());
+                            });
+                }
+            });
+        }
 
         batchCopy(device, deviceDto, groupIdsMap);
         deviceRepository.save(device);
@@ -148,9 +151,11 @@ public class DeviceService {
             link.setDeviceId(device.getId());
             deviceGroupLinkRepository.save(link);
         }
-        //缓存设备的设备组信息
-        var deviceKey=  String.format(RedisKey.DEVICE, deviceDto.getProduct().getSn(), deviceDto.getSn());
-        redisCommands.hset(deviceKey, "deviceGroup",deviceDto.getDeviceGroup());
+        if(!ObjectUtils.isEmpty(deviceDto.getDeviceGroup())){
+            //缓存设备的设备组信息
+            var deviceKey=  String.format(RedisKey.DEVICE, device.getProductSn(), deviceDto.getSn());
+            redisCommands.hset(deviceKey, "deviceGroup",deviceDto.getDeviceGroup());
+        }
 
         ep.publishEvent(new ChangeDevice(this, device, ChangeDevice.Action.ADD, groupIdsMap));
         return true;
@@ -195,8 +200,10 @@ public class DeviceService {
                 deviceGroupLinkRepository.save(link);
             }
             //缓存每个涉笔的设备组信息
-            var deviceKey=  String.format(RedisKey.DEVICE, deviceDto.getProduct().getSn(), d.getSn());
-            redisCommands.hset(deviceKey, "deviceGroup",deviceDto.getDeviceGroup());
+            if(!ObjectUtils.isEmpty(deviceDto.getDeviceGroup())){
+                var deviceKey=  String.format(RedisKey.DEVICE, device.getProductSn(), d.getSn());
+                redisCommands.hset(deviceKey, "deviceGroup",deviceDto.getDeviceGroup());
+            }
         }
         log.info("批量创建设备" + list.size());
         return list;
@@ -231,7 +238,8 @@ public class DeviceService {
     public Object saveProduct(ProductForm productForm) {
         Product product = new Product();
         BeanUtils.copyProperties(productForm, product);
-        product.setSpec(new Object());
+        product.setSpec("{}");
+        product.setTags("[]");
         productRepository.save(product);
         ep.publishEvent(new ChangeProduct(this, product, ChangeProduct.Action.ADD));
         return true;
@@ -506,6 +514,17 @@ public class DeviceService {
         deviceGroupRepository.findById(form.getId()).ifPresent(d -> {
             d.setFence(form.getFence());
             deviceGroupRepository.save(d);
+        });
+        return true;
+    }
+
+    public Object saveGroupPlayground(DeviceGroupSpecSaveForm form) {
+        deviceGroupRepository.findById(form.getId()).ifPresent(d -> {
+            d.setSpec(form.getSpec());
+            deviceGroupRepository.save(d);
+            //编排文件存入redis
+            var deviceKey=  String.format(RedisKey.DEVICE_GROUP, d.getName());
+            redisCommands.hset(deviceKey, "playground",form.getSpec());
         });
         return true;
     }

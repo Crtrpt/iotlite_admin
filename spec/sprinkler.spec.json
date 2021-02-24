@@ -1,0 +1,36 @@
+{
+  "version": "01",
+  "name": "sprinkler",
+  "desc": "喷水器",
+  "property": [
+    {
+      "name": "power",
+      "desc": "电量",
+      "value": 0,
+      "threshold": 5,
+      "defaultValue": 0,
+      "expect": 0
+    }
+  ],
+  "alarm": [
+    {
+      "name": "电量低",
+      "level": "10",
+      "interval": 10,
+      "condition":"power<20",
+      "resume": "power>20"
+    }
+  ],
+  "control":[
+    {
+      "name": "turn off",
+      "desc": "关闭",
+      "action":"power=0"
+    },
+    {
+      "name": "turn on",
+      "desc": "喷水",
+      "action":"power=100"
+    }
+  ]
+}

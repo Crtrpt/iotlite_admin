@@ -77,6 +77,11 @@ public class DeviceController extends BaseController {
         return success(deviceService.saveGroupFence(form));
     }
 
+    @PostMapping("/saveGroupPlayground")
+    public ResDto<Boolean> saveGroupPlayground(@RequestBody DeviceGroupSpecSaveForm form) {
+        return success(deviceService.saveGroupPlayground(form));
+    }
+
     @GetMapping("/log")
     public ResDto<Page<DeviceLogDto>> getLogList(DeviceLogQueryForm query) {
         Page<DeviceLogDto> ret = new Page<>();

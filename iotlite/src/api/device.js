@@ -48,6 +48,9 @@ const device={
     },
     setDeviceMeta:(ctx)=>{
       return request.post("device/setDeviceMeta",ctx)
+    },
+    saveGroupPlayground:(ctx)=>{
+      return request.post("device/saveGroupPlayground",ctx)
     }
 }
 

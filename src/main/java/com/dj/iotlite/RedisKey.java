@@ -9,4 +9,6 @@ public class RedisKey {
    public static final String DeviceLOCATION_MEMBER = "%s,%s";
 
    public static final String DEVICE = "%s,%s";
+
+   public static final String DEVICE_GROUP = "GROUP:%s";
 }

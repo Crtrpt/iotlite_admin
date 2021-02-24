@@ -26,7 +26,9 @@ default/Psn001/Dsn001/property
 payload
 ```
 {
-    power:"3000",
+    action:"property",
+    name:"power",
+    value:80
 }
 ```
 

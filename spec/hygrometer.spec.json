@@ -1,0 +1,81 @@
+{
+  "version": "01",
+  "name": "hygrometer",
+  "desc": "湿度计",
+  "property": [
+    {
+      "name": "humidity",
+      "desc": "湿度",
+      "value": 0,
+      "defaultValue": 0,
+      "expect": 0
+    },
+    {
+      "name": "power",
+      "desc": "电量",
+      "value": 0,
+      "threshold": 5,
+      "defaultValue": 0,
+      "expect": 0
+    }
+  ],
+  "alarm": [
+    {
+      "name": "温度过低",
+      "level": "20",
+      "interval": 10,
+      "condition":"temperature<20",
+      "resume": "temperature>20"
+    },
+    {
+      "name": "电量低",
+      "level": "10",
+      "interval": 10,
+      "condition":"power<20",
+      "resume": "power>20"
+    }
+  ],
+  "control":[
+    {
+      "name": "turn off",
+      "desc": "关电",
+      "action":"power=0"
+    },
+    {
+      "name": "turn on",
+      "desc": "开电",
+      "action":"power=100"
+    },
+    {
+      "name": "turn up",
+      "desc": "调高温度",
+      "action":"temperature=temperature+20"
+    },
+    {
+      "name": "turn down",
+      "desc": "调高温度",
+      "action":"temperature=temperature-10"
+    }
+  ],
+  "metric":[
+    {
+      "name":"温度",
+      "source": {
+        "type": "property",
+        "name": "temperature"
+      }
+    }
+  ],
+  "event": [
+    {
+      "name": "turn off",
+      "desc": "关电",
+      "condition":"power==0"
+    },
+    {
+      "name": "开电",
+      "desc": "打开电灯",
+      "condition":"power==0"
+    }
+  ]
+}
