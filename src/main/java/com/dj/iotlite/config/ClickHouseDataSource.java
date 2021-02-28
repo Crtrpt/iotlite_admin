@@ -18,52 +18,52 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Map;
 
-@Configuration
-@EnableTransactionManagement
-@EnableJpaRepositories(
-        entityManagerFactoryRef = "entityManagerFactorySecondary",
-        transactionManagerRef = "transactionManagerSecondary",
-        basePackages = {"com.dj.iotlite.analysis"})
+//@Configuration
+//@EnableTransactionManagement
+//@EnableJpaRepositories(
+//        entityManagerFactoryRef = "entityManagerFactorySecondary",
+//        transactionManagerRef = "transactionManagerSecondary",
+//        basePackages = {"com.dj.iotlite.analysis"})
 public class ClickHouseDataSource {
 
-
-    @Autowired
-    @Qualifier("secondaryDataSource")
-    private DataSource secondaryDataSource;
-
-    @Autowired
-    private JpaProperties jpaProperties; //Jpa自带的一个读取jpa属性的类
-
-    @Autowired
-    HibernateProperties hibernateProperties1;
-
-
-    @Bean("entityManagerFactorySecondary")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactorySecondary() {
-
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(false);
-        vendorAdapter.setDatabase(Database.MYSQL);
-        vendorAdapter.setShowSql(false);
-
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-        factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.dj.iotlite.analysis");
-        factory.setDataSource(secondaryDataSource);
-
-        Map<String, Object> hibernateProperties = hibernateProperties1.determineHibernateProperties(
-                jpaProperties.getProperties(), new HibernateSettings());
-        factory.setJpaPropertyMap(hibernateProperties);
-        return factory;
-
-    }
-
-
-    @Bean("transactionManagerSecondary")
-    public PlatformTransactionManager transactionManagerSecondary() {
-
-        JpaTransactionManager txManager = new JpaTransactionManager();
-        txManager.setEntityManagerFactory(entityManagerFactorySecondary().getObject());
-        return txManager;
-    }
+//
+//    @Autowired
+//    @Qualifier("secondaryDataSource")
+//    private DataSource secondaryDataSource;
+//
+//    @Autowired
+//    private JpaProperties jpaProperties; //Jpa自带的一个读取jpa属性的类
+//
+//    @Autowired
+//    HibernateProperties hibernateProperties1;
+//
+//
+//    @Bean("entityManagerFactorySecondary")
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactorySecondary() {
+//
+//        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+//        vendorAdapter.setGenerateDdl(false);
+//        vendorAdapter.setDatabase(Database.MYSQL);
+//        vendorAdapter.setShowSql(false);
+//
+//        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+//        factory.setJpaVendorAdapter(vendorAdapter);
+//        factory.setPackagesToScan("com.dj.iotlite.analysis");
+//        factory.setDataSource(secondaryDataSource);
+//
+//        Map<String, Object> hibernateProperties = hibernateProperties1.determineHibernateProperties(
+//                jpaProperties.getProperties(), new HibernateSettings());
+//        factory.setJpaPropertyMap(hibernateProperties);
+//        return factory;
+//
+//    }
+//
+//
+//    @Bean("transactionManagerSecondary")
+//    public PlatformTransactionManager transactionManagerSecondary() {
+//
+//        JpaTransactionManager txManager = new JpaTransactionManager();
+//        txManager.setEntityManagerFactory(entityManagerFactorySecondary().getObject());
+//        return txManager;
+//    }
 }
