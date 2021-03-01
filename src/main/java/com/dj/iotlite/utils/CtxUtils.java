@@ -10,4 +10,8 @@ public class CtxUtils {
         return applicationContext.getBean(c);
     }
 
+    public static Object getBean(String c){
+        return applicationContext.getBean(c);
+    }
+
 }

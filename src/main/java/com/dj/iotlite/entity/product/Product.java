@@ -94,4 +94,6 @@ public class Product extends Base {
      */
     @Column(columnDefinition = "int default 0")
     ProtocolTypeEnum protocolType;
+
+    Long adaptorId;
 }

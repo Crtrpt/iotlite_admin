@@ -1,13 +1,16 @@
 package com.dj.iotlite.service;
 
 import com.dj.iotlite.RedisKey;
+import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.entity.device.Device;
+import com.dj.iotlite.entity.repo.AdaptorRepository;
 import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
 import com.dj.iotlite.enums.DirectionEnum;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.push.PushService;
+import com.dj.iotlite.utils.CtxUtils;
 import com.dj.iotlite.utils.JsonUtils;
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
@@ -38,6 +41,9 @@ public class DeviceInstance implements DeviceModel {
     DeviceRepository deviceRepository;
 
     @Autowired
+    AdaptorRepository adaptorRepository;
+
+    @Autowired
     PushService pushService;
 
     @Autowired
@@ -47,9 +53,6 @@ public class DeviceInstance implements DeviceModel {
     public void setProductSn(String productSn) {
 
     }
-
-    @Autowired
-    MqttClient mqttClient;
 
     @Override
     public void setProperty(String productSn, String deviceSn, String property, Object value, String desc) {
@@ -77,23 +80,31 @@ public class DeviceInstance implements DeviceModel {
         device.setVersion(device.getVersion() + 1);
         deviceRepository.save(device);
         //写入下发日志
-        MqttMessage mqttMessage = new MqttMessage();
-        mqttMessage.setPayload(data.getBytes(StandardCharsets.UTF_8));
+
         deviceLogService.Log(deviceSn, productSn, DirectionEnum.Down, "admin", topic, desc, JsonUtils.toJson(propertys));
         try {
             log.info("topic {}  data: {}", topic, data);
-            mqttClient.publish(topic, mqttMessage);
-        } catch (MqttException e) {
+            if (ObjectUtils.isEmpty(product.getAdaptorId())) {
+                throw new BusinessException("未找到设备 适配器");
+            } else {
+                adaptorRepository.findById(product.getAdaptorId()).ifPresent(adaptor -> {
+                    try {
+                        ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(product, device, topic, data);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessException("下发设备信息异常");
         }
     }
 
-
     @Autowired
     RedisCommands<String, String> redisCommands;
 
-    public void deviceResponse(String productSn, String deviceSn, String topic,  String rawData) throws Exception {
+    public void deviceResponse(String productSn, String deviceSn, String topic, String rawData) throws Exception {
         Integer v = JsonPath.read(rawData, "$.v");
         //TODO 并发问题处理
         deviceRepository.findFirstBySnAndProductSn(deviceSn, productSn).ifPresent((d) -> {

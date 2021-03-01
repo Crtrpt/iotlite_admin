@@ -1,7 +1,11 @@
 package com.dj.iotlite.api;
 
 
+import com.dj.iotlite.adaptor.Adaptor;
+import com.dj.iotlite.adaptor.IotlitHttpImpl;
+import com.dj.iotlite.adaptor.IotliteMqttImpl;
 import com.dj.iotlite.api.dto.ResDto;
+import com.dj.iotlite.service.AdaptorService;
 import com.dj.iotlite.service.UserService;
 import com.dj.iotlite.spec.SpecV1;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +59,27 @@ public class TestController extends BaseController {
     public ResDto<Object> clickhouse() throws Exception {
         List<Map<String, Object>> maps = postgresJdbcTemplate.queryForList("select * from test1.userEvents ");
 
-       System.out.println(maps);
+        System.out.println(maps);
+        return success();
+    }
+
+    @Autowired
+    IotliteMqttImpl iotliteMqtt;
+
+    @Autowired
+    IotlitHttpImpl iotlitHttp;
+
+    @GetMapping("/install")
+    public ResDto<Object> install() throws Exception {
+        iotliteMqtt.install();
+        iotlitHttp.install();
+        return success();
+    }
+
+    @GetMapping("/uninstall")
+    public ResDto<Object> uninstall() throws Exception {
+        iotliteMqtt.uninstall();
+        iotlitHttp.uninstall();
         return success();
     }
 }
