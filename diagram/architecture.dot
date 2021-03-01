@@ -1,0 +1,49 @@
+digraph G {
+   subgraph cluster_CTWING {
+		CTWING_adapter ;
+		label = "CTWING";
+	}
+   subgraph cluster_ALIIOT {
+		ALI_adapter ;
+		label = "ALIIOT";
+	}
+
+  subgraph cluster_MQTT {
+		MQTT_adapter ;
+		label = "MQTT";
+	}
+
+  subgraph cluster_HTTP {
+		HTTP_adapter ;
+		label = "HTTP";
+	}
+
+  subgraph cluster_TCP {
+		TCP_adapter ;
+		label = "TCP";
+	}
+
+  subgraph cluster_IOTLITE {
+		device_engin1->group_engine1;
+    device_engin2->group_engine1;
+		label = "IOTLITE";
+	}
+
+  device_0->gateway0->MQTT_adapter[dir="both"]
+  device_1->gateway1->HTTP_adapter[dir="both"]
+  device_2->gateway2->ALI_adapter[dir="both"]
+  device_3->gateway3->CTWING_adapter[dir="both"]
+  device_4->gateway4->TCP_adapter[dir="both"]
+
+  MQTT_adapter -> device_engin1[dir="both"]
+  HTTP_adapter -> device_engin1[dir="both"]
+  TCP_adapter->device_engin1[dir="both"]
+  ALI_adapter -> device_engin1[dir="both"]
+  CTWING_adapter->device_engin1[dir="both"]
+
+  MQTT_adapter -> device_engin2[dir="both"]
+  HTTP_adapter -> device_engin2[dir="both"]
+  TCP_adapter->device_engin2[dir="both"]
+  ALI_adapter -> device_engin2[dir="both"]
+  CTWING_adapter->device_engin2[dir="both"]
+}
