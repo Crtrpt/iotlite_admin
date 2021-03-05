@@ -24,7 +24,7 @@
             <ul class="navbar-item flex-row ml-md-auto">
 
 
-                 <b-dropdown 
+                 <!-- <b-dropdown 
                   toggle-tag="a"
                   toggle-class="nav-link dropdown-toggle"
                   variant="link"
@@ -37,7 +37,7 @@
                     <b-dropdown-item class="dropdown-item">消息</b-dropdown-item>
                     <b-dropdown-item class="dropdown-item">消息</b-dropdown-item>
                     <b-dropdown-item class="dropdown-item">消息</b-dropdown-item>
-                </b-dropdown>
+                </b-dropdown> -->
 
                 <b-dropdown 
                   toggle-tag="a"

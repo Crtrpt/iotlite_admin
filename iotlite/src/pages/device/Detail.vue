@@ -7,7 +7,7 @@
         <b-icon v-if="form.ver!=form.product.ver" icon="arrow-up-square"></b-icon>
       </p>
       <p>{{form.description}} 
-        <b-link  class="link" href="javascript:void();" v-b-toggle.more> {{"更多"}}</b-link>
+        <b-link  class="link" href="javascript:void(0);" v-b-toggle.more> {{"更多"}}</b-link>
         </p>
     </b-col>
     <b-col cols="12">

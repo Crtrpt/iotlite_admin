@@ -1,7 +1,7 @@
 package com.dj.iotlite.service;
 
-import com.dj.iotlite.entity.adaptor.Adaptor;
-import com.dj.iotlite.entity.repo.AdaptorRepository;
+import com.dj.iotlite.entity.adaptor.Adapter;
+import com.dj.iotlite.entity.repo.AdapterRepository;
 import com.dj.iotlite.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +14,24 @@ import java.util.HashMap;
 public class AdaptorServiceImpl implements AdaptorService {
 
     @Autowired
-    AdaptorRepository adaptorRepository;
+    AdapterRepository adapterRepository;
 
     @Override
     public void install(String name, String implName, HashMap<String, Object> meta) {
-        adaptorRepository.findFirstByName(name).ifPresent(a -> {
+        adapterRepository.findFirstByName(name).ifPresent(a -> {
             throw new BusinessException("适配器已经存在");
         });
-        var adaptor = new Adaptor();
+        var adaptor = new Adapter();
         adaptor.setName(name);
         adaptor.setImplClass(implName);
         adaptor.setMeta(meta);
-        adaptorRepository.save(adaptor);
+        adapterRepository.save(adaptor);
     }
 
     @Override
     public void unInstall(String name) {
-        adaptorRepository.findFirstByName(name).ifPresentOrElse(adaptor -> {
-            adaptorRepository.delete(adaptor);
+        adapterRepository.findFirstByName(name).ifPresentOrElse(adapter -> {
+            adapterRepository.delete(adapter);
         },()->{
             throw new BusinessException("要删除的适配器不存在");
         });

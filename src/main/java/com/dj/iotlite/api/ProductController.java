@@ -62,6 +62,12 @@ public class ProductController extends BaseController {
         return success(ret);
     }
 
+    @GetMapping("/allAdapter")
+    public ResDto<List<AdapterOptionDto>> allAdapter() {
+        List<AdapterOptionDto> ret = deviceService.getAllAdapterOptionDto();
+        return success(ret);
+    }
+
     @PostMapping("/remove")
     public ResDto<Boolean> remove(@RequestParam("uuid") String uuid) {
         return success(deviceService.removeProduct(uuid));

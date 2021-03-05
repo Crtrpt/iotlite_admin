@@ -35,6 +35,13 @@
           placeholder="型号"
         ></b-form-input>
       </b-form-group>
+
+      <b-form-group
+        label="接入适配器:"
+        description="接入适配器"
+      >
+        <AdapterSelect v-model="form.adapterId"></AdapterSelect>
+      </b-form-group>
      
        <b-button type="submit" variant="primary">提交</b-button>
     </b-form>
@@ -43,14 +50,15 @@
 
 <script>
 import {product} from "../../api/product"
+import AdapterSelect from '../../components/product/AdapterSelect.vue'
 
 export default {
   name:"New",
+  components:{
+    AdapterSelect
+  },
   data(){
     return {
-      productType:[
-          "设备","网关"
-      ],
       form:{
 
       }

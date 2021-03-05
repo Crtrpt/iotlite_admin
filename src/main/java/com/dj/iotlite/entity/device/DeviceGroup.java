@@ -41,9 +41,7 @@ public class DeviceGroup extends Base {
     @Column(columnDefinition = "json")
     String fence;
     /**
-     * 产品分组规范
+     * 分支的规则引擎 groovy 实现用户自定义的逻辑
      */
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
-    Object spec;
+    String spec;
 }

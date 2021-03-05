@@ -95,5 +95,9 @@ public class Product extends Base {
     @Column(columnDefinition = "int default 0")
     ProtocolTypeEnum protocolType;
 
-    Long adaptorId;
+    /**
+     * 设备适配的协议
+     */
+    @Column(columnDefinition = "int default 1")
+    Long adapterId;
 }

@@ -49,14 +49,14 @@ const group  =[
         name:"groupDetailMap"
       }
     },
-  //   {
-  //     path: 'setting',
-  //     component: require('../pages/group/group/Setting').default,
-  //     name: 'groupDetailSetting',
-  //     meta:{
-  //       name:"groupDetailSetting"
-  //     }
-  //   },
+    {
+      path: 'log',
+      component: require('../pages/group/group/Log').default,
+      name: 'groupDetailLog',
+      meta:{
+        name:"groupDetailLog"
+      }
+    },
     {
       path: 'device',
       component: require('../pages/group/group/Device').default,

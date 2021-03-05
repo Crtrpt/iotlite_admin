@@ -12,6 +12,7 @@
         <b-nav-item to="device"  active-class="active"> 设备</b-nav-item>
         <b-nav-item to="map"  active-class="active" >设备地图</b-nav-item>
         <b-nav-item to="playground"  active-class="active" >编排</b-nav-item>
+        <b-nav-item to="log"  active-class="active" >日志</b-nav-item>
         <!-- <b-nav-item to="3d"  active-class="active" >3d</b-nav-item> -->
       </b-nav>
       <router-view  class="content" :form=form></router-view>

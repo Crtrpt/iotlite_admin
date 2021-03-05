@@ -3,7 +3,7 @@ package com.dj.iotlite.service;
 import com.dj.iotlite.RedisKey;
 import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.repo.AdaptorRepository;
+import com.dj.iotlite.entity.repo.AdapterRepository;
 import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
@@ -16,15 +16,10 @@ import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
 import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +36,7 @@ public class DeviceInstance implements DeviceModel {
     DeviceRepository deviceRepository;
 
     @Autowired
-    AdaptorRepository adaptorRepository;
+    AdapterRepository adapterRepository;
 
     @Autowired
     PushService pushService;
@@ -84,10 +79,10 @@ public class DeviceInstance implements DeviceModel {
         deviceLogService.Log(deviceSn, productSn, DirectionEnum.Down, "admin", topic, desc, JsonUtils.toJson(propertys));
         try {
             log.info("topic {}  data: {}", topic, data);
-            if (ObjectUtils.isEmpty(product.getAdaptorId())) {
+            if (ObjectUtils.isEmpty(product.getAdapterId())) {
                 throw new BusinessException("未找到设备 适配器");
             } else {
-                adaptorRepository.findById(product.getAdaptorId()).ifPresent(adaptor -> {
+                adapterRepository.findById(product.getAdapterId()).ifPresent(adaptor -> {
                     try {
                         ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(product, device, topic, data);
                     } catch (Exception e) {

@@ -13,6 +13,9 @@ const product={
     all:(ctx)=>{
       return request.get("product/all",ctx)
     },
+    allAdapter:(ctx)=>{
+      return request.get("product/allAdapter",ctx)
+    },
     save:(ctx)=>{
       return request.post("product/save",ctx)
     },

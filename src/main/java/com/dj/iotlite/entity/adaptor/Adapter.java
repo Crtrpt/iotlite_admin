@@ -7,15 +7,16 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.Stack;
 
 @Data
-@SQLDelete(sql = "update `adaptor` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
+@SQLDelete(sql = "update `adapter` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
 @Entity
-@Table(name = "adaptor")
+@Table(name = "adapter")
 @Where(clause = "deleted_at is null")
 @DynamicUpdate
 @Cacheable
-public class Adaptor extends Base {
+public class Adapter extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

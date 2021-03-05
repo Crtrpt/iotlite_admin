@@ -6,22 +6,16 @@ import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.*;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
-import com.dj.iotlite.enums.DeviceCertEnum;
-import com.dj.iotlite.enums.ProductDiscoverEnum;
+import com.dj.iotlite.entity.repo.*;
 import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.mapper.DeviceMapper;
-import com.dj.iotlite.entity.repo.DeviceGroupLinkRepository;
-import com.dj.iotlite.entity.repo.DeviceGroupRepository;
-import com.dj.iotlite.entity.repo.DeviceLogRepository;
-import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.spec.SpecV1;
 import com.dj.iotlite.utils.UUID;
 import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
 import io.lettuce.core.GeoArgs;
-import io.lettuce.core.GeoRadiusStoreArgs;
 import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -48,6 +42,9 @@ public class DeviceService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    AdapterRepository adapterRepository;
 
     @Autowired
     DeviceRepository deviceRepository;
@@ -309,6 +306,15 @@ public class DeviceService {
             optionDto.setId(p.getId());
             optionDto.setLabel(p.getName());
             optionDto.setSn(p.getSn());
+            return optionDto;
+        }).collect(Collectors.toList());
+    }
+
+    public List<AdapterOptionDto> getAllAdapterOptionDto() {
+        return adapterRepository.findAll().stream().map(p -> {
+            AdapterOptionDto optionDto = new AdapterOptionDto();
+            optionDto.setId(p.getId());
+            optionDto.setLabel(p.getName());
             return optionDto;
         }).collect(Collectors.toList());
     }

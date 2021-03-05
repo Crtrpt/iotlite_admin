@@ -29,8 +29,8 @@ public class MqttClientConfig {
         option.setAutomaticReconnect(true);
 
         MqttClient mqttClient=new MqttClient(serverURI,clientId, new MemoryPersistence());
-        mqttClient.setCallback(new PushCallback(mqttClient));
-        mqttClient.connect(option);
+//        mqttClient.setCallback(new PushCallback(mqttClient));
+//        mqttClient.connect(option);
         return  mqttClient;
     }
 }
