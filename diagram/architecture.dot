@@ -8,26 +8,37 @@ digraph G {
 		label = "ALIIOT";
 	}
 
-  subgraph cluster_MQTT {
+    subgraph cluster_MQTT {
 		MQTT_adapter ;
 		label = "MQTT";
 	}
 
-  subgraph cluster_HTTP {
+    subgraph cluster_HTTP {
 		HTTP_adapter ;
 		label = "HTTP";
 	}
 
-  subgraph cluster_TCP {
+    subgraph cluster_TCP {
 		TCP_adapter ;
 		label = "TCP";
 	}
 
-  subgraph cluster_IOTLITE {
-		device_engin1->group_engine1;
-    device_engin2->group_engine1;
+    subgraph cluster_IOTLITE {
+      	iotlite_agent_2->iotlite_group_agent;
+		iotlite_agent_1->iotlite_group_agent;
+        iotlite_agent->iotlite_group_agent;
 		label = "IOTLITE";
 	}
+
+   	iotlite_agent_2->admin_panel;
+	iotlite_agent_1->admin_panel;
+    iotlite_agent->admin_panel;
+    iotlite_group_agent->admin_panel;
+
+
+   iotlite_group_agent->dashboard_agent;
+
+   dashboard_agent->dashboard_page
 
   device_0->gateway0->MQTT_adapter[dir="both"]
   device_1->gateway1->HTTP_adapter[dir="both"]
@@ -35,15 +46,15 @@ digraph G {
   device_3->gateway3->CTWING_adapter[dir="both"]
   device_4->gateway4->TCP_adapter[dir="both"]
 
-  MQTT_adapter -> device_engin1[dir="both"]
-  HTTP_adapter -> device_engin1[dir="both"]
-  TCP_adapter->device_engin1[dir="both"]
-  ALI_adapter -> device_engin1[dir="both"]
-  CTWING_adapter->device_engin1[dir="both"]
+  MQTT_adapter -> iotlite_agent_1[dir="both"]
+  HTTP_adapter -> iotlite_agent_1[dir="both"]
+  TCP_adapter->iotlite_agent_1[dir="both"]
+  ALI_adapter -> iotlite_agent_1[dir="both"]
+  CTWING_adapter->iotlite_agent_1[dir="both"]
 
-  MQTT_adapter -> device_engin2[dir="both"]
-  HTTP_adapter -> device_engin2[dir="both"]
-  TCP_adapter->device_engin2[dir="both"]
-  ALI_adapter -> device_engin2[dir="both"]
-  CTWING_adapter->device_engin2[dir="both"]
+  MQTT_adapter -> iotlite_agent[dir="both"]
+  HTTP_adapter -> iotlite_agent[dir="both"]
+  TCP_adapter->iotlite_agent[dir="both"]
+  ALI_adapter -> iotlite_agent[dir="both"]
+  CTWING_adapter->iotlite_agent[dir="both"]
 }
