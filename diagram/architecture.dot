@@ -23,22 +23,32 @@ digraph G {
 		label = "TCP";
 	}
 
+	subgraph cluster_Application {
+		Application_Layer ;
+
+		Application_Layer->dashboard_app
+
+		Application_Layer->billing_app
+		label = "应用层";
+	}
+
     subgraph cluster_IOTLITE {
       	iotlite_agent_2->iotlite_group_agent;
 		iotlite_agent_1->iotlite_group_agent;
         iotlite_agent->iotlite_group_agent;
-		label = "IOTLITE";
+
+
+        iotlite_agent_2->Application_Layer;
+		iotlite_agent_1->Application_Layer;
+        iotlite_agent->Application_Layer;
+        iotlite_group_agent->Application_Layer;
+		label = "交互层";
 	}
 
-   	iotlite_agent_2->admin_panel;
-	iotlite_agent_1->admin_panel;
-    iotlite_agent->admin_panel;
-    iotlite_group_agent->admin_panel;
 
 
-   iotlite_group_agent->dashboard_agent;
 
-   dashboard_agent->dashboard_page
+
 
   device_0->gateway0->MQTT_adapter[dir="both"]
   device_1->gateway1->HTTP_adapter[dir="both"]
