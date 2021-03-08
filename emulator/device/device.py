@@ -13,7 +13,7 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 def on_connect(client, userdata, flags, rc):
-    client.subscribe("default/3/温度计10")
+    client.subscribe("default/3/10")
 
 def on_message(client, userdata, msg):
     print("↓"+msg.topic+" "+str(msg.payload))
@@ -25,13 +25,16 @@ def on_message(client, userdata, msg):
     data=json.dumps(response)
     print("↑"+"response "+data)
     client.publish("/default/3/温度计10",payload=data,qos=2,retain=False)
+    client.publish("/default/3/温度计10",payload=data,qos=2,retain=False)
+    client.publish("/default/3/温度计10",payload=data,qos=2,retain=False)
+
+
 
 client = mqtt.Client(client_id="device")
 client.on_connect = on_connect
 client.on_message = on_message
 
 
-client.connect("127.0.0.1", 41883, 60)
+client.connect("127.0.0.1", 41884, 60)
 
-print ("start..."+"127.0.0.1"+":"+str(41883))
 client.loop_forever()
