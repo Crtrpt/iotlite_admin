@@ -1,4 +1,4 @@
-package com.dj.iotlite.mqtt;
+package com.dj.iotlite.adaptor.IotliteMqttAdaptor;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

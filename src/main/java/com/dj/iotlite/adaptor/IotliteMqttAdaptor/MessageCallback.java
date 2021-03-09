@@ -1,4 +1,4 @@
-package com.dj.iotlite.mqtt;
+package com.dj.iotlite.adaptor.IotliteMqttAdaptor;
 
 
 import com.dj.iotlite.RedisKey;
@@ -6,12 +6,14 @@ import com.dj.iotlite.enums.DirectionEnum;
 import com.dj.iotlite.push.PushService;
 import com.dj.iotlite.service.DeviceInstance;
 import com.dj.iotlite.service.DeviceLogServiceImpl;
+import com.dj.iotlite.service.GroupInstance;
 import com.dj.iotlite.utils.CtxUtils;
 import com.jayway.jsonpath.JsonPath;
 import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.springframework.util.ObjectUtils;
 
 
 @Slf4j
@@ -66,6 +68,15 @@ public class MessageCallback implements IMqttMessageListener {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
+                    //TODO 设备组编排
+                    System.out.println("寻找组内事件"+String.format(RedisKey.DEVICE, productSn, deviceSn));
+                    var groupName =  CtxUtils.getBean(RedisCommands.class).hget(String.format(RedisKey.DEVICE, productSn, deviceSn), "deviceGroup");
+                    if (!ObjectUtils.isEmpty(groupName)) {
+                        for (String g : ((String)groupName).split(",")) {
+                            CtxUtils.getBean(GroupInstance.class).fire(g, productSn, deviceSn, action, locationSeg);
+                        }
+                    }
                     break;
                 default:
                     log.error("未定义action");
@@ -74,6 +85,7 @@ public class MessageCallback implements IMqttMessageListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         CtxUtils.getBean(PushService.class).push("/device/" + productSn + "/" + deviceSn + "/", rawData);
     }
 }

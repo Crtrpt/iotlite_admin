@@ -14,7 +14,7 @@ module.exports = {
           //  在`server`模式下，分析器将启动HTTP服务器来显示软件包报告。
           //  在“静态”模式下，会生成带有报告的单个HTML文件。
           //  在`disabled`模式下，你可以使用这个插件来将`generateStatsFile`设置为`true`来生成Webpack Stats JSON文件。
-          analyzerMode: 'static',
+          analyzerMode: 'disabled',
           reportFilename: 'report.html',
           //  模块大小默认显示在报告中。
           //  应该是`stat`，`parsed`或者`gzip`中的一个。

@@ -29,8 +29,8 @@ export default {
     return {
         d:{
             type:"codeEditor",
-            mode:"javascript",
-            value:JSON.stringify(this.form.spec,null,2),
+            mode:"groovy",
+            value:this.form.spec,
         }
     }
   },
