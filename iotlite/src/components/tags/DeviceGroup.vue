@@ -5,7 +5,7 @@
       placeholder="添加分组"
       disabled
       @tags-changed="newTags => change(newTags)"
-    > 
+    >
       <template
         slot="tag-center"
         slot-scope="props"
