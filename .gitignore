@@ -24,7 +24,7 @@ target/
 /nbbuild/
 /dist/
 /nbdist/
-/iotlite/
+/web/
 /.nb-gradle/
 build/
 !**/src/main/**/build/
@@ -34,4 +34,4 @@ build/
 .vscode/
 log/*
 
-./iotlite/node_modules
+./web/node_modules
