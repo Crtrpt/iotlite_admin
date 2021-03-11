@@ -67,8 +67,11 @@ public class DeviceInstance implements DeviceModel {
         });
 
         Gson gson = new Gson();
+
         String topic = String.format(RedisKey.DeviceProperty, "default", productSn, deviceSn);
+
         propertys.put("v", device.getVersion());
+
         String data = gson.toJson(propertys);
 
         device.setVersion(device.getVersion() + 1);
@@ -116,10 +119,6 @@ public class DeviceInstance implements DeviceModel {
         String value = JsonPath.read(data, "$.value");
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
         redisCommands.hset(member, name, value);
-        var groupName = redisCommands.hget(member, "deviceGroup");
-        Arrays.stream(groupName.split(",")).forEach(g -> {
-            groupInstance.observed(g, productSn, deviceSn, name, value);
-        });
     }
 
 
@@ -134,13 +133,7 @@ public class DeviceInstance implements DeviceModel {
         }
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
 
-        //TODO 设备组编排
-        var groupName = redisCommands.hget(member, "deviceGroup");
-        if (!ObjectUtils.isEmpty(groupName)) {
-            for (String g : groupName.split(",")) {
-                groupInstance.fire(g, productSn, deviceSn, name, payload);
-            }
-        }
+
     }
 
     public void deviceAlarm(String productSn, String deviceSn, String topic, String rawData) {
@@ -152,11 +145,7 @@ public class DeviceInstance implements DeviceModel {
         } catch (Exception e) {
             log.info("payload is empty");
         }
-        String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
-        var groupName = redisCommands.hget(member, "deviceGroup");
-        for (String g : groupName.split(",")) {
-            groupInstance.fire(g, productSn, deviceSn, name, payload);
-        }
+
     }
 
     public void deviceLog(String productSn, String deviceSn, String topic, String rawData) {

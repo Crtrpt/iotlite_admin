@@ -69,14 +69,7 @@ public class MessageCallback implements IMqttMessageListener {
                         e.printStackTrace();
                     }
 
-                    //TODO 设备组编排
-                    System.out.println("寻找组内事件"+String.format(RedisKey.DEVICE, productSn, deviceSn));
-                    var groupName =  CtxUtils.getBean(RedisCommands.class).hget(String.format(RedisKey.DEVICE, productSn, deviceSn), "deviceGroup");
-                    if (!ObjectUtils.isEmpty(groupName)) {
-                        for (String g : ((String)groupName).split(",")) {
-                            CtxUtils.getBean(GroupInstance.class).fire(g, productSn, deviceSn, action, locationSeg);
-                        }
-                    }
+
                     break;
                 default:
                     log.error("未定义action");
@@ -84,6 +77,15 @@ public class MessageCallback implements IMqttMessageListener {
             //更新前端的状态
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        //TODO 设备组编排
+        System.out.println("寻找组内事件"+String.format(RedisKey.DEVICE, productSn, deviceSn));
+        var groupName =  CtxUtils.getBean(RedisCommands.class).hget(String.format(RedisKey.DEVICE, productSn, deviceSn), "deviceGroup");
+        if (!ObjectUtils.isEmpty(groupName)) {
+            for (String g : ((String)groupName).split(",")) {
+                CtxUtils.getBean(GroupInstance.class).fire(g, productSn, deviceSn, action, rawData);
+            }
         }
 
         CtxUtils.getBean(PushService.class).push("/device/" + productSn + "/" + deviceSn + "/", rawData);
