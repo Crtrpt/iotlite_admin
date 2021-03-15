@@ -3,7 +3,6 @@
 
 import paho.mqtt.client as mqtt
 import json
-import time
 import logging
 
 logging.basicConfig(format='%(asctime)s %(message)s')

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CsharpEmulator": {
+      "commandName": "Project",
+      "commandLineArgs": "broker=81.69.46.38  productSn=0001 deviceSn=0002"
+    }
+  }
+}
