@@ -52,18 +52,6 @@ public class TestController extends BaseController {
     }
 
     @Autowired
-    @Qualifier("clickHouseJdbcTemplate")
-    JdbcTemplate postgresJdbcTemplate;
-
-    @GetMapping("/clickhouse")
-    public ResDto<Object> clickhouse() throws Exception {
-        List<Map<String, Object>> maps = postgresJdbcTemplate.queryForList("select * from test1.userEvents ");
-
-        System.out.println(maps);
-        return success();
-    }
-
-    @Autowired
     IotliteMqttImpl iotliteMqtt;
 
     @Autowired

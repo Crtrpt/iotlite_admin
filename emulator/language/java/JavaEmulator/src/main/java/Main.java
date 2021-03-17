@@ -1,12 +1,17 @@
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Main {
     static MqttClient mqttClient;
 
+    static  Calendar calendar=Calendar.getInstance();
+
     static HashMap<String,Object> params=new HashMap<>();
+
+    static SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
 
     public static void main(String[] args) throws MqttException {
 
@@ -41,7 +46,7 @@ public class Main {
         var topic=String.format("/%s/%s",(String) params.get("productSn"),(String) params.get("deviceSn"));
         System.out.println("订阅消息"+topic);
         mqttClient.subscribe(topic, (s, mqttMessage) -> {
-            System.out.println("收到消息"+mqttMessage.toString());
+            System.out.printf("time: %s topic %s payload: %s \r\n",format.format(calendar.getTime()),s, mqttMessage.toString());
         });
 
 

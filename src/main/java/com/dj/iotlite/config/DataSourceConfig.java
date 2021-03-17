@@ -21,21 +21,21 @@ public class DataSourceConfig {
         return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
-    @Bean("secondaryDataSource")
-    @ConfigurationProperties("spring.datasource-clickhouse")
-    public DataSource secondaryDataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
-    }
+//    @Bean("secondaryDataSource")
+//    @ConfigurationProperties("spring.datasource-clickhouse")
+//    public DataSource secondaryDataSource() {
+//        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+//    }
 
     @Bean(name = "mysqlJdbcTemplate")
     public JdbcTemplate jdbcTemplate(@Qualifier("primaryDataSource") DataSource primaryDataSource) {
         return new JdbcTemplate(primaryDataSource);
     }
 
-    @Bean(name = "clickHouseJdbcTemplate")
-    public JdbcTemplate clickHouseJdbcTemplate(@Qualifier("secondaryDataSource")
-                                                       DataSource secondaryDataSource) {
-        return new JdbcTemplate(secondaryDataSource);
-    }
+//    @Bean(name = "clickHouseJdbcTemplate")
+//    public JdbcTemplate clickHouseJdbcTemplate(@Qualifier("secondaryDataSource")
+//                                                       DataSource secondaryDataSource) {
+//        return new JdbcTemplate(secondaryDataSource);
+//    }
 
 }

@@ -10,11 +10,14 @@ import com.dj.iotlite.entity.repo.*;
 import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
 import com.dj.iotlite.exception.BusinessException;
+import com.dj.iotlite.function.State;
 import com.dj.iotlite.mapper.DeviceMapper;
 import com.dj.iotlite.spec.SpecV1;
 import com.dj.iotlite.utils.UUID;
 import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
+import groovy.lang.GroovyShell;
+import groovy.lang.Script;
 import io.lettuce.core.GeoArgs;
 import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
@@ -527,6 +530,11 @@ public class DeviceService {
     public Object saveGroupPlayground(DeviceGroupSpecSaveForm form) {
         deviceGroupRepository.findById(form.getId()).ifPresent(d -> {
             d.setSpec(form.getSpec());
+            GroovyShell gs = new GroovyShell();
+            Script script= gs.parse(form.getSpec());
+            script.setProperty("state",new State());
+            GroupInstanceImpl.groupScriptMapping.put(d.getName(),script);
+
             deviceGroupRepository.save(d);
             //编排文件存入redis
             var deviceKey=  String.format(RedisKey.DEVICE_GROUP, d.getName());
