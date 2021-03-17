@@ -10,6 +10,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 @RequestMapping("/device")
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -60,6 +62,11 @@ public class DeviceController extends BaseController {
     @GetMapping("/groupInfo")
     public ResDto<DeviceGroupDto> queryGroupInfo(@RequestParam("id") Long id) {
         return success(deviceService.queryDeviceGroup(id));
+    }
+
+    @PostMapping("/groupStateClean")
+    public ResDto<Boolean> groupStateClean(@RequestBody DeviceGroupCleanForm deviceGroupCleanForm) {
+        return success(deviceService.groupStateClean(deviceGroupCleanForm));
     }
 
     @GetMapping("/groupInfoByName")

@@ -76,7 +76,6 @@ public class MessageCallback implements IMqttMessageListener {
         }
 
         //TODO 设备组编排
-        log.info("寻找组内事件"+String.format(RedisKey.DEVICE, productSn, deviceSn));
         var groupName =  CtxUtils.getBean(RedisCommands.class).hget(String.format(RedisKey.DEVICE, productSn, deviceSn), "deviceGroup");
         if (!ObjectUtils.isEmpty(groupName)) {
             for (String g : ((String)groupName).split(",")) {

@@ -10,7 +10,7 @@ import com.dj.iotlite.entity.repo.*;
 import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
 import com.dj.iotlite.exception.BusinessException;
-import com.dj.iotlite.function.State;
+import com.dj.iotlite.function.StateAble;
 import com.dj.iotlite.mapper.DeviceMapper;
 import com.dj.iotlite.spec.SpecV1;
 import com.dj.iotlite.utils.UUID;
@@ -464,6 +464,13 @@ public class DeviceService {
         var deviceGroupDto = new DeviceGroupDto();
         DeviceGroup device = deviceGroupRepository.findById(id).orElse(new DeviceGroup());
         BeanUtils.copyProperties(device, deviceGroupDto);
+        Script s=GroupInstanceImpl.groupScriptMapping.get(device.getName());
+        if(ObjectUtils.isEmpty(s)){
+            deviceGroupDto.setState(new HashMap<>());
+        }else {
+            deviceGroupDto.setState(((StateAble)s.getProperty("state")).getStates());
+        }
+
         return deviceGroupDto;
     }
 
@@ -530,9 +537,12 @@ public class DeviceService {
     public Object saveGroupPlayground(DeviceGroupSpecSaveForm form) {
         deviceGroupRepository.findById(form.getId()).ifPresent(d -> {
             d.setSpec(form.getSpec());
+
+            //编排更新保持状态
+            var state=GroupInstanceImpl.groupScriptMapping.get(d.getName()).getProperty("state");
             GroovyShell gs = new GroovyShell();
             Script script= gs.parse(form.getSpec());
-            script.setProperty("state",new State());
+            script.setProperty("state",state);
             GroupInstanceImpl.groupScriptMapping.put(d.getName(),script);
 
             deviceGroupRepository.save(d);
@@ -575,5 +585,15 @@ public class DeviceService {
             ret.add(t);
         });
         return ret;
+    }
+
+    public Object groupStateClean(DeviceGroupCleanForm deviceGroupCleanForm) {
+        deviceGroupRepository.findById(deviceGroupCleanForm.getId()).ifPresent(g->{
+           var s= GroupInstanceImpl.groupScriptMapping.get(g.getName());
+           if(s!=null){
+               ((StateAble)s.getProperty("state")).cleanAll();
+           }
+        });
+        return true;
     }
 }

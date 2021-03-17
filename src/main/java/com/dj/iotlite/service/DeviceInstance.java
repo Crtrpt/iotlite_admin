@@ -114,7 +114,6 @@ public class DeviceInstance implements DeviceModel {
     GroupInstance groupInstance;
 
     public void devicePropertyChange(String productSn, String deviceSn, String topic, String data) {
-        log.info("设备属性变化  更新");
         String name = JsonPath.read(data, "$.name");
         Object value = JsonPath.read(data, "$.value");
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
@@ -122,7 +121,6 @@ public class DeviceInstance implements DeviceModel {
     }
 
     public void deviceEventFire(String productSn, String deviceSn, String topic, String rawData) {
-        log.info("设备发生事件  更新");
         String name = JsonPath.read(rawData, "$.name");
         Object payload = null;
         try {
