@@ -18,8 +18,6 @@ import org.springframework.util.ObjectUtils;
 
 @Slf4j
 public class MessageCallback implements IMqttMessageListener {
-
-
     @Override
     public void messageArrived(String topic, MqttMessage msg) throws Exception {
         var rawData = new String(msg.getPayload(), "UTF-8");
@@ -68,8 +66,6 @@ public class MessageCallback implements IMqttMessageListener {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-
                     break;
                 default:
                     log.error("未定义action");
@@ -80,7 +76,6 @@ public class MessageCallback implements IMqttMessageListener {
         }
 
         //TODO 设备组编排
-        System.out.println("寻找组内事件"+String.format(RedisKey.DEVICE, productSn, deviceSn));
         var groupName =  CtxUtils.getBean(RedisCommands.class).hget(String.format(RedisKey.DEVICE, productSn, deviceSn), "deviceGroup");
         if (!ObjectUtils.isEmpty(groupName)) {
             for (String g : ((String)groupName).split(",")) {

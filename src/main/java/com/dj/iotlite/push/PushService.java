@@ -35,15 +35,14 @@ public class PushService {
         mqttBroker.startServer(classPathConfig, userHandlers,new SslContextCreator(), new Authenticator(), new AuthorizatorPolicy());
     }
 
-    public void  push(String topic, Object data){
-        String pushData = JsonUtils.toJson(data);
+    public void  push(String topic, String data){
         MqttPublishMessage message = MqttMessageBuilders.publish()
                 .topicName(topic)
                 .retained(false)
                 .qos(MqttQoS.AT_LEAST_ONCE)
-                .payload(Unpooled.copiedBuffer(pushData.getBytes(UTF_8)))
+                .payload(Unpooled.copiedBuffer(data.getBytes(UTF_8)))
                 .build();
-        log.info("推送:" + topic + " 数据: " + pushData);
+        log.info("推送:" + topic + " 数据: " + data);
         mqttBroker.internalPublish(message, "INTRLPUB");
     }
 }
