@@ -20,6 +20,5 @@ docker run -d --link mysql:db -p 4021:80/tcp iotlite
 ```
 ## 测试环境体验
 
-iotlite.crtrpt.com
-
+http://iotlite.crtrpt.com
 
