@@ -18,5 +18,8 @@ docker pull jingdor/iotlite
 docker run -d --name mysql -p 3306:3306/tcp -e MYSQL_ROOT_PASSWORD=root  percona/percona-server:8.0
 docker run -d --link mysql:db -p 4021:80/tcp iotlite
 ```
+## 测试环境体验
+
+iotlite.crtrpt.com
 
 
