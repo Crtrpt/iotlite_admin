@@ -70,11 +70,11 @@ public class DeviceInstance implements DeviceModel {
 
         String topic = String.format(RedisKey.DeviceProperty, "default", productSn, deviceSn);
 
-        propertys.put("v", device.getVersion());
+        propertys.put("v", device.getVer());
 
         String data = gson.toJson(propertys);
 
-        device.setVersion(device.getVersion() + 1);
+        device.setVer(device.getVer() + 1);
         deviceRepository.save(device);
         //写入下发日志
 
@@ -105,7 +105,7 @@ public class DeviceInstance implements DeviceModel {
         Integer v = JsonPath.read(rawData, "$.v");
         //TODO 并发问题处理
         deviceRepository.findFirstBySnAndProductSn(deviceSn, productSn).ifPresent((d) -> {
-            d.setVersion(v);
+            d.setVer(v);
             deviceRepository.save(d);
         });
     }
@@ -118,6 +118,8 @@ public class DeviceInstance implements DeviceModel {
         Object value = JsonPath.read(data, "$.value");
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
         redisCommands.hset(member, name, String.valueOf(value));
+        //设备值最后变更时间
+        redisCommands.hset(member, name+":last_at", String.valueOf(System.currentTimeMillis()));
     }
 
     public void deviceEventFire(String productSn, String deviceSn, String topic, String rawData) {

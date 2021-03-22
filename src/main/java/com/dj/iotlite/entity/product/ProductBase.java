@@ -11,22 +11,17 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
+@MappedSuperclass
 @Data
-@SQLDelete(sql = "update `product` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
-@Entity
-@Table(name = "product")
-@Where(clause = "deleted_at is null")
-@DynamicUpdate
-@Cacheable
 @org.hibernate.annotations.TypeDef(name = "json", typeClass = JsonStringType.class)
-public class Product extends ProductBase {
+public class ProductBase extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String sn;
-    
+
     String name;
 
     String description;

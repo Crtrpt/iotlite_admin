@@ -7,6 +7,8 @@ import com.dj.iotlite.entity.device.*;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
 import com.dj.iotlite.entity.repo.*;
+import com.dj.iotlite.enums.DeviceCertEnum;
+import com.dj.iotlite.enums.ProductDiscoverEnum;
 import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
 import com.dj.iotlite.exception.BusinessException;
@@ -81,7 +83,6 @@ public class DeviceService {
                         //名称
                         criteriaBuilder.like(root.get("name").as(String.class), "%" + deviceQueryForm.getWords() + "%"),
                         criteriaBuilder.like(root.get("sn").as(String.class), "%" + deviceQueryForm.getWords() + "%"),
-                        criteriaBuilder.like(root.get("ver").as(String.class), "%" + deviceQueryForm.getWords() + "%"),
                         //备注
                         criteriaBuilder.like(root.get("description").as(String.class), "%" + deviceQueryForm.getWords() + "%"),
                         criteriaBuilder.like(root.get("tags").as(String.class), deviceQueryForm.getWords() + "%")
@@ -105,20 +106,20 @@ public class DeviceService {
     public Object saveDevice(DeviceSaveForm deviceDto) {
         Device device = new Device();
         BeanUtils.copyProperties(deviceDto, device);
-        device.setVersion(1);
+        device.setVer(1);
         device.setCreatedAt(System.currentTimeMillis());
         productRepository.findById(deviceDto.getProductId()).ifPresentOrElse(p -> {
             device.setSpec(p.getSpec());
             device.setProductSn(p.getSn());
             device.setTags(new ArrayList<>());
             //创建的时候的版本
-            device.setVer(p.getVer());
+            device.setVersion(p.getVersion());
         }, () -> {
             throw new BusinessException("设备不存在");
         });
 
         var groupIdsMap = new HashMap<String, Long>();
-        if(!ObjectUtils.isEmpty(deviceDto.getDeviceGroup())){
+        if (!ObjectUtils.isEmpty(deviceDto.getDeviceGroup())) {
             Arrays.stream(deviceDto.getDeviceGroup().split(",")).forEach((s) -> {
                 if (s.equals("")) {
                 } else {
@@ -151,10 +152,10 @@ public class DeviceService {
             link.setDeviceId(device.getId());
             deviceGroupLinkRepository.save(link);
         }
-        if(!ObjectUtils.isEmpty(deviceDto.getDeviceGroup())){
+        if (!ObjectUtils.isEmpty(deviceDto.getDeviceGroup())) {
             //缓存设备的设备组信息
-            var deviceKey=  String.format(RedisKey.DEVICE, device.getProductSn(), deviceDto.getSn());
-            redisCommands.hset(deviceKey, "deviceGroup",deviceDto.getDeviceGroup());
+            var deviceKey = String.format(RedisKey.DEVICE, device.getProductSn(), deviceDto.getSn());
+            redisCommands.hset(deviceKey, "deviceGroup", deviceDto.getDeviceGroup());
         }
 
         ep.publishEvent(new ChangeDevice(this, device, ChangeDevice.Action.ADD, groupIdsMap));
@@ -200,9 +201,9 @@ public class DeviceService {
                 deviceGroupLinkRepository.save(link);
             }
             //缓存每个涉笔的设备组信息
-            if(!ObjectUtils.isEmpty(deviceDto.getDeviceGroup())){
-                var deviceKey=  String.format(RedisKey.DEVICE, device.getProductSn(), d.getSn());
-                redisCommands.hset(deviceKey, "deviceGroup",deviceDto.getDeviceGroup());
+            if (!ObjectUtils.isEmpty(deviceDto.getDeviceGroup())) {
+                var deviceKey = String.format(RedisKey.DEVICE, device.getProductSn(), d.getSn());
+                redisCommands.hset(deviceKey, "deviceGroup", deviceDto.getDeviceGroup());
             }
         }
         log.info("批量创建设备" + list.size());
@@ -240,6 +241,11 @@ public class DeviceService {
         BeanUtils.copyProperties(productForm, product);
         product.setSpec("{}");
         product.setTags("[]");
+        product.setVersion("0.0.0");
+        product.setSn(UUID.getUUID());
+        product.setDeviceCert(DeviceCertEnum.none);
+        product.setSecKey(UUID.getUUID());
+        product.setDiscover(ProductDiscoverEnum.auto);
         productRepository.save(product);
         ep.publishEvent(new ChangeProduct(this, product, ChangeProduct.Action.ADD));
         return true;
@@ -464,11 +470,11 @@ public class DeviceService {
         var deviceGroupDto = new DeviceGroupDto();
         DeviceGroup device = deviceGroupRepository.findById(id).orElse(new DeviceGroup());
         BeanUtils.copyProperties(device, deviceGroupDto);
-        Script s=GroupInstanceImpl.groupScriptMapping.get(device.getName());
-        if(ObjectUtils.isEmpty(s)){
+        Script s = GroupInstanceImpl.groupScriptMapping.get(device.getName());
+        if (ObjectUtils.isEmpty(s)) {
             deviceGroupDto.setState(new HashMap<>());
-        }else {
-            deviceGroupDto.setState(((StateAble)s.getProperty("state")).getStates());
+        } else {
+            deviceGroupDto.setState(((StateAble) s.getProperty("state")).getStates());
         }
 
         return deviceGroupDto;
@@ -539,16 +545,16 @@ public class DeviceService {
             d.setSpec(form.getSpec());
 
             //编排更新保持状态
-            var state=GroupInstanceImpl.groupScriptMapping.get(d.getName()).getProperty("state");
+            var state = GroupInstanceImpl.groupScriptMapping.get(d.getName()).getProperty("state");
             GroovyShell gs = new GroovyShell();
-            Script script= gs.parse(form.getSpec());
-            script.setProperty("state",state);
-            GroupInstanceImpl.groupScriptMapping.put(d.getName(),script);
+            Script script = gs.parse(form.getSpec());
+            script.setProperty("state", state);
+            GroupInstanceImpl.groupScriptMapping.put(d.getName(), script);
 
             deviceGroupRepository.save(d);
             //编排文件存入redis
-            var deviceKey=  String.format(RedisKey.DEVICE_GROUP, d.getName());
-            redisCommands.hset(deviceKey, "playground",form.getSpec());
+            var deviceKey = String.format(RedisKey.DEVICE_GROUP, d.getName());
+            redisCommands.hset(deviceKey, "playground", form.getSpec());
         });
         return true;
     }
@@ -568,31 +574,32 @@ public class DeviceService {
     }
 
     /**
-     *  TODO 修改为只显示视口内的设备
+     * TODO 修改为只显示视口内的设备
+     *
      * @param query
      * @return
      */
     public Object getMapDeviceList(MapDeviceQueryForm query) {
-        List<DeviceMapLocationDto> ret=new ArrayList<>();
+        List<DeviceMapLocationDto> ret = new ArrayList<>();
         String key = String.format(RedisKey.DeviceLOCATION, "default");
-        deviceRepository.findAllByProductSn(query.getProductSn()).stream().forEach(s->{
-            DeviceMapLocationDto t=new DeviceMapLocationDto();
+        deviceRepository.findAllByProductSn(query.getProductSn()).stream().forEach(s -> {
+            DeviceMapLocationDto t = new DeviceMapLocationDto();
             String member = String.format(RedisKey.DeviceLOCATION_MEMBER, s.getProductSn(), s.getSn());
-            BeanUtils.copyProperties(s,t);
+            BeanUtils.copyProperties(s, t);
             t.setDeviceSn(s.getSn());
             t.setProductSn(s.getProductSn());
-            t.setLocation( redisCommands.geopos(key, member).get(0));
+            t.setLocation(redisCommands.geopos(key, member).get(0));
             ret.add(t);
         });
         return ret;
     }
 
     public Object groupStateClean(DeviceGroupCleanForm deviceGroupCleanForm) {
-        deviceGroupRepository.findById(deviceGroupCleanForm.getId()).ifPresent(g->{
-           var s= GroupInstanceImpl.groupScriptMapping.get(g.getName());
-           if(s!=null){
-               ((StateAble)s.getProperty("state")).cleanAll();
-           }
+        deviceGroupRepository.findById(deviceGroupCleanForm.getId()).ifPresent(g -> {
+            var s = GroupInstanceImpl.groupScriptMapping.get(g.getName());
+            if (s != null) {
+                ((StateAble) s.getProperty("state")).cleanAll();
+            }
         });
         return true;
     }

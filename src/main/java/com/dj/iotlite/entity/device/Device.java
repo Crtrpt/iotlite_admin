@@ -62,7 +62,7 @@ public class Device extends Base {
     /**
      * 每次修改版本加一
      */
-    Integer version;
+    String version;
 
     /**
      * 产品物模型
@@ -79,9 +79,9 @@ public class Device extends Base {
     Object tags;
 
     /**
-     * 产品版本
+     * 影子版本
      */
-    String ver;
+    Integer ver;
 
     /**
      * 设备注册方式
@@ -104,8 +104,6 @@ public class Device extends Base {
      */
     Long batchId;
 
-
-
     /**
      * 设备加入的分组
      */
@@ -123,9 +121,13 @@ public class Device extends Base {
     @Column(columnDefinition = "int default 0")
     ProtocolTypeEnum protocolType;
 
-
     /**
      * 设备围栏
      */
     String fence;
+
+    /**
+     * 接入点 设备
+     */
+    String ap;
 }
