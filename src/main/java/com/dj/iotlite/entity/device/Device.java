@@ -60,9 +60,13 @@ public class Device extends Base {
     HashMap shadow;
 
     /**
-     * 每次修改版本加一
+     * 软件版本
      */
     String version;
+    /**
+     * 硬件版本
+     */
+    String hdVersion;
 
     /**
      * 产品物模型
