@@ -4,6 +4,7 @@ import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.Product;
+import com.dj.iotlite.entity.product.ProductVersion;
 import com.dj.iotlite.service.DeviceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -36,7 +37,7 @@ public class ProductController extends BaseController {
     }
 
     @GetMapping("/deviceList")
-    public ResDto<Page<ProductListDto>> deviceList(DeviceQueryForm query) {
+    public ResDto<Page<DeviceListDto>> deviceList(DeviceQueryForm query) {
 
         Page<DeviceListDto> ret = new Page<DeviceListDto>();
         org.springframework.data.domain.Page<Device> res = deviceService.getDeviceList(query);
@@ -98,4 +99,6 @@ public class ProductController extends BaseController {
     public ResDto<Boolean> changeTags(@RequestBody ChangeTagsForm form) {
         return success(deviceService.changeTags(form));
     }
+
+
 }

@@ -1,6 +1,5 @@
 package com.dj.iotlite.entity.product;
 
-import com.dj.iotlite.entity.Base;
 import com.dj.iotlite.enums.*;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Data;
@@ -10,16 +9,17 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
-@SQLDelete(sql = "update `product` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
+@SQLDelete(sql = "update `product_version` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
 @Entity
-@Table(name = "product")
+@Table(name = "product_version")
 @Where(clause = "deleted_at is null")
 @DynamicUpdate
 @Cacheable
 @org.hibernate.annotations.TypeDef(name = "json", typeClass = JsonStringType.class)
-public class Product extends ProductBase {
+public class ProductVersion extends ProductBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,8 +64,17 @@ public class Product extends ProductBase {
     /**
      * 每次修改版本加一
      */
+    String verDescription;
+
+    /**
+     * 每次修改版本加一
+     */
     String version;
 
+    /**
+     * 最新hd版本
+     */
+    String minHdVersion;
     /**
      * 默认后台手动添加
      */
@@ -94,4 +103,8 @@ public class Product extends ProductBase {
      */
     @Column(columnDefinition = "int default 1")
     Long adapterId;
+
+    Date startAt;
+
+    Date endAt;
 }

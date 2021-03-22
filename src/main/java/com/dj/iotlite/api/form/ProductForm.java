@@ -7,4 +7,7 @@ public class ProductForm {
     String name;
     String description;
     Integer type;
+    Long adapterId;
+    String model;
+    String icon;
 }
