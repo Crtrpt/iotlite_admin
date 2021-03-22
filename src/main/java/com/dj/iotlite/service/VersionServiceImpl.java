@@ -71,6 +71,8 @@ public class VersionServiceImpl implements VersionService {
                         criteriaBuilder.like(root.get("tags").as(String.class), query.getWords() + "%")
                 ));
             }
+            list.add(criteriaBuilder.equal(root.get("sn").as(String.class), query.getProductSn()));
+
             Predicate[] p = new Predicate[list.size()];
             criteriaQuery.where(criteriaBuilder.and(list.toArray(p)));
             return null;
