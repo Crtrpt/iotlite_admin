@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,5 +20,6 @@ public interface DeviceGroupRepository extends CrudRepository<DeviceGroup, Long>
     Optional<DeviceGroup> findFirstByName(String name);
 
     Page<DeviceGroup> findAll(Specification spec, Pageable page);
+
 
 }

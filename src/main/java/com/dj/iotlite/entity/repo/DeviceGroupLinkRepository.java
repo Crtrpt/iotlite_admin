@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface DeviceGroupLinkRepository extends CrudRepository<DeviceGroupLink, Long>,
         JpaSpecificationExecutor<DeviceGroupLink>,
@@ -17,4 +19,8 @@ public interface DeviceGroupLinkRepository extends CrudRepository<DeviceGroupLin
     Page<DeviceGroupLink> findAll(Specification spec, Pageable page);
 
     Long countByGroupId(Long groupId);
+
+    List<DeviceGroupLink> findAllByProductSnAndDeviceSn(String productSn, String deviceSn);
+
+    List<DeviceGroupLink> findAllByProductSn(String productSn);
 }

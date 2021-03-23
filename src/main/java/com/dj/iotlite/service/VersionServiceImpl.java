@@ -43,6 +43,9 @@ public class VersionServiceImpl implements VersionService {
             newProduct.setVersion(form.getVersion());
             newProduct.setMinHdVersion(form.getMinHdVersion());
             newProduct.setCreatedAt(System.currentTimeMillis());
+            newProduct.setStartAt(form.getStartAt());
+            newProduct.setEndAt(form.getEndAt());
+            newProduct.setDeviceCount(0L);
             productVersionRepository.save(newProduct);
         }, () -> {
             throw new BusinessException("产品不存在");
@@ -71,6 +74,8 @@ public class VersionServiceImpl implements VersionService {
                         criteriaBuilder.like(root.get("tags").as(String.class), query.getWords() + "%")
                 ));
             }
+            list.add(criteriaBuilder.equal(root.get("sn").as(String.class), query.getProductSn()));
+
             Predicate[] p = new Predicate[list.size()];
             criteriaQuery.where(criteriaBuilder.and(list.toArray(p)));
             return null;

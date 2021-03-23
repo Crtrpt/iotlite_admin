@@ -70,8 +70,8 @@ public class ProductController extends BaseController {
     }
 
     @PostMapping("/remove")
-    public ResDto<Boolean> remove(@RequestParam("uuid") String uuid) {
-        return success(deviceService.removeProduct(uuid));
+    public ResDto<Boolean> remove(@RequestBody ProductRemoveForm form) {
+        return success(deviceService.removeProduct(form));
     }
 
     @PostMapping("/save")

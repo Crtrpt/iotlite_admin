@@ -103,8 +103,8 @@ public class DeviceController extends BaseController {
     }
 
     @PostMapping("/remove")
-    public ResDto<Boolean> remove(@RequestParam("uuid") String uuid) {
-        return success(deviceService.removeDevice(uuid));
+    public ResDto<Boolean> remove(@RequestBody DeviceRemoveForm form) {
+        return success(deviceService.removeDevice(form));
     }
 
     @PostMapping("/save")

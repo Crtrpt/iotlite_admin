@@ -9,7 +9,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+
 
 @Data
 @SQLDelete(sql = "update `product_version` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")
@@ -107,4 +108,6 @@ public class ProductVersion extends ProductBase {
     Date startAt;
 
     Date endAt;
+
+    Long deviceCount;
 }

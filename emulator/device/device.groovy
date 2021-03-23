@@ -41,7 +41,6 @@ static void main(String[] args) {
     mqttClient.subscribe("/default/5/HK07");
     def rand = Random.newInstance();
 
-
     while (true) {
         def data = new HashMap<>();
         data.put("action", "property");
