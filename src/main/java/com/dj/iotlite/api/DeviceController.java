@@ -64,6 +64,11 @@ public class DeviceController extends BaseController {
         return success(deviceService.queryDeviceGroup(id));
     }
 
+    @PostMapping("/groupRemove")
+    public ResDto<DeviceGroupDto> groupRemove(@RequestBody DeviceGroupRemoveForm groupRemoveForm) {
+        return success(deviceService.groupRemove(groupRemoveForm));
+    }
+
     @PostMapping("/groupStateClean")
     public ResDto<Boolean> groupStateClean(@RequestBody DeviceGroupCleanForm deviceGroupCleanForm) {
         return success(deviceService.groupStateClean(deviceGroupCleanForm));

@@ -621,4 +621,11 @@ public class DeviceService {
         });
         return true;
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Object groupRemove(DeviceGroupRemoveForm groupRemoveForm) {
+        deviceGroupRepository.deleteById(groupRemoveForm.getId());
+        deviceGroupLinkRepository.deleteInBatch(deviceGroupLinkRepository.findAllByGroupId(groupRemoveForm.getId()));
+        return true;
+    }
 }
