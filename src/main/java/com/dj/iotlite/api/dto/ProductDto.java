@@ -22,4 +22,9 @@ public class ProductDto extends ProductListDto {
 
     @JsonSerialize(using = StringMaskSerialize.class)
     String secKey;
+
+    /**
+     * 推送hook
+     */
+    Object hook;
 }

@@ -9,4 +9,8 @@ public class DeviceGroupDto extends DeviceGroupListDto {
     String fence;
     Object spec;
     Object state;
+    /**
+     * 推送hook
+     */
+    Object hook;
 }

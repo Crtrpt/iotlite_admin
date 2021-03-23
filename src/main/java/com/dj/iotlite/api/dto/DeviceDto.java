@@ -24,4 +24,8 @@ public class DeviceDto extends DeviceListDto {
      */
     Object snap;
     DeviceDto proxy;
+    /**
+     * 推送hook
+     */
+    Object hook;
 }
