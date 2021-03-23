@@ -16,4 +16,5 @@ public class DeviceSaveForm extends DeviceListDto {
     ProductDto product;
     Integer count;
     String deviceGroup;
+    Long proxyId;
 }

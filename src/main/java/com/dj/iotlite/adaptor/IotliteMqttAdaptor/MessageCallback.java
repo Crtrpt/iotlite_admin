@@ -10,10 +10,15 @@ import com.dj.iotlite.service.GroupInstance;
 import com.dj.iotlite.utils.CtxUtils;
 import com.jayway.jsonpath.JsonPath;
 import io.lettuce.core.api.sync.RedisCommands;
+import io.netty.buffer.Unpooled;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.util.ObjectUtils;
+
+import java.util.Arrays;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 @Slf4j
@@ -22,10 +27,15 @@ public class MessageCallback implements IMqttMessageListener {
     public void messageArrived(String topic, MqttMessage msg) throws Exception {
         var rawData = new String(msg.getPayload(), "UTF-8");
         log.info("收到数据" + rawData);
-        String action = JsonPath.read(rawData, "$.action");
+
         var seg = topic.split("/");
+
         var deviceSn = seg[3];
         var productSn = seg[2];
+
+        log.info("收到数据" + seg.length + "");
+
+        String action = JsonPath.read(rawData, "$.action");
         //log
         CtxUtils.getBean(DeviceLogServiceImpl.class).Log(deviceSn, productSn, DirectionEnum.UP, "device", topic, action, rawData);
 
@@ -67,6 +77,12 @@ public class MessageCallback implements IMqttMessageListener {
                         e.printStackTrace();
                     }
                     break;
+                case "pass":
+                    String realTopic=JsonPath.read(rawData, "$.topic");
+                    String payload=JsonPath.read(rawData, "$.payload");
+                    msg=new MqttMessage();
+                    msg.setPayload(payload.getBytes(UTF_8));
+                    messageArrived(realTopic,msg);
                 default:
                     log.error("未定义action");
             }

@@ -30,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Data
@@ -90,7 +91,7 @@ public class IotliteMqttImpl implements Adaptor {
     }
 
     @Override
-    public void publish(Product product, Device device, String topic, String data) throws Exception {
+    public void publish(Optional<Device> proxy, Product product, Device device, String topic, String data) throws Exception {
         MqttMessage mqttMessage = new MqttMessage();
         mqttMessage.setPayload(data.getBytes(StandardCharsets.UTF_8));
         mqttClient.publish(topic, mqttMessage);

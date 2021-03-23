@@ -3,6 +3,10 @@ package com.dj.iotlite;
 public class RedisKey {
 
    public static final String DeviceProperty ="%s/%s/%s";
+   /**
+    * 透传
+    */
+   public static final String DevicePass ="%s/%s/%s/pass ";
 
    public static final String DeviceLOCATION = "LOCATION:%s";
 

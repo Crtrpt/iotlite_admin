@@ -22,6 +22,7 @@ import org.springframework.util.ObjectUtils;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -66,9 +67,18 @@ public class DeviceInstance implements DeviceModel {
             throw new BusinessException("设备序号不存在");
         });
 
+        Optional<Device> proxy= Optional.of(null);
+        String topic = String.format(RedisKey.DeviceProperty, "default", productSn, deviceSn);
+
+        //透传下发
+        if(device.getProxyId()!=null){
+            proxy=deviceRepository.findById(device.getProductId());
+            topic= String.format(RedisKey.DeviceProperty, "default", proxy.get().getProductSn(), proxy.get().getSn());
+        }
+
         Gson gson = new Gson();
 
-        String topic = String.format(RedisKey.DeviceProperty, "default", productSn, deviceSn);
+
 
         propertys.put("v", device.getVer());
 
@@ -84,9 +94,12 @@ public class DeviceInstance implements DeviceModel {
             if (ObjectUtils.isEmpty(product.getAdapterId())) {
                 throw new BusinessException("未找到设备 适配器");
             } else {
+                Optional<Device> finalProxy = proxy;
+                String finalTopic = topic;
                 adapterRepository.findById(product.getAdapterId()).ifPresent(adaptor -> {
                     try {
-                        ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(product, device, topic, data);
+
+                        ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(finalProxy,product, device, finalTopic, data);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
