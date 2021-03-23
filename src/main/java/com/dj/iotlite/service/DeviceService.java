@@ -98,8 +98,13 @@ public class DeviceService {
         return deviceRepository.findAll(specification, deviceQueryForm.getPage());
     }
 
-    public Object removeDevice(String uuid) {
-        return null;
+    @Transactional(rollbackFor = Exception.class)
+    public Object removeDevice(DeviceRemoveForm form) {
+        deviceRepository.deleteById(form.getId());
+        var links = deviceGroupLinkRepository.findAllByProductSnAndDeviceSn(form.getProductSn(), form.getDeviceSn());
+        deviceGroupLinkRepository.deleteInBatch(links);
+        //TODO 清除其他的状态
+        return true;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -232,8 +237,21 @@ public class DeviceService {
         return productRepository.findAll(specification, query.getPage());
     }
 
-    public Object removeProduct(String uuid) {
-        return null;
+    @Transactional(rollbackFor = Exception.class)
+    public Object removeProduct(ProductRemoveForm form) {
+        productRepository.findById(form.getId()).ifPresentOrElse((p) -> {
+            //删除所有设备
+            deviceRepository.deleteAll(deviceRepository.findAllByProductSn(p.getSn()));
+            //删除组内关系
+            var links = deviceGroupLinkRepository.findAllByProductSn(p.getSn());
+            deviceGroupLinkRepository.deleteInBatch(links);
+            //删除产品
+            productRepository.delete(p);
+            // TODO 清理各种状态
+        }, () -> {
+            throw new BusinessException("产品已经不存在");
+        });
+        return true;
     }
 
     public Object saveProduct(ProductForm productForm) {

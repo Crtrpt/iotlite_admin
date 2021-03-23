@@ -43,6 +43,9 @@ public class VersionServiceImpl implements VersionService {
             newProduct.setVersion(form.getVersion());
             newProduct.setMinHdVersion(form.getMinHdVersion());
             newProduct.setCreatedAt(System.currentTimeMillis());
+            newProduct.setStartAt(form.getStartAt());
+            newProduct.setEndAt(form.getEndAt());
+            newProduct.setDeviceCount(0L);
             productVersionRepository.save(newProduct);
         }, () -> {
             throw new BusinessException("产品不存在");
