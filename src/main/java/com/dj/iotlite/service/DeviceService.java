@@ -8,6 +8,8 @@ import com.dj.iotlite.entity.device.DeviceGroup;
 import com.dj.iotlite.entity.device.DeviceGroupLink;
 import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.entity.product.Product;
+import com.dj.iotlite.entity.product.ProductVersion;
+import com.dj.iotlite.entity.repo.ProductVersionRepository;
 import com.dj.iotlite.entity.repo.ProductRepository;
 import com.dj.iotlite.entity.repo.DeviceGroupLinkRepository;
 import com.dj.iotlite.entity.repo.DeviceGroupRepository;
@@ -52,8 +54,12 @@ public class DeviceService {
     @Autowired
     private ApplicationEventPublisher ep;
 
+
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ProductVersionRepository productVersionRepository;
 
     @Autowired
     AdapterRepository adapterRepository;
@@ -75,7 +81,7 @@ public class DeviceService {
         BeanUtils.copyProperties(device, deviceDto);
 
         ProductDto productDto = new ProductDto();
-        Product product = productRepository.findById(device.getProductId()).orElseThrow(()->{
+        ProductVersion product = productVersionRepository.findFirstBySnAndVersion(device.getProductSn(),device.getVersion()).orElseThrow(()->{
             throw new BusinessException("not found product");
         });
         BeanUtils.copyProperties(product, productDto);
@@ -133,24 +139,24 @@ public class DeviceService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Object saveDevice(DeviceSaveForm deviceDto) {
+    public Object saveDevice(DeviceSaveForm form) {
         Device device = new Device();
-        BeanUtils.copyProperties(deviceDto, device);
+        BeanUtils.copyProperties(form, device);
         device.setVer(1);
         device.setCreatedAt(System.currentTimeMillis());
-        productRepository.findById(deviceDto.getProductId()).ifPresentOrElse(p -> {
+        productRepository.findById(form.getProductId()).ifPresentOrElse(p -> {
             device.setSpec(p.getSpec());
             device.setProductSn(p.getSn());
             device.setTags(new ArrayList<>());
             //创建的时候的版本
-            device.setVersion(p.getVersion());
+            device.setVersion(form.getVersion());
         }, () -> {
             throw new BusinessException("设备不存在");
         });
 
         var groupIdsMap = new HashMap<String, Long>();
-        if (!ObjectUtils.isEmpty(deviceDto.getDeviceGroup())) {
-            Arrays.stream(deviceDto.getDeviceGroup().split(",")).forEach((s) -> {
+        if (!ObjectUtils.isEmpty(form.getDeviceGroup())) {
+            Arrays.stream(form.getDeviceGroup().split(",")).forEach((s) -> {
                 if (s.equals("")) {
                 } else {
                     deviceGroupRepository.findFirstByName(s).ifPresentOrElse(
@@ -168,7 +174,7 @@ public class DeviceService {
             });
         }
 
-        batchCopy(device, deviceDto, groupIdsMap);
+        batchCopy(device, form, groupIdsMap);
         deviceRepository.save(device);
         //保存分组关系
         for (Map.Entry<String, Long> entry : groupIdsMap.entrySet()) {
@@ -182,10 +188,10 @@ public class DeviceService {
             link.setDeviceId(device.getId());
             deviceGroupLinkRepository.save(link);
         }
-        if (!ObjectUtils.isEmpty(deviceDto.getDeviceGroup())) {
+        if (!ObjectUtils.isEmpty(form.getDeviceGroup())) {
             //缓存设备的设备组信息
-            var deviceKey = String.format(RedisKey.DEVICE, device.getProductSn(), deviceDto.getSn());
-            redisCommands.hset(deviceKey, "deviceGroup", deviceDto.getDeviceGroup());
+            var deviceKey = String.format(RedisKey.DEVICE, device.getProductSn(), form.getSn());
+            redisCommands.hset(deviceKey, "deviceGroup", form.getDeviceGroup());
         }
 
         ep.publishEvent(new ChangeDevice(this, device, ChangeDevice.Action.ADD, groupIdsMap));
@@ -545,7 +551,7 @@ public class DeviceService {
             var t = new DeviceListDto();
             BeanUtils.copyProperties(d, t);
             var pto = new ProductDto();
-            var p = productRepository.findFirstBySn(d.getProductSn()).orElse(new Product());
+            var p = productVersionRepository.findFirstBySnAndVersion(d.getProductSn(),d.getVersion()).orElse(new ProductVersion());
             BeanUtils.copyProperties(p, pto);
             t.setProduct(pto);
             t.setTags(gson.fromJson(String.valueOf(d.getTags()), List.class));

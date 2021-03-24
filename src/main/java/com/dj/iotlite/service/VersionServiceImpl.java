@@ -4,7 +4,7 @@ import com.dj.iotlite.api.form.DeviceQueryForm;
 import com.dj.iotlite.api.form.NewVersionReleaseForm;
 import com.dj.iotlite.entity.repo.ProductRepository;
 import com.dj.iotlite.entity.product.ProductVersion;
-import com.dj.iotlite.entity.product.ProductVersionRepository;
+import com.dj.iotlite.entity.repo.ProductVersionRepository;
 import com.dj.iotlite.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

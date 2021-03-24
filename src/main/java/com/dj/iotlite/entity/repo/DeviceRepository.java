@@ -4,6 +4,7 @@ package com.dj.iotlite.entity.repo;
 import com.dj.iotlite.entity.device.Device;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +34,7 @@ public interface DeviceRepository extends CrudRepository<Device, Long>, JpaSpeci
     Optional<Device> findById(Long id);
 
     @Override
-    @CacheEvict(cacheNames = "device", key = "#device.id")
+    @CachePut(cacheNames = "device", key = "#device.id")
     Device save(Device device);
 
     @Override

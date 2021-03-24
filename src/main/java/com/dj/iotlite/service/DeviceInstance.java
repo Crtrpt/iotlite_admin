@@ -4,9 +4,11 @@ import com.dj.iotlite.RedisKey;
 import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.Product;
+import com.dj.iotlite.entity.product.ProductVersion;
 import com.dj.iotlite.entity.repo.ProductRepository;
 import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.entity.repo.AdapterRepository;
+import com.dj.iotlite.entity.repo.ProductVersionRepository;
 import com.dj.iotlite.enums.DirectionEnum;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.push.PushService;
@@ -30,7 +32,7 @@ import java.util.Optional;
 public class DeviceInstance implements DeviceModel {
 
     @Autowired
-    ProductRepository productRepository;
+    ProductVersionRepository productVersionRepository;
 
     @Autowired
     DeviceRepository deviceRepository;
@@ -59,12 +61,13 @@ public class DeviceInstance implements DeviceModel {
     @Override
     public void setPropertys(String productSn, String deviceSn, Map<String, Object> propertys, String desc) {
 
-        Product product = productRepository.findFirstBySn(productSn).orElseThrow(() -> {
-            throw new BusinessException("产品序号不存在");
-        });
 
         Device device = deviceRepository.findFirstBySnAndProductSn(deviceSn, productSn).orElseThrow(() -> {
             throw new BusinessException("设备序号不存在");
+        });
+
+        ProductVersion product = productVersionRepository.findFirstBySnAndVersion(device.getProductSn(),device.getVersion()).orElseThrow(() -> {
+            throw new BusinessException("产品序号不存在");
         });
 
         Optional<Device> proxy = Optional.of(null);
@@ -97,7 +100,6 @@ public class DeviceInstance implements DeviceModel {
                 String finalTopic = topic;
                 adapterRepository.findById(product.getAdapterId()).ifPresent(adaptor -> {
                     try {
-
                         ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(finalProxy, product, device, finalTopic, data);
                     } catch (Exception e) {
                         e.printStackTrace();

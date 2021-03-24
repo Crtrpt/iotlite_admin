@@ -3,6 +3,7 @@ package com.dj.iotlite.adaptor;
 import com.dj.iotlite.adaptor.IotliteMqttAdaptor.PushCallback;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.Product;
+import com.dj.iotlite.entity.product.ProductVersion;
 import com.dj.iotlite.push.Authenticator;
 import com.dj.iotlite.push.AuthorizatorPolicy;
 import com.dj.iotlite.push.PublisherListener;
@@ -91,7 +92,7 @@ public class IotliteMqttImpl implements Adaptor {
     }
 
     @Override
-    public void publish(Optional<Device> proxy, Product product, Device device, String topic, String data) throws Exception {
+    public void publish(Optional<Device> proxy, ProductVersion product, Device device, String topic, String data) throws Exception {
         MqttMessage mqttMessage = new MqttMessage();
         mqttMessage.setPayload(data.getBytes(StandardCharsets.UTF_8));
         mqttClient.publish(topic, mqttMessage);
