@@ -1,8 +1,5 @@
 package com.dj.iotlite.function;
 
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicLong;
-
 public interface StateAble {
 
 

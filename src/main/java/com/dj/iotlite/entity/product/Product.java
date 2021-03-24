@@ -1,6 +1,5 @@
 package com.dj.iotlite.entity.product;
 
-import com.dj.iotlite.entity.Base;
 import com.dj.iotlite.enums.*;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Data;

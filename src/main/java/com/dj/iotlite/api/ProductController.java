@@ -4,7 +4,6 @@ import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.Product;
-import com.dj.iotlite.entity.product.ProductVersion;
 import com.dj.iotlite.service.DeviceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

@@ -1,18 +1,16 @@
 package com.dj.iotlite.api;
 
-import com.dj.iotlite.api.dto.*;
-import com.dj.iotlite.api.form.*;
-import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.product.Product;
+import com.dj.iotlite.api.dto.Page;
+import com.dj.iotlite.api.dto.ProductVersionListDto;
+import com.dj.iotlite.api.dto.ResDto;
+import com.dj.iotlite.api.form.DeviceQueryForm;
+import com.dj.iotlite.api.form.NewVersionReleaseForm;
 import com.dj.iotlite.entity.product.ProductVersion;
-import com.dj.iotlite.service.DeviceService;
 import com.dj.iotlite.service.VersionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/product/version")

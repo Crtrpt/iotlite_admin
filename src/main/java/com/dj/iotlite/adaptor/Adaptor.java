@@ -2,7 +2,6 @@ package com.dj.iotlite.adaptor;
 
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.Product;
-import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.util.Optional;
 

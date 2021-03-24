@@ -4,17 +4,10 @@ import com.dj.iotlite.RedisKey;
 import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.entity.repo.DeviceLogRepository;
 import com.dj.iotlite.enums.DirectionEnum;
-import com.dj.iotlite.utils.JsonUtils;
-import com.dj.iotlite.utils.StringUtils;
-import com.google.gson.Gson;
 import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
-
-import java.sql.Timestamp;
-import java.util.Date;
 
 @Service
 @Slf4j

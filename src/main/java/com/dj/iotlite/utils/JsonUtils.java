@@ -1,7 +1,6 @@
 package com.dj.iotlite.utils;
 
 import com.google.gson.Gson;
-import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.HashMap;
 

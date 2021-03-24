@@ -10,13 +10,10 @@ import com.dj.iotlite.service.GroupInstance;
 import com.dj.iotlite.utils.CtxUtils;
 import com.jayway.jsonpath.JsonPath;
 import io.lettuce.core.api.sync.RedisCommands;
-import io.netty.buffer.Unpooled;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.util.ObjectUtils;
-
-import java.util.Arrays;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
