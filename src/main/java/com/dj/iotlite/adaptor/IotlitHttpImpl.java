@@ -1,7 +1,5 @@
 package com.dj.iotlite.adaptor;
 
-import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.service.AdaptorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

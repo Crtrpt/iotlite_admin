@@ -7,7 +7,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.Stack;
 
 @Data
 @SQLDelete(sql = "update `adapter` SET deleted_at =  unix_timestamp(now()) WHERE id = ?")

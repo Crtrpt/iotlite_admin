@@ -133,5 +133,5 @@ public class Device extends Base {
     /**
      * 接入点 设备
      */
-    String ap;
+    Long proxyId;
 }

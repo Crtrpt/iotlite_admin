@@ -18,6 +18,7 @@ public class PushCallback implements MqttCallbackExtended {
     }
 
     public void connectionLost(Throwable cause) {
+        cause.printStackTrace();
         log.info("连接断开" + cause.toString() + new Date());
 
     }
@@ -36,7 +37,7 @@ public class PushCallback implements MqttCallbackExtended {
         log.info(reconnect ? "重新连接成功" : "连接成功" + serverURI);
         try {
             String topic="/default/#";
-            client.subscribe(topic, 2, new MessageCallback());
+            client.subscribe(topic, 0, new MessageCallback());
         } catch (MqttException e) {
             e.printStackTrace();
         }

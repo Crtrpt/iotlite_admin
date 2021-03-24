@@ -3,10 +3,17 @@ package com.dj.iotlite.service;
 import com.dj.iotlite.RedisKey;
 import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.*;
-import com.dj.iotlite.entity.device.*;
+import com.dj.iotlite.entity.device.Device;
+import com.dj.iotlite.entity.device.DeviceGroup;
+import com.dj.iotlite.entity.device.DeviceGroupLink;
+import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
-import com.dj.iotlite.entity.repo.*;
+import com.dj.iotlite.entity.repo.DeviceGroupLinkRepository;
+import com.dj.iotlite.entity.repo.DeviceGroupRepository;
+import com.dj.iotlite.entity.repo.AdapterRepository;
+import com.dj.iotlite.entity.repo.DeviceLogRepository;
+import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.enums.DeviceCertEnum;
 import com.dj.iotlite.enums.ProductDiscoverEnum;
 import com.dj.iotlite.event.ChangeDevice;
@@ -60,7 +67,7 @@ public class DeviceService {
     @Autowired
     DeviceGroupLinkRepository deviceGroupLinkRepository;
 
-    public Object queryDevice(Long id) {
+    public DeviceDto queryDevice(Long id) {
         DeviceDto deviceDto = new DeviceDto();
         Device device = deviceRepository.findById(id).orElse(new Device());
         BeanUtils.copyProperties(device, deviceDto);
@@ -72,6 +79,11 @@ public class DeviceService {
         //设备当前的状态信息
         String member = String.format(RedisKey.DeviceLOCATION_MEMBER, device.getProductSn(), device.getSn());
         deviceDto.setSnap(redisCommands.hgetall(member));
+
+        //上级代理设备
+        if(!ObjectUtils.isEmpty(device.getProxyId())){
+            deviceDto.setProxy(queryDevice(device.getProxyId()));
+        }
         return deviceDto;
     }
 
@@ -88,6 +100,15 @@ public class DeviceService {
                         criteriaBuilder.like(root.get("tags").as(String.class), deviceQueryForm.getWords() + "%")
                 ));
             }
+            /**
+             * 获取全部的子设备
+             */
+            if (!ObjectUtils.isEmpty(deviceQueryForm.getProxyId())) {
+                list.add(criteriaBuilder.equal(root.get("proxyId").as(Long.class), deviceQueryForm.getProxyId()));
+            }
+            /**
+             * 获取指定产品下面的全部设备
+             */
             if (!StringUtils.isEmpty(deviceQueryForm.getProductSn())) {
                 list.add(criteriaBuilder.equal(root.get("productSn").as(String.class), deviceQueryForm.getProductSn()));
             }
@@ -619,6 +640,13 @@ public class DeviceService {
                 ((StateAble) s.getProperty("state")).cleanAll();
             }
         });
+        return true;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Object groupRemove(DeviceGroupRemoveForm groupRemoveForm) {
+        deviceGroupRepository.deleteById(groupRemoveForm.getId());
+        deviceGroupLinkRepository.deleteInBatch(deviceGroupLinkRepository.findAllByGroupId(groupRemoveForm.getId()));
         return true;
     }
 }

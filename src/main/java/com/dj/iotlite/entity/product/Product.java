@@ -1,6 +1,5 @@
 package com.dj.iotlite.entity.product;
 
-import com.dj.iotlite.entity.Base;
 import com.dj.iotlite.enums.*;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Data;
@@ -35,6 +34,7 @@ public class Product extends ProductBase {
      * 产品图标
      */
     String icon;
+
     /**
      * 产品uuid
      */
@@ -47,7 +47,6 @@ public class Product extends ProductBase {
     @Column(columnDefinition = "json")
     Object tags;
 
-
     /**
      * 产品物模型
      */
@@ -55,14 +54,18 @@ public class Product extends ProductBase {
     @Column(columnDefinition = "json")
     Object spec;
 
-
+    /**
+     * 格式类型
+     * 默认JSON
+     */
     @Column(columnDefinition = "int default 0")
     SpecFileEnum specFileType;
+
 
     String secKey;
 
     /**
-     * 每次修改版本加一
+     * 产品版本
      */
     String version;
 
@@ -94,4 +97,10 @@ public class Product extends ProductBase {
      */
     @Column(columnDefinition = "int default 1")
     Long adapterId;
+
+    /**
+     * 使用什么解释器执行内嵌脚本 默认groovy执行
+     */
+    @Column(columnDefinition = "int default 0")
+    InterpreterTypeEnum Interpreter;
 }

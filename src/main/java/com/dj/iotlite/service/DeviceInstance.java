@@ -3,9 +3,10 @@ package com.dj.iotlite.service;
 import com.dj.iotlite.RedisKey;
 import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.repo.*;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
+import com.dj.iotlite.entity.repo.DeviceRepository;
+import com.dj.iotlite.entity.repo.AdapterRepository;
 import com.dj.iotlite.enums.DirectionEnum;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.push.PushService;
@@ -19,9 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -66,9 +67,18 @@ public class DeviceInstance implements DeviceModel {
             throw new BusinessException("设备序号不存在");
         });
 
+        Optional<Device> proxy= Optional.of(null);
+        String topic = String.format(RedisKey.DeviceProperty, "default", productSn, deviceSn);
+
+        //透传下发
+        if(device.getProxyId()!=null){
+            proxy=deviceRepository.findById(device.getProductId());
+            topic= String.format(RedisKey.DeviceProperty, "default", proxy.get().getProductSn(), proxy.get().getSn());
+        }
+
         Gson gson = new Gson();
 
-        String topic = String.format(RedisKey.DeviceProperty, "default", productSn, deviceSn);
+
 
         propertys.put("v", device.getVer());
 
@@ -84,9 +94,12 @@ public class DeviceInstance implements DeviceModel {
             if (ObjectUtils.isEmpty(product.getAdapterId())) {
                 throw new BusinessException("未找到设备 适配器");
             } else {
+                Optional<Device> finalProxy = proxy;
+                String finalTopic = topic;
                 adapterRepository.findById(product.getAdapterId()).ifPresent(adaptor -> {
                     try {
-                        ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(product, device, topic, data);
+
+                        ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(finalProxy,product, device, finalTopic, data);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

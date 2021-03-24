@@ -2,7 +2,6 @@ package com.dj.iotlite.service;
 
 import com.dj.iotlite.api.form.DeviceQueryForm;
 import com.dj.iotlite.api.form.NewVersionReleaseForm;
-import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.ProductRepository;
 import com.dj.iotlite.entity.product.ProductVersion;
 import com.dj.iotlite.entity.product.ProductVersionRepository;

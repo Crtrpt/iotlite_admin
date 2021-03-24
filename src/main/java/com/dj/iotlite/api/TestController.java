@@ -1,17 +1,13 @@
 package com.dj.iotlite.api;
 
 
-import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.adaptor.IotlitHttpImpl;
 import com.dj.iotlite.adaptor.IotliteMqttImpl;
 import com.dj.iotlite.api.dto.ResDto;
-import com.dj.iotlite.service.AdaptorService;
 import com.dj.iotlite.service.UserService;
 import com.dj.iotlite.spec.SpecV1;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/test")
