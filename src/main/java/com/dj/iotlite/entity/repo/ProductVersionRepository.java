@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -29,6 +30,8 @@ public interface ProductVersionRepository extends
      */
     @Cacheable(key="#productSn+'_'+version")
     Optional<ProductVersion> findFirstBySnAndVersion(String productSn,String version);
+
+    List<ProductVersion> findAllBySn(String Sn);
 
     @Override
     @Cacheable(key = "#id")

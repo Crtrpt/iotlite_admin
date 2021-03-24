@@ -1,6 +1,8 @@
 package com.dj.iotlite.service;
 
+import com.dj.iotlite.api.dto.OptionDto;
 import com.dj.iotlite.api.form.DeviceQueryForm;
+import com.dj.iotlite.api.form.GetAllVersionForm;
 import com.dj.iotlite.api.form.NewVersionReleaseForm;
 import com.dj.iotlite.entity.repo.ProductRepository;
 import com.dj.iotlite.entity.product.ProductVersion;
@@ -80,5 +82,19 @@ public class VersionServiceImpl implements VersionService {
             return null;
         };
         return productVersionRepository.findAll(specification, query.getPage());
+    }
+
+    @Override
+    public List<OptionDto> getAll(GetAllVersionForm query) {
+        List<OptionDto> res=new ArrayList<>();
+        var  p= productRepository.findById(query.getId()).orElseThrow(()->{
+            throw new BusinessException("not found product");
+        });
+        productVersionRepository.findAllBySn(p.getSn()).stream().forEach(p->{
+            OptionDto optionDto=new OptionDto();
+            optionDto.setLabel(p.getVersion());
+            res.add(optionDto);
+        });
+        return res;
     }
 }
