@@ -1,8 +1,9 @@
 package com.dj.iotlite.entity.repo;
 
 
-
 import com.dj.iotlite.entity.device.Device;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -17,12 +18,23 @@ import java.util.Optional;
 @Repository
 public interface DeviceRepository extends CrudRepository<Device, Long>, JpaSpecificationExecutor<Device>, JpaRepository<Device, Long> {
 
-    Page<Device> findAll(Specification spec, Pageable  page);
+    Page<Device> findAll(Specification spec, Pageable page);
 
-    Optional<Device> findFirstBySnAndProductSn(String deviceSn,String productSn);
-
+    Optional<Device> findFirstBySnAndProductSn(String deviceSn, String productSn);
 
     List<Device> findAllByProductSn(String productSn);
 
     Long countByProductSn(String productSn);
+
+    @Override
+    @Cacheable(cacheNames = "device")
+    Optional<Device> findById(Long id);
+
+    @Override
+    @CacheEvict(cacheNames = "device", key = "#device.id")
+    Device save(Device device);
+
+    @Override
+    @CacheEvict(cacheNames = "device", key = "#device.id")
+    void delete(Device device);
 }

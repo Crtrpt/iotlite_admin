@@ -8,7 +8,7 @@ import com.dj.iotlite.entity.device.DeviceGroup;
 import com.dj.iotlite.entity.device.DeviceGroupLink;
 import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.entity.product.Product;
-import com.dj.iotlite.entity.product.ProductRepository;
+import com.dj.iotlite.entity.repo.ProductRepository;
 import com.dj.iotlite.entity.repo.DeviceGroupLinkRepository;
 import com.dj.iotlite.entity.repo.DeviceGroupRepository;
 import com.dj.iotlite.entity.repo.AdapterRepository;
@@ -69,11 +69,15 @@ public class DeviceService {
 
     public DeviceDto queryDevice(Long id) {
         DeviceDto deviceDto = new DeviceDto();
-        Device device = deviceRepository.findById(id).orElse(new Device());
+        Device device = deviceRepository.findById(id).orElseThrow(()->{
+            throw new BusinessException("not found device");
+        });
         BeanUtils.copyProperties(device, deviceDto);
 
         ProductDto productDto = new ProductDto();
-        Product product = productRepository.findById(device.getProductId()).orElse(new Product());
+        Product product = productRepository.findById(device.getProductId()).orElseThrow(()->{
+            throw new BusinessException("not found product");
+        });
         BeanUtils.copyProperties(product, productDto);
         deviceDto.setProduct(productDto);
         //设备当前的状态信息
@@ -293,7 +297,7 @@ public class DeviceService {
     public Object queryProduct(Long id) {
         ProductDto productDto = new ProductDto();
         Product product = productRepository.findById(id).orElseThrow(() -> {
-            throw new BusinessException("设备不存在");
+            throw new BusinessException("not found device");
         });
         BeanUtils.copyProperties(product, productDto);
         productDto.setDeviceCount(deviceRepository.countByProductSn(product.getSn()));

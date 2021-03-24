@@ -4,7 +4,7 @@ import com.dj.iotlite.RedisKey;
 import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.Product;
-import com.dj.iotlite.entity.product.ProductRepository;
+import com.dj.iotlite.entity.repo.ProductRepository;
 import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.entity.repo.AdapterRepository;
 import com.dj.iotlite.enums.DirectionEnum;
@@ -67,17 +67,16 @@ public class DeviceInstance implements DeviceModel {
             throw new BusinessException("设备序号不存在");
         });
 
-        Optional<Device> proxy= Optional.of(null);
+        Optional<Device> proxy = Optional.of(null);
         String topic = String.format(RedisKey.DeviceProperty, "default", productSn, deviceSn);
 
         //透传下发
-        if(device.getProxyId()!=null){
-            proxy=deviceRepository.findById(device.getProductId());
-            topic= String.format(RedisKey.DeviceProperty, "default", proxy.get().getProductSn(), proxy.get().getSn());
+        if (device.getProxyId() != null) {
+            proxy = deviceRepository.findById(device.getProxyId());
+            topic = String.format(RedisKey.DeviceProperty, "default", proxy.get().getProductSn(), proxy.get().getSn());
         }
 
         Gson gson = new Gson();
-
 
 
         propertys.put("v", device.getVer());
@@ -99,7 +98,7 @@ public class DeviceInstance implements DeviceModel {
                 adapterRepository.findById(product.getAdapterId()).ifPresent(adaptor -> {
                     try {
 
-                        ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(finalProxy,product, device, finalTopic, data);
+                        ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(finalProxy, product, device, finalTopic, data);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -132,7 +131,7 @@ public class DeviceInstance implements DeviceModel {
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
         redisCommands.hset(member, name, String.valueOf(value));
         //设备值最后变更时间
-        redisCommands.hset(member, name+":last_at", String.valueOf(System.currentTimeMillis()));
+        redisCommands.hset(member, name + ":last_at", String.valueOf(System.currentTimeMillis()));
     }
 
     public void deviceEventFire(String productSn, String deviceSn, String topic, String rawData) {

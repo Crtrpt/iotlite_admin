@@ -23,7 +23,6 @@ public class ProductController extends BaseController {
 
     @GetMapping("/list")
     public ResDto<Page<ProductListDto>> list(ProductQueryForm query) {
-
         Page<ProductListDto> ret = new Page<ProductListDto>();
         org.springframework.data.domain.Page<Product> res = deviceService.getProductList(query);
         res.forEach(s -> {
