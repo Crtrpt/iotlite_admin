@@ -2,6 +2,7 @@ package com.dj.iotlite.entity.repo;
 
 
 import com.dj.iotlite.entity.device.Device;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@CacheConfig(cacheNames={"device"})
 public interface DeviceRepository extends CrudRepository<Device, Long>, JpaSpecificationExecutor<Device>, JpaRepository<Device, Long> {
 
     Page<Device> findAll(Specification spec, Pageable page);
@@ -27,7 +29,7 @@ public interface DeviceRepository extends CrudRepository<Device, Long>, JpaSpeci
     Long countByProductSn(String productSn);
 
     @Override
-    @Cacheable(cacheNames = "device")
+    @Cacheable()
     Optional<Device> findById(Long id);
 
     @Override
