@@ -1,7 +1,7 @@
 package com.dj.iotlite.entity.repo;
 
 
-import com.dj.iotlite.entity.device.*;
+import com.dj.iotlite.entity.device.DeviceGroup;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -19,5 +19,6 @@ public interface DeviceGroupRepository extends CrudRepository<DeviceGroup, Long>
     Optional<DeviceGroup> findFirstByName(String name);
 
     Page<DeviceGroup> findAll(Specification spec, Pageable page);
+
 
 }

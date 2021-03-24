@@ -4,7 +4,6 @@ import com.dj.iotlite.entity.Base;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -41,9 +40,7 @@ public class DeviceGroup extends Base {
     @Column(columnDefinition = "json")
     String fence;
     /**
-     * 产品分组规范
+     * 分支的规则引擎 groovy 实现用户自定义的逻辑
      */
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
-    Object spec;
+    String spec;
 }

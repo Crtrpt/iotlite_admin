@@ -1,5 +1,6 @@
 package com.dj.iotlite.config;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -16,9 +17,9 @@ public class DataSourceConfig {
 
     @Bean("primaryDataSource")
     @Primary
-    @ConfigurationProperties("spring.datasource-mysql")
+    @ConfigurationProperties("spring.datasource")
     public DataSource primaryDataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+        return DataSourceBuilder.create().type(DruidDataSource.class).build();
     }
 
 //    @Bean("secondaryDataSource")

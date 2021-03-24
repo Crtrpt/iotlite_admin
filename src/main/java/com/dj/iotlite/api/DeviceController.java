@@ -3,7 +3,7 @@ package com.dj.iotlite.api;
 import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.device.*;
+import com.dj.iotlite.entity.device.DeviceGroup;
 import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.service.DeviceService;
 import org.springframework.beans.BeanUtils;
@@ -62,6 +62,16 @@ public class DeviceController extends BaseController {
         return success(deviceService.queryDeviceGroup(id));
     }
 
+    @PostMapping("/groupRemove")
+    public ResDto<DeviceGroupDto> groupRemove(@RequestBody DeviceGroupRemoveForm groupRemoveForm) {
+        return success(deviceService.groupRemove(groupRemoveForm));
+    }
+
+    @PostMapping("/groupStateClean")
+    public ResDto<Boolean> groupStateClean(@RequestBody DeviceGroupCleanForm deviceGroupCleanForm) {
+        return success(deviceService.groupStateClean(deviceGroupCleanForm));
+    }
+
     @GetMapping("/groupInfoByName")
     public ResDto<DeviceGroupDto> queryGroupInfo(@RequestParam("name") String name) {
         return success(deviceService.queryDeviceGroup(name));
@@ -96,8 +106,8 @@ public class DeviceController extends BaseController {
     }
 
     @PostMapping("/remove")
-    public ResDto<Boolean> remove(@RequestParam("uuid") String uuid) {
-        return success(deviceService.removeDevice(uuid));
+    public ResDto<Boolean> remove(@RequestBody DeviceRemoveForm form) {
+        return success(deviceService.removeDevice(form));
     }
 
     @PostMapping("/save")

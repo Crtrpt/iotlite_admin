@@ -1,30 +1,28 @@
 package com.dj.iotlite.service;
 
 import com.dj.iotlite.RedisKey;
+import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductRepository;
+import com.dj.iotlite.entity.repo.DeviceRepository;
+import com.dj.iotlite.entity.repo.AdapterRepository;
 import com.dj.iotlite.enums.DirectionEnum;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.push.PushService;
+import com.dj.iotlite.utils.CtxUtils;
 import com.dj.iotlite.utils.JsonUtils;
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
 import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -38,6 +36,9 @@ public class DeviceInstance implements DeviceModel {
     DeviceRepository deviceRepository;
 
     @Autowired
+    AdapterRepository adapterRepository;
+
+    @Autowired
     PushService pushService;
 
     @Autowired
@@ -47,9 +48,6 @@ public class DeviceInstance implements DeviceModel {
     public void setProductSn(String productSn) {
 
     }
-
-    @Autowired
-    MqttClient mqttClient;
 
     @Override
     public void setProperty(String productSn, String deviceSn, String property, Object value, String desc) {
@@ -69,35 +67,58 @@ public class DeviceInstance implements DeviceModel {
             throw new BusinessException("设备序号不存在");
         });
 
-        Gson gson = new Gson();
+        Optional<Device> proxy= Optional.of(null);
         String topic = String.format(RedisKey.DeviceProperty, "default", productSn, deviceSn);
-        propertys.put("v", device.getVersion());
+
+        //透传下发
+        if(device.getProxyId()!=null){
+            proxy=deviceRepository.findById(device.getProductId());
+            topic= String.format(RedisKey.DeviceProperty, "default", proxy.get().getProductSn(), proxy.get().getSn());
+        }
+
+        Gson gson = new Gson();
+
+
+
+        propertys.put("v", device.getVer());
+
         String data = gson.toJson(propertys);
 
-        device.setVersion(device.getVersion() + 1);
+        device.setVer(device.getVer() + 1);
         deviceRepository.save(device);
         //写入下发日志
-        MqttMessage mqttMessage = new MqttMessage();
-        mqttMessage.setPayload(data.getBytes(StandardCharsets.UTF_8));
+
         deviceLogService.Log(deviceSn, productSn, DirectionEnum.Down, "admin", topic, desc, JsonUtils.toJson(propertys));
         try {
             log.info("topic {}  data: {}", topic, data);
-            mqttClient.publish(topic, mqttMessage);
-        } catch (MqttException e) {
+            if (ObjectUtils.isEmpty(product.getAdapterId())) {
+                throw new BusinessException("未找到设备 适配器");
+            } else {
+                Optional<Device> finalProxy = proxy;
+                String finalTopic = topic;
+                adapterRepository.findById(product.getAdapterId()).ifPresent(adaptor -> {
+                    try {
+
+                        ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(finalProxy,product, device, finalTopic, data);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             throw new BusinessException("下发设备信息异常");
         }
     }
 
-
     @Autowired
     RedisCommands<String, String> redisCommands;
 
-    public void deviceResponse(String productSn, String deviceSn, String topic,  String rawData) throws Exception {
+    public void deviceResponse(String productSn, String deviceSn, String topic, String rawData) throws Exception {
         Integer v = JsonPath.read(rawData, "$.v");
         //TODO 并发问题处理
         deviceRepository.findFirstBySnAndProductSn(deviceSn, productSn).ifPresent((d) -> {
-            d.setVersion(v);
+            d.setVer(v);
             deviceRepository.save(d);
         });
     }
@@ -106,20 +127,15 @@ public class DeviceInstance implements DeviceModel {
     GroupInstance groupInstance;
 
     public void devicePropertyChange(String productSn, String deviceSn, String topic, String data) {
-        log.info("设备属性变化  更新");
         String name = JsonPath.read(data, "$.name");
-        String value = JsonPath.read(data, "$.value");
+        Object value = JsonPath.read(data, "$.value");
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
-        redisCommands.hset(member, name, value);
-        var groupName = redisCommands.hget(member, "deviceGroup");
-        Arrays.stream(groupName.split(",")).forEach(g -> {
-            groupInstance.observed(g, productSn, deviceSn, name, value);
-        });
+        redisCommands.hset(member, name, String.valueOf(value));
+        //设备值最后变更时间
+        redisCommands.hset(member, name+":last_at", String.valueOf(System.currentTimeMillis()));
     }
 
-
     public void deviceEventFire(String productSn, String deviceSn, String topic, String rawData) {
-        log.info("设备发生事件  更新");
         String name = JsonPath.read(rawData, "$.name");
         Object payload = null;
         try {
@@ -129,13 +145,7 @@ public class DeviceInstance implements DeviceModel {
         }
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
 
-        //TODO 设备组编排
-        var groupName = redisCommands.hget(member, "deviceGroup");
-        if (!ObjectUtils.isEmpty(groupName)) {
-            for (String g : groupName.split(",")) {
-                groupInstance.fire(g, productSn, deviceSn, name, payload);
-            }
-        }
+
     }
 
     public void deviceAlarm(String productSn, String deviceSn, String topic, String rawData) {
@@ -147,11 +157,7 @@ public class DeviceInstance implements DeviceModel {
         } catch (Exception e) {
             log.info("payload is empty");
         }
-        String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
-        var groupName = redisCommands.hget(member, "deviceGroup");
-        for (String g : groupName.split(",")) {
-            groupInstance.fire(g, productSn, deviceSn, name, payload);
-        }
+
     }
 
     public void deviceLog(String productSn, String deviceSn, String topic, String rawData) {

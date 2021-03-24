@@ -36,7 +36,7 @@ public class ProductController extends BaseController {
     }
 
     @GetMapping("/deviceList")
-    public ResDto<Page<ProductListDto>> deviceList(DeviceQueryForm query) {
+    public ResDto<Page<DeviceListDto>> deviceList(DeviceQueryForm query) {
 
         Page<DeviceListDto> ret = new Page<DeviceListDto>();
         org.springframework.data.domain.Page<Device> res = deviceService.getDeviceList(query);
@@ -62,9 +62,15 @@ public class ProductController extends BaseController {
         return success(ret);
     }
 
+    @GetMapping("/allAdapter")
+    public ResDto<List<AdapterOptionDto>> allAdapter() {
+        List<AdapterOptionDto> ret = deviceService.getAllAdapterOptionDto();
+        return success(ret);
+    }
+
     @PostMapping("/remove")
-    public ResDto<Boolean> remove(@RequestParam("uuid") String uuid) {
-        return success(deviceService.removeProduct(uuid));
+    public ResDto<Boolean> remove(@RequestBody ProductRemoveForm form) {
+        return success(deviceService.removeProduct(form));
     }
 
     @PostMapping("/save")
@@ -92,4 +98,6 @@ public class ProductController extends BaseController {
     public ResDto<Boolean> changeTags(@RequestBody ChangeTagsForm form) {
         return success(deviceService.changeTags(form));
     }
+
+
 }

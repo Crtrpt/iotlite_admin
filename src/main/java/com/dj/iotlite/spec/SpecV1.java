@@ -45,8 +45,11 @@ public class SpecV1 implements Specification {
                 this.property.forEach(p -> {
                     gs.setVariable(p.name, p.expect);
                 });
-                System.out.println("EXEC -> "+c.action);
-                gs.evaluate(c.action);
+                System.out.println("编译 -> "+c.action);
+                var script=gs.parse(c.action);
+                System.out.println("执行 -> "+c.action);
+
+                script.run();
                 this.property.forEach(p -> {
                     p.setExpect((int) gs.getVariable(p.name));
                 });

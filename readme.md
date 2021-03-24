@@ -1,39 +1,27 @@
 # IOTLITE
-Simple to use IoT platform
+简单易用的物联网平台
+### 总体流程图
+![总体流程图](./diagram/architecture.svg)
 
-## required
-- JDK >=  11 
-- clickhouse >= 21.1.2.15
-- mysql >= 8.0
-- mqtt >= 3.1
-- redis >=5.0
+### 设备工作流程图
+![设备工作流程图](./diagram/sample_device.svg)
 
-## run
-java -jar iotlite.jar
+## 快速体验
 
-## 设置设备属性
-
-设置一个或者多个设备属性
+或者直接docker pull
 ```
-Tenant/ProductSn/DeviceSn/Property
-```
-- Psn001 产品 Psn001
-- Dsn001 设备 Dsn001
-topic
-```
-default/Psn001/Dsn001/property
-```
-payload
-```
-{
-    action:"property",
-    name:"power",
-    value:80
-}
+docker pull jingdor/iotlite
 ```
 
----
-- redis 设备最新数据
-- mysql 设备元数据
-- mqtt 设备通讯
----
+或者单独启动 指定 redis 和 mysql
+```
+docker run -d --name mysql -p 3306:3306/tcp -e MYSQL_ROOT_PASSWORD=root  percona/percona-server:8.0
+docker run -d --link mysql:db -p 4021:80/tcp iotlite
+```
+## 测试环境体验
+
+http://iotlite.crtrpt.com
+## 文档
+https://crtrpt.github.io/iotlite_doc/#/
+## 支持
+QQ群：829543314

@@ -1,6 +1,5 @@
 package com.dj.iotlite.entity.product;
 
-import com.dj.iotlite.entity.Base;
 import com.dj.iotlite.enums.*;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Data;
@@ -19,7 +18,7 @@ import javax.persistence.*;
 @DynamicUpdate
 @Cacheable
 @org.hibernate.annotations.TypeDef(name = "json", typeClass = JsonStringType.class)
-public class Product extends Base {
+public class Product extends ProductBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,16 +34,11 @@ public class Product extends Base {
      * 产品图标
      */
     String icon;
+
     /**
      * 产品uuid
      */
     String uuid;
-
-    /**
-     * 网关类型
-     */
-    Integer type;
-
 
     /**
      * 产品标签
@@ -53,7 +47,6 @@ public class Product extends Base {
     @Column(columnDefinition = "json")
     Object tags;
 
-
     /**
      * 产品物模型
      */
@@ -61,16 +54,20 @@ public class Product extends Base {
     @Column(columnDefinition = "json")
     Object spec;
 
-
+    /**
+     * 格式类型
+     * 默认JSON
+     */
     @Column(columnDefinition = "int default 0")
     SpecFileEnum specFileType;
+
 
     String secKey;
 
     /**
-     * 每次修改版本加一
+     * 产品版本
      */
-    String ver;
+    String version;
 
     /**
      * 默认后台手动添加
@@ -94,4 +91,16 @@ public class Product extends Base {
      */
     @Column(columnDefinition = "int default 0")
     ProtocolTypeEnum protocolType;
+
+    /**
+     * 设备适配的协议
+     */
+    @Column(columnDefinition = "int default 1")
+    Long adapterId;
+
+    /**
+     * 使用什么解释器执行内嵌脚本 默认groovy执行
+     */
+    @Column(columnDefinition = "int default 0")
+    InterpreterTypeEnum Interpreter;
 }
