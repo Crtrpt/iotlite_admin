@@ -129,7 +129,7 @@ public class VersionServiceImpl implements VersionService {
             //删除所有设备
             deviceRepository.deleteAll(deviceRepository.findAllByProductSnAndVersion(p.getSn(),p.getVersion()));
             //删除组内关系
-            var links = deviceGroupLinkRepository.findAllByProductSn(p.getSn());
+            var links = deviceGroupLinkRepository.findAllByProductSnAndVersion(p.getSn(),p.getVersion());
             deviceGroupLinkRepository.deleteInBatch(links);
             //删除版本
             productVersionRepository.delete(p);

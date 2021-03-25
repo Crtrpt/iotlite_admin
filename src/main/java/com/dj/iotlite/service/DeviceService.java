@@ -75,13 +75,13 @@ public class DeviceService {
 
     public DeviceDto queryDevice(Long id) {
         DeviceDto deviceDto = new DeviceDto();
-        Device device = deviceRepository.findById(id).orElseThrow(()->{
+        Device device = deviceRepository.findById(id).orElseThrow(() -> {
             throw new BusinessException("not found device");
         });
         BeanUtils.copyProperties(device, deviceDto);
 
         ProductDto productDto = new ProductDto();
-        ProductVersion product = productVersionRepository.findFirstBySnAndVersion(device.getProductSn(),device.getVersion()).orElseThrow(()->{
+        ProductVersion product = productVersionRepository.findFirstBySnAndVersion(device.getProductSn(), device.getVersion()).orElseThrow(() -> {
             throw new BusinessException("not found product");
         });
         BeanUtils.copyProperties(product, productDto);
@@ -91,7 +91,7 @@ public class DeviceService {
         deviceDto.setSnap(redisCommands.hgetall(member));
 
         //上级代理设备
-        if(!ObjectUtils.isEmpty(device.getProxyId())){
+        if (!ObjectUtils.isEmpty(device.getProxyId())) {
             deviceDto.setProxy(queryDevice(device.getProxyId()));
         }
         return deviceDto;
@@ -191,6 +191,7 @@ public class DeviceService {
             var link = new DeviceGroupLink();
             link.setDeviceSn(device.getSn());
             link.setProductSn(device.getProductSn());
+            link.setVersion(device.getVersion());
             link.setGroupId(id);
             link.setGroupName(name);
             link.setDeviceId(device.getId());
@@ -241,6 +242,7 @@ public class DeviceService {
                 link.setGroupId(id);
                 link.setGroupName(name);
                 link.setProductSn(d.getProductSn());
+                link.setVersion(d.getVersion());
                 link.setDeviceId(d.getId());
                 deviceGroupLinkRepository.save(link);
             }
@@ -279,6 +281,8 @@ public class DeviceService {
     @Transactional(rollbackFor = Exception.class)
     public Object removeProduct(ProductRemoveForm form) {
         productRepository.findById(form.getId()).ifPresentOrElse((p) -> {
+            //删除所有所有版本的产品
+            productVersionRepository.deleteAll(productVersionRepository.findAllBySn(p.getSn()));
             //删除所有设备
             deviceRepository.deleteAll(deviceRepository.findAllByProductSn(p.getSn()));
             //删除组内关系
@@ -559,7 +563,7 @@ public class DeviceService {
             var t = new DeviceListDto();
             BeanUtils.copyProperties(d, t);
             var pto = new ProductDto();
-            var p = productVersionRepository.findFirstBySnAndVersion(d.getProductSn(),d.getVersion()).orElse(new ProductVersion());
+            var p = productVersionRepository.findFirstBySnAndVersion(d.getProductSn(), d.getVersion()).orElse(new ProductVersion());
             BeanUtils.copyProperties(p, pto);
             t.setProduct(pto);
             t.setTags(gson.fromJson(String.valueOf(d.getTags()), List.class));
