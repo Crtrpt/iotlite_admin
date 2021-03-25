@@ -27,6 +27,8 @@ public interface DeviceRepository extends CrudRepository<Device, Long>, JpaSpeci
 
     List<Device> findAllByProductSn(String productSn);
 
+    List<Device> findAllByProductSnAndVersion(String productSn,String version);
+
     Long countByProductSn(String productSn);
 
     @Override

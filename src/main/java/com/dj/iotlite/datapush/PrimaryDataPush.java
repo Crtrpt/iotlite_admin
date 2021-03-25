@@ -42,6 +42,9 @@ public class PrimaryDataPush implements DataPush {
             case "mqtt":
                 CtxUtils.mqtt.Publish(config,payload);
                 break;
+            case "sse":
+                CtxUtils.sse.Publish(config,payload);
+                break;
             default:
                 log.info("不存在的推送");
 

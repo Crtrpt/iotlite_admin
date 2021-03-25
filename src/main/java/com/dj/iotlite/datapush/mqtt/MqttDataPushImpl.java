@@ -1,5 +1,6 @@
-package com.dj.iotlite.datapush;
+package com.dj.iotlite.datapush.mqtt;
 
+import com.dj.iotlite.datapush.DataPush;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.KeyedObjectPool;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPool;

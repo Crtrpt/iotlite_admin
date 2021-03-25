@@ -122,6 +122,14 @@ public class DeviceService {
             if (!StringUtils.isEmpty(deviceQueryForm.getProductSn())) {
                 list.add(criteriaBuilder.equal(root.get("productSn").as(String.class), deviceQueryForm.getProductSn()));
             }
+
+            /**
+             * 获取指定产品下面的全部设备
+             */
+            if (!StringUtils.isEmpty(deviceQueryForm.getVersion())) {
+                list.add(criteriaBuilder.equal(root.get("version").as(String.class), deviceQueryForm.getVersion()));
+            }
+
             Predicate[] p = new Predicate[list.size()];
             criteriaQuery.where(criteriaBuilder.and(list.toArray(p)));
             return null;
@@ -300,9 +308,9 @@ public class DeviceService {
         return true;
     }
 
-    public Object queryProduct(Long id) {
+    public Object queryProduct(String sn) {
         ProductDto productDto = new ProductDto();
-        Product product = productRepository.findById(id).orElseThrow(() -> {
+        Product product = productRepository.findFirstBySn(sn).orElseThrow(() -> {
             throw new BusinessException("not found device");
         });
         BeanUtils.copyProperties(product, productDto);

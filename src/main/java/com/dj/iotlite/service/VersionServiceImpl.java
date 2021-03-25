@@ -1,9 +1,13 @@
 package com.dj.iotlite.service;
 
 import com.dj.iotlite.api.dto.OptionDto;
+import com.dj.iotlite.api.dto.ProductDto;
 import com.dj.iotlite.api.form.DeviceQueryForm;
 import com.dj.iotlite.api.form.GetAllVersionForm;
 import com.dj.iotlite.api.form.NewVersionReleaseForm;
+import com.dj.iotlite.api.form.VersionRemoveForm;
+import com.dj.iotlite.entity.repo.DeviceGroupLinkRepository;
+import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.entity.repo.ProductRepository;
 import com.dj.iotlite.entity.product.ProductVersion;
 import com.dj.iotlite.entity.repo.ProductVersionRepository;
@@ -101,5 +105,38 @@ public class VersionServiceImpl implements VersionService {
             res.add(opt);
         });
         return res;
+    }
+
+    @Override
+    public Object queryProductVersion(String sn, String version) {
+        var ret = new ProductDto();
+        var p = productVersionRepository.findFirstBySnAndVersion(sn, version).orElseThrow(() -> {
+            throw new BusinessException("not found product version");
+        });
+        BeanUtils.copyProperties(p, ret);
+        return ret;
+    }
+
+    @Autowired
+    DeviceRepository deviceRepository;
+
+    @Autowired
+    DeviceGroupLinkRepository deviceGroupLinkRepository;
+
+    @Override
+    public Object removeProductVersion(VersionRemoveForm form) {
+        productVersionRepository.findById(form.getId()).ifPresentOrElse((p) -> {
+            //删除所有设备
+            deviceRepository.deleteAll(deviceRepository.findAllByProductSnAndVersion(p.getSn(),p.getVersion()));
+            //删除组内关系
+            var links = deviceGroupLinkRepository.findAllByProductSn(p.getSn());
+            deviceGroupLinkRepository.deleteInBatch(links);
+            //删除版本
+            productVersionRepository.delete(p);
+            // TODO 清理各种状态
+        }, () -> {
+            throw new BusinessException("version not found");
+        });
+        return true;
     }
 }
