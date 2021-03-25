@@ -1,6 +1,6 @@
 package com.dj.iotlite.api;
 
-import com.dj.iotlite.adaptor.IotliteMqttImpl;
+import com.dj.iotlite.adaptor.IotliteMqttAdaptor.IotliteMqttImpl;
 import com.dj.iotlite.api.dto.ResDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

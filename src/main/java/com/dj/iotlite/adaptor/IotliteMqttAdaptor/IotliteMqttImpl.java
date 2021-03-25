@@ -1,5 +1,6 @@
-package com.dj.iotlite.adaptor;
+package com.dj.iotlite.adaptor.IotliteMqttAdaptor;
 
+import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.adaptor.IotliteMqttAdaptor.PushCallback;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.Product;
