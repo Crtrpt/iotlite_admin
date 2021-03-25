@@ -1,14 +1,9 @@
 package com.dj.iotlite.adaptor.IotliteMqttAdaptor;
 
 import com.dj.iotlite.adaptor.Adaptor;
-import com.dj.iotlite.adaptor.IotliteMqttAdaptor.PushCallback;
 import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductVersion;
-import com.dj.iotlite.push.Authenticator;
-import com.dj.iotlite.push.AuthorizatorPolicy;
 import com.dj.iotlite.push.PublisherListener;
-import com.dj.iotlite.push.SslContextCreator;
 import com.dj.iotlite.service.AdaptorService;
 import io.moquette.broker.Server;
 import io.moquette.broker.config.ClasspathResourceLoader;
@@ -64,7 +59,12 @@ public class IotliteMqttImpl implements Adaptor {
         List<? extends InterceptHandler> userHandlers = Collections.singletonList(new PublisherListener());
         IResourceLoader classpathLoader = new ClasspathResourceLoader("./mqtt_adaptor.conf");
         final IConfig classPathConfig = new ResourceLoaderConfig(classpathLoader);
-        mqttBroker.startServer(classPathConfig, userHandlers, new SslContextCreator(), new Authenticator(), new AuthorizatorPolicy());
+        mqttBroker.startServer(
+                classPathConfig,
+                userHandlers,
+                new SslContextCreator(),
+                new Authenticator(),
+                new AuthorizatorPolicy());
     }
 
     void initMqttClient() throws MqttException {
