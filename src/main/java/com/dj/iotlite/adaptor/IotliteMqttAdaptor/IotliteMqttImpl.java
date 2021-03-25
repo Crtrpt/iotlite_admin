@@ -1,14 +1,9 @@
 package com.dj.iotlite.adaptor.IotliteMqttAdaptor;
 
 import com.dj.iotlite.adaptor.Adaptor;
-import com.dj.iotlite.adaptor.IotliteMqttAdaptor.PushCallback;
 import com.dj.iotlite.entity.device.Device;
-import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductVersion;
-import com.dj.iotlite.push.Authenticator;
-import com.dj.iotlite.push.AuthorizatorPolicy;
 import com.dj.iotlite.push.PublisherListener;
-import com.dj.iotlite.push.SslContextCreator;
 import com.dj.iotlite.service.AdaptorService;
 import io.moquette.broker.Server;
 import io.moquette.broker.config.ClasspathResourceLoader;
@@ -52,34 +47,33 @@ public class IotliteMqttImpl implements Adaptor {
 
     @PostConstruct
     void init() throws MqttException {
-        System.out.println("启动mqtt适配器");
         initMqttBroker();
         initMqttClient();
     }
-
 
     MqttClient mqttClient;
 
     private final Server mqttBroker = new Server();
 
     void initMqttBroker() {
-        log.info("启动mqtt适配broker");
         List<? extends InterceptHandler> userHandlers = Collections.singletonList(new PublisherListener());
         IResourceLoader classpathLoader = new ClasspathResourceLoader("./mqtt_adaptor.conf");
         final IConfig classPathConfig = new ResourceLoaderConfig(classpathLoader);
-        mqttBroker.startServer(classPathConfig, userHandlers, new SslContextCreator(), new Authenticator(), new AuthorizatorPolicy());
+        mqttBroker.startServer(
+                classPathConfig,
+                userHandlers,
+                new SslContextCreator(),
+                new Authenticator(),
+                new AuthorizatorPolicy());
     }
 
     void initMqttClient() throws MqttException {
-        log.info("启动mqtt客户端");
         var option = new MqttConnectOptions();
         option.setCleanSession(false);
         option.setAutomaticReconnect(true);
-
         mqttClient = new MqttClient(serverURI, clientId, new MemoryPersistence());
         mqttClient.setCallback(new PushCallback(mqttClient));
         mqttClient.connect(option);
-
     }
 
     @Override

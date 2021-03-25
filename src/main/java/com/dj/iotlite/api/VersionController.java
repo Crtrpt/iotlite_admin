@@ -1,12 +1,7 @@
 package com.dj.iotlite.api;
 
-import com.dj.iotlite.api.dto.OptionDto;
-import com.dj.iotlite.api.dto.Page;
-import com.dj.iotlite.api.dto.ProductVersionListDto;
-import com.dj.iotlite.api.dto.ResDto;
-import com.dj.iotlite.api.form.DeviceQueryForm;
-import com.dj.iotlite.api.form.GetAllVersionForm;
-import com.dj.iotlite.api.form.NewVersionReleaseForm;
+import com.dj.iotlite.api.dto.*;
+import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.product.ProductVersion;
 import com.dj.iotlite.service.VersionService;
 import lombok.extern.slf4j.Slf4j;
@@ -49,5 +44,15 @@ public class VersionController extends BaseController {
         });
         ret.setTotal(res.getTotalElements());
         return success(ret);
+    }
+
+    @GetMapping("/query")
+    public ResDto<ProductDto> query(@RequestParam("sn") String sn,@RequestParam("version") String version) {
+        return success(versionService.queryProductVersion(sn,version));
+    }
+
+    @PostMapping("/remove")
+    public ResDto<Boolean> remove(@RequestBody VersionRemoveForm form) {
+        return success(versionService.removeProductVersion(form));
     }
 }

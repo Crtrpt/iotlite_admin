@@ -19,18 +19,18 @@ public interface ProductRepository extends
         JpaSpecificationExecutor<Product>,
         JpaRepository<Product, Long> {
 
+    @Cacheable(key = "#productSn")
     Optional<Product> findFirstBySn(String productSn);
 
     @Override
-    @Cacheable(key = "#id")
     Optional<Product> findById(Long id);
 
     @Override
-    @CachePut(key="#product.id")
+    @CachePut(key="#product.sn")
     Product save(Product product);
 
     @Override
-    @CacheEvict(key="#product.id")
+    @CachePut(key="#product.sn")
     void delete(Product product);
 
 }

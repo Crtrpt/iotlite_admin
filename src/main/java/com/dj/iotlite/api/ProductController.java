@@ -78,8 +78,8 @@ public class ProductController extends BaseController {
     }
 
     @GetMapping("/info")
-    public ResDto<ProductDto> query(@RequestParam("id") Long id) {
-        return success(deviceService.queryProduct(id));
+    public ResDto<ProductDto> query(@RequestParam("sn") String sn) {
+        return success(deviceService.queryProduct(sn));
     }
 
     @PostMapping("/saveModel")

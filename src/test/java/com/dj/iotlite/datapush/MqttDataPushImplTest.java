@@ -1,11 +1,9 @@
 package com.dj.iotlite.datapush;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
+import com.dj.iotlite.datapush.mqtt.MqttDataPushImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MqttDataPushImplTest {
 

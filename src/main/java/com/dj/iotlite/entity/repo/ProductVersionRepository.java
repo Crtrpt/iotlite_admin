@@ -28,7 +28,7 @@ public interface ProductVersionRepository extends
      * @param version
      * @return
      */
-    @Cacheable(key="#productSn+'_'+version")
+    @Cacheable(key="#productSn+'_'+#version")
     Optional<ProductVersion> findFirstBySnAndVersion(String productSn,String version);
 
     List<ProductVersion> findAllBySn(String Sn);
