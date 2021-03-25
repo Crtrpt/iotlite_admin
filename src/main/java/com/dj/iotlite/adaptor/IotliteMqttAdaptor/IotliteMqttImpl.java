@@ -52,18 +52,15 @@ public class IotliteMqttImpl implements Adaptor {
 
     @PostConstruct
     void init() throws MqttException {
-        System.out.println("启动mqtt适配器");
         initMqttBroker();
         initMqttClient();
     }
-
 
     MqttClient mqttClient;
 
     private final Server mqttBroker = new Server();
 
     void initMqttBroker() {
-        log.info("启动mqtt适配broker");
         List<? extends InterceptHandler> userHandlers = Collections.singletonList(new PublisherListener());
         IResourceLoader classpathLoader = new ClasspathResourceLoader("./mqtt_adaptor.conf");
         final IConfig classPathConfig = new ResourceLoaderConfig(classpathLoader);
@@ -71,15 +68,12 @@ public class IotliteMqttImpl implements Adaptor {
     }
 
     void initMqttClient() throws MqttException {
-        log.info("启动mqtt客户端");
         var option = new MqttConnectOptions();
         option.setCleanSession(false);
         option.setAutomaticReconnect(true);
-
         mqttClient = new MqttClient(serverURI, clientId, new MemoryPersistence());
         mqttClient.setCallback(new PushCallback(mqttClient));
         mqttClient.connect(option);
-
     }
 
     @Override
