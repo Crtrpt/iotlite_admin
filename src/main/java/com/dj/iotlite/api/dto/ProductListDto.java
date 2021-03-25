@@ -18,5 +18,5 @@ public class ProductListDto implements BaseDto {
 
     Long deviceCount;
 
-    String ver;
+    String version;
 }

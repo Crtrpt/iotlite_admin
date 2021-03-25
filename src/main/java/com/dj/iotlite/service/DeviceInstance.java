@@ -4,9 +4,11 @@ import com.dj.iotlite.RedisKey;
 import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.Product;
-import com.dj.iotlite.entity.product.ProductRepository;
+import com.dj.iotlite.entity.product.ProductVersion;
+import com.dj.iotlite.entity.repo.ProductRepository;
 import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.entity.repo.AdapterRepository;
+import com.dj.iotlite.entity.repo.ProductVersionRepository;
 import com.dj.iotlite.enums.DirectionEnum;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.push.PushService;
@@ -30,7 +32,7 @@ import java.util.Optional;
 public class DeviceInstance implements DeviceModel {
 
     @Autowired
-    ProductRepository productRepository;
+    ProductVersionRepository productVersionRepository;
 
     @Autowired
     DeviceRepository deviceRepository;
@@ -59,25 +61,25 @@ public class DeviceInstance implements DeviceModel {
     @Override
     public void setPropertys(String productSn, String deviceSn, Map<String, Object> propertys, String desc) {
 
-        Product product = productRepository.findFirstBySn(productSn).orElseThrow(() -> {
-            throw new BusinessException("产品序号不存在");
-        });
 
         Device device = deviceRepository.findFirstBySnAndProductSn(deviceSn, productSn).orElseThrow(() -> {
             throw new BusinessException("设备序号不存在");
         });
 
-        Optional<Device> proxy= Optional.of(null);
+        ProductVersion product = productVersionRepository.findFirstBySnAndVersion(device.getProductSn(),device.getVersion()).orElseThrow(() -> {
+            throw new BusinessException("产品序号不存在");
+        });
+
+        Optional<Device> proxy = Optional.of(null);
         String topic = String.format(RedisKey.DeviceProperty, "default", productSn, deviceSn);
 
         //透传下发
-        if(device.getProxyId()!=null){
-            proxy=deviceRepository.findById(device.getProductId());
-            topic= String.format(RedisKey.DeviceProperty, "default", proxy.get().getProductSn(), proxy.get().getSn());
+        if (device.getProxyId() != null) {
+            proxy = deviceRepository.findById(device.getProxyId());
+            topic = String.format(RedisKey.DeviceProperty, "default", proxy.get().getProductSn(), proxy.get().getSn());
         }
 
         Gson gson = new Gson();
-
 
 
         propertys.put("v", device.getVer());
@@ -98,8 +100,7 @@ public class DeviceInstance implements DeviceModel {
                 String finalTopic = topic;
                 adapterRepository.findById(product.getAdapterId()).ifPresent(adaptor -> {
                     try {
-
-                        ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(finalProxy,product, device, finalTopic, data);
+                        ((Adaptor) CtxUtils.getBean(adaptor.getImplClass())).publish(finalProxy, product, device, finalTopic, data);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -132,7 +133,7 @@ public class DeviceInstance implements DeviceModel {
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
         redisCommands.hset(member, name, String.valueOf(value));
         //设备值最后变更时间
-        redisCommands.hset(member, name+":last_at", String.valueOf(System.currentTimeMillis()));
+        redisCommands.hset(member, name + ":last_at", String.valueOf(System.currentTimeMillis()));
     }
 
     public void deviceEventFire(String productSn, String deviceSn, String topic, String rawData) {

@@ -68,7 +68,7 @@ public class ProductVersion extends ProductBase {
     String verDescription;
 
     /**
-     * 每次修改版本加一
+     * 快照版本
      */
     String version;
 

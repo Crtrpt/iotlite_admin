@@ -2,6 +2,7 @@ package com.dj.iotlite.adaptor.IotliteMqttAdaptor;
 
 
 import com.dj.iotlite.RedisKey;
+import com.dj.iotlite.config.MacroConfig;
 import com.dj.iotlite.enums.DirectionEnum;
 import com.dj.iotlite.push.PushService;
 import com.dj.iotlite.service.DeviceInstance;
@@ -9,17 +10,18 @@ import com.dj.iotlite.service.DeviceLogServiceImpl;
 import com.dj.iotlite.service.GroupInstance;
 import com.dj.iotlite.utils.CtxUtils;
 import com.jayway.jsonpath.JsonPath;
-import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.util.ObjectUtils;
+
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 @Slf4j
 public class MessageCallback implements IMqttMessageListener {
+
     @Override
     public void messageArrived(String topic, MqttMessage msg) throws Exception {
         var rawData = new String(msg.getPayload(), "UTF-8");
@@ -30,6 +32,14 @@ public class MessageCallback implements IMqttMessageListener {
         var deviceSn = seg[3];
         var productSn = seg[2];
 
+        if (MacroConfig.push) {
+            try {
+                CtxUtils.push.devicePush(productSn, deviceSn, rawData);
+                CtxUtils.push.productPush(productSn, rawData);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         log.info("收到数据" + seg.length + "");
 
         String action = JsonPath.read(rawData, "$.action");
@@ -69,17 +79,17 @@ public class MessageCallback implements IMqttMessageListener {
                     log.info("设置经纬度  {} {} {} {} ", key, member, Double.parseDouble(locationSeg[0]), Double.parseDouble(locationSeg[1]));
                     //更新设备自身的经纬度
                     try {
-                        CtxUtils.getBean(RedisCommands.class).geoadd(key, Double.parseDouble(locationSeg[0]), Double.parseDouble(locationSeg[1]), member);
+                        CtxUtils.redis.geoadd(key, Double.parseDouble(locationSeg[0]), Double.parseDouble(locationSeg[1]), member);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
                 case "pass":
-                    String realTopic=JsonPath.read(rawData, "$.topic");
-                    String payload=JsonPath.read(rawData, "$.payload");
-                    msg=new MqttMessage();
+                    String realTopic = JsonPath.read(rawData, "$.topic");
+                    String payload = JsonPath.read(rawData, "$.payload");
+                    msg = new MqttMessage();
                     msg.setPayload(payload.getBytes(UTF_8));
-                    messageArrived(realTopic,msg);
+                    messageArrived(realTopic, msg);
                 default:
                     log.error("未定义action");
             }
@@ -89,10 +99,14 @@ public class MessageCallback implements IMqttMessageListener {
         }
 
         //TODO 设备组编排
-        var groupName =  CtxUtils.getBean(RedisCommands.class).hget(String.format(RedisKey.DEVICE, productSn, deviceSn), "deviceGroup");
+        var groupName = CtxUtils.redis.hget(String.format(RedisKey.DEVICE, productSn, deviceSn), "deviceGroup");
         if (!ObjectUtils.isEmpty(groupName)) {
-            for (String g : ((String)groupName).split(",")) {
+            var groups = ((String) groupName).split(",");
+            for (String g : groups) {
                 CtxUtils.getBean(GroupInstance.class).fire(g, productSn, deviceSn, action, rawData);
+                if (MacroConfig.push) {
+                    CtxUtils.push.groupPush(g, rawData);
+                }
             }
         }
 

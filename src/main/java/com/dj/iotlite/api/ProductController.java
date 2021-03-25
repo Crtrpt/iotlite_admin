@@ -23,7 +23,6 @@ public class ProductController extends BaseController {
 
     @GetMapping("/list")
     public ResDto<Page<ProductListDto>> list(ProductQueryForm query) {
-
         Page<ProductListDto> ret = new Page<ProductListDto>();
         org.springframework.data.domain.Page<Product> res = deviceService.getProductList(query);
         res.forEach(s -> {
@@ -87,7 +86,6 @@ public class ProductController extends BaseController {
     public ResDto<Boolean> saveModel(@RequestBody ProductSaveModelForm form) {
         return success(deviceService.saveModel(form));
     }
-
 
     @PostMapping("/refreshProductKey")
     public ResDto<Boolean> refreshProductKey(@RequestBody ProductRefreshProductKeyForm form) {

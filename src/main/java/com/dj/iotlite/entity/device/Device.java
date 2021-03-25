@@ -1,10 +1,7 @@
 package com.dj.iotlite.entity.device;
 
 import com.dj.iotlite.entity.Base;
-import com.dj.iotlite.enums.DeviceCertEnum;
-import com.dj.iotlite.enums.ProductDiscoverEnum;
-import com.dj.iotlite.enums.ProtocolTypeEnum;
-import com.dj.iotlite.enums.WorkTypeEnum;
+import com.dj.iotlite.enums.*;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
@@ -134,4 +131,16 @@ public class Device extends Base {
      * 接入点 设备
      */
     Long proxyId;
+
+
+    /**
+     * 默认所有人可见
+     */
+    @Column(columnDefinition = "int default 0")
+    AccessTypeEnum access;
+
+    /**
+     * 设备所有者
+     */
+    Long owner;
 }

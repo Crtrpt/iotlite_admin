@@ -102,5 +102,5 @@ public class Product extends ProductBase {
      * 使用什么解释器执行内嵌脚本 默认groovy执行
      */
     @Column(columnDefinition = "int default 0")
-    InterpreterTypeEnum Interpreter;
+    InterpreterTypeEnum interpreter;
 }

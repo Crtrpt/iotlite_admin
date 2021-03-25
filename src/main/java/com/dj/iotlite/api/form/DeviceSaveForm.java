@@ -9,6 +9,7 @@ public class DeviceSaveForm extends DeviceListDto {
     Long id;
     String name;
     Long productId;
+    String version;
     String description;
     String sn;
     String uuid;

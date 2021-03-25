@@ -1,10 +1,12 @@
 package com.dj.iotlite.service;
 
+import com.dj.iotlite.api.dto.OptionDto;
 import com.dj.iotlite.api.form.DeviceQueryForm;
+import com.dj.iotlite.api.form.GetAllVersionForm;
 import com.dj.iotlite.api.form.NewVersionReleaseForm;
-import com.dj.iotlite.entity.product.ProductRepository;
+import com.dj.iotlite.entity.repo.ProductRepository;
 import com.dj.iotlite.entity.product.ProductVersion;
-import com.dj.iotlite.entity.product.ProductVersionRepository;
+import com.dj.iotlite.entity.repo.ProductVersionRepository;
 import com.dj.iotlite.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -80,5 +82,24 @@ public class VersionServiceImpl implements VersionService {
             return null;
         };
         return productVersionRepository.findAll(specification, query.getPage());
+    }
+
+    @Override
+    public List<OptionDto> getAll(GetAllVersionForm query) {
+        List<OptionDto> res = new ArrayList<>();
+        var p = productRepository.findById(query.getId()).orElseThrow(() -> {
+            throw new BusinessException("not found product");
+        });
+        OptionDto optionDto = new OptionDto();
+        optionDto.setId(-1L);
+        optionDto.setLabel("开发版");
+        res.add(optionDto);
+        productVersionRepository.findAllBySn(p.getSn()).stream().forEach(p1 -> {
+            OptionDto opt = new OptionDto();
+            opt.setId(p1.getId());
+            opt.setLabel(p1.getVersion());
+            res.add(opt);
+        });
+        return res;
     }
 }
