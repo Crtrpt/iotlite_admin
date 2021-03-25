@@ -1,6 +1,7 @@
 package com.dj.iotlite.entity.device;
 
 import com.dj.iotlite.entity.Base;
+import com.dj.iotlite.enums.AccessTypeEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
@@ -43,4 +44,15 @@ public class DeviceGroup extends Base {
      * 分支的规则引擎 groovy 实现用户自定义的逻辑
      */
     String spec;
+
+    /**
+     * 默认所有人可见
+     */
+    @Column(columnDefinition = "int default 0")
+    AccessTypeEnum access;
+
+    /**
+     * 设备所有者
+     */
+    Long owner;
 }

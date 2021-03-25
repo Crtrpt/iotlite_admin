@@ -1,12 +1,11 @@
 package com.dj.iotlite.api.dto;
 
-import com.dj.iotlite.enums.DeviceCertEnum;
-import com.dj.iotlite.enums.InterpreterTypeEnum;
-import com.dj.iotlite.enums.ProductDiscoverEnum;
-import com.dj.iotlite.enums.WorkTypeEnum;
+import com.dj.iotlite.enums.*;
 import com.dj.iotlite.serialize.StringMaskSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
+
+import javax.persistence.Column;
 
 @Data
 public class ProductDto extends ProductListDto {
@@ -32,4 +31,15 @@ public class ProductDto extends ProductListDto {
      * 设备使用的解释器
      */
     InterpreterTypeEnum interpreter;
+
+    /**
+     * 默认所有人可见
+     */
+    @Column(columnDefinition = "int default 0")
+    AccessTypeEnum access;
+
+    /**
+     * 产品所有者
+     */
+    Long owner;
 }

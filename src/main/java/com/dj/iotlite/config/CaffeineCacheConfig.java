@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class CaffeineCacheConfig {
+
     @Value("${spring.cache.cache-names}")
     List<String> cacheNames;
 

@@ -86,4 +86,15 @@ public class ProductBase extends Base {
      */
     @Column(columnDefinition = "int default 1")
     Long adapterId;
+
+    /**
+     * 默认所有人可见
+     */
+    @Column(columnDefinition = "int default 0")
+    AccessTypeEnum access;
+
+    /**
+     * 产品所有者
+     */
+    Long owner;
 }

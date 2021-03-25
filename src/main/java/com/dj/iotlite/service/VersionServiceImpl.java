@@ -86,14 +86,19 @@ public class VersionServiceImpl implements VersionService {
 
     @Override
     public List<OptionDto> getAll(GetAllVersionForm query) {
-        List<OptionDto> res=new ArrayList<>();
-        var  p= productRepository.findById(query.getId()).orElseThrow(()->{
+        List<OptionDto> res = new ArrayList<>();
+        var p = productRepository.findById(query.getId()).orElseThrow(() -> {
             throw new BusinessException("not found product");
         });
-        productVersionRepository.findAllBySn(p.getSn()).stream().forEach(p->{
-            OptionDto optionDto=new OptionDto();
-            optionDto.setLabel(p.getVersion());
-            res.add(optionDto);
+        OptionDto optionDto = new OptionDto();
+        optionDto.setId(-1L);
+        optionDto.setLabel("开发版");
+        res.add(optionDto);
+        productVersionRepository.findAllBySn(p.getSn()).stream().forEach(p1 -> {
+            OptionDto opt = new OptionDto();
+            opt.setId(p1.getId());
+            opt.setLabel(p1.getVersion());
+            res.add(opt);
         });
         return res;
     }
