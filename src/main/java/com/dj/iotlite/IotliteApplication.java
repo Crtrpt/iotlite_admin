@@ -19,6 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAsync
 @EnableConfigurationProperties
 @Transactional
+
 @MapperScan("com.dj.iotlite.mapper")
 public class IotliteApplication {
     public static void main(String[] args) {

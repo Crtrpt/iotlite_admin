@@ -21,6 +21,7 @@ public class AppListener implements ApplicationListener<ApplicationReadyEvent> {
 
         CtxUtils.redis=CtxUtils.applicationContext.getBean(RedisCommands.class);
 
+
         CtxUtils.push=CtxUtils.applicationContext.getBean(PrimaryDataPush.class);
 //        CtxUtils.http=CtxUtils.applicationContext.getBean(HttpDataPushImpl.class);
 //        CtxUtils.mqtt=CtxUtils.applicationContext.getBean(MqttDataPushImpl.class);
