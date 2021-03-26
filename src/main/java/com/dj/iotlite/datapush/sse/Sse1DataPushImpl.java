@@ -20,7 +20,7 @@ import java.util.Map;
 @Service
 @Slf4j
 @Data
-public class SseDataPushImpl implements DataPush {
+public class Sse1DataPushImpl implements DataPush {
 
     /**
      * 所有订阅者
