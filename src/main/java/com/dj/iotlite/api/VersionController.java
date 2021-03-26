@@ -27,8 +27,6 @@ public class VersionController extends BaseController {
 
     @GetMapping("/all")
     public ResDto<List<OptionDto>> version(GetAllVersionForm query) {
-
-
         return success(versionService.getAll(query));
     }
 

@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class GetAllVersionForm {
-    Long id;
+    String sn;
 }

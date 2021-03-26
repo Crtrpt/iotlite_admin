@@ -42,7 +42,7 @@ public class ProductController extends BaseController {
         res.forEach(s -> {
             DeviceListDto t = new DeviceListDto();
             BeanUtils.copyProperties(s, t);
-            deviceService.getProduct(s.getProductId(), t.getProduct());
+            deviceService.getProduct(s.getProductSn(), t.getProduct());
             ret.getList().add(t);
         });
         ret.setTotal(res.getTotalElements());

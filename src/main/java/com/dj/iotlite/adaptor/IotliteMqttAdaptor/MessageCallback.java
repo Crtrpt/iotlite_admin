@@ -25,6 +25,6 @@ public class MessageCallback implements IMqttMessageListener , MessageScheduling
 
     @Override
     public void messageArrived(String topic, MqttMessage msg) throws Exception {
-
+        dispatch(topic, msg.getPayload());
     }
 }

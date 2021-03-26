@@ -143,4 +143,13 @@ public class Device extends Base {
      * 设备所有者
      */
     Long owner;
+
+    @Column(columnDefinition = "int default 0")
+    RegTypeEnum regType;
+
+    /**
+     * 设备更新策略
+     */
+    @Column(columnDefinition = "int default 0")
+    UpdateStrategyEnum updateStrategy;
 }

@@ -42,4 +42,6 @@ public class ProductDto extends ProductListDto {
      * 产品所有者
      */
     Long owner;
+
+    UpdateStrategyEnum updateStrategy;
 }

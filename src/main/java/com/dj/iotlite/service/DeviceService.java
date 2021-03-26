@@ -1,6 +1,7 @@
 package com.dj.iotlite.service;
 
 import com.dj.iotlite.RedisKey;
+import com.dj.iotlite.adaptor.IotliteMqttAdaptor.RegisterDto;
 import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.Device;
@@ -18,6 +19,7 @@ import com.dj.iotlite.entity.repo.DeviceLogRepository;
 import com.dj.iotlite.entity.repo.DeviceRepository;
 import com.dj.iotlite.enums.DeviceCertEnum;
 import com.dj.iotlite.enums.ProductDiscoverEnum;
+import com.dj.iotlite.enums.RegTypeEnum;
 import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
 import com.dj.iotlite.exception.BusinessException;
@@ -94,6 +96,8 @@ public class DeviceService {
         if (!ObjectUtils.isEmpty(device.getProxyId())) {
             deviceDto.setProxy(queryDevice(device.getProxyId()));
         }
+        var key="hook@device@"+member;
+        deviceDto.setHook(redisCommands.hgetall(key));
         return deviceDto;
     }
 
@@ -152,14 +156,21 @@ public class DeviceService {
         BeanUtils.copyProperties(form, device);
         device.setVer(1);
         device.setCreatedAt(System.currentTimeMillis());
-        productRepository.findById(form.getProductId()).ifPresentOrElse(p -> {
-            device.setSpec(p.getSpec());
-            device.setProductSn(p.getSn());
-            device.setTags(new ArrayList<>());
-            //创建的时候的版本
-            device.setVersion(form.getVersion());
+        device.setTags(new ArrayList<>());
+
+        device.setHdVersion(form.getHdVersion());
+        //创建的时候的版本
+        device.setVersion(form.getVersion());
+
+        deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).ifPresent(d -> {
+            throw new BusinessException("device already exists ");
+        });
+
+        productVersionRepository.findFirstBySnAndVersion(form.getProductSn(), form.getVersion()).ifPresentOrElse(pv -> {
+            device.setSpec(pv.getSpec());
+            device.setProductSn(pv.getSn());
         }, () -> {
-            throw new BusinessException("设备不存在");
+            throw new BusinessException("product version not found");
         });
 
         var groupIdsMap = new HashMap<String, Long>();
@@ -181,8 +192,10 @@ public class DeviceService {
                 }
             });
         }
+        if (!ObjectUtils.isEmpty(form.getCount())) {
+            batchCopy(device, form, groupIdsMap);
+        }
 
-        batchCopy(device, form, groupIdsMap);
         deviceRepository.save(device);
         //保存分组关系
         for (Map.Entry<String, Long> entry : groupIdsMap.entrySet()) {
@@ -365,8 +378,8 @@ public class DeviceService {
         return null;
     }
 
-    public void getProduct(Long productId, ProductDto productDto) {
-        Product product = productRepository.findById(productId).orElse(new Product());
+    public void getProduct(String sn, ProductDto productDto) {
+        Product product = productRepository.findFirstBySn(sn).orElse(new Product());
         BeanUtils.copyProperties(product, productDto);
     }
 
@@ -670,5 +683,22 @@ public class DeviceService {
         deviceGroupRepository.deleteById(groupRemoveForm.getId());
         deviceGroupLinkRepository.deleteInBatch(deviceGroupLinkRepository.findAllByGroupId(groupRemoveForm.getId()));
         return true;
+    }
+
+    public void deviceRegister(RegisterDto regDto) {
+        var form = new DeviceSaveForm();
+        form.setVersion(regDto.getVersion());
+        form.setProductSn(regDto.getProductSn());
+        form.setSn(regDto.getDeviceSn());
+        form.setName(regDto.getDeviceSn());
+        form.setHdVersion(regDto.getHdVersion());
+        form.setRegType(RegTypeEnum.device_auto);
+
+        productRepository.findFirstBySn(regDto.getProductSn()).ifPresent(product -> {
+            if(product.getDiscover().equals(ProductDiscoverEnum.all) || product.getDiscover().equals(ProductDiscoverEnum.auto)){
+
+            }
+        });
+        saveDevice(form);
     }
 }
