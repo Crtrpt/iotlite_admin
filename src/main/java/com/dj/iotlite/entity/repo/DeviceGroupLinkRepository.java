@@ -24,5 +24,7 @@ public interface DeviceGroupLinkRepository extends CrudRepository<DeviceGroupLin
 
     List<DeviceGroupLink> findAllByProductSn(String productSn);
 
+    List<DeviceGroupLink> findAllByProductSnAndVersion(String productSn,String version);
+
     List<DeviceGroupLink> findAllByGroupId(Long groupId);
 }

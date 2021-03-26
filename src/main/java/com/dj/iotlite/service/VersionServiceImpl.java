@@ -91,14 +91,12 @@ public class VersionServiceImpl implements VersionService {
     @Override
     public List<OptionDto> getAll(GetAllVersionForm query) {
         List<OptionDto> res = new ArrayList<>();
-        var p = productRepository.findById(query.getId()).orElseThrow(() -> {
-            throw new BusinessException("not found product");
-        });
+
         OptionDto optionDto = new OptionDto();
         optionDto.setId(-1L);
         optionDto.setLabel("开发版");
         res.add(optionDto);
-        productVersionRepository.findAllBySn(p.getSn()).stream().forEach(p1 -> {
+        productVersionRepository.findAllBySn(query.getSn()).stream().forEach(p1 -> {
             OptionDto opt = new OptionDto();
             opt.setId(p1.getId());
             opt.setLabel(p1.getVersion());
@@ -129,7 +127,7 @@ public class VersionServiceImpl implements VersionService {
             //删除所有设备
             deviceRepository.deleteAll(deviceRepository.findAllByProductSnAndVersion(p.getSn(),p.getVersion()));
             //删除组内关系
-            var links = deviceGroupLinkRepository.findAllByProductSn(p.getSn());
+            var links = deviceGroupLinkRepository.findAllByProductSnAndVersion(p.getSn(),p.getVersion());
             deviceGroupLinkRepository.deleteInBatch(links);
             //删除版本
             productVersionRepository.delete(p);

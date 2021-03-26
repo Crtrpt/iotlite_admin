@@ -38,6 +38,11 @@ public class PushCallback implements MqttCallbackExtended {
         try {
             String topic="/default/#";
             client.subscribe(topic, 0, new MessageCallback());
+            /**
+             * 设备自注册
+             */
+            String registerTopic="/register";
+            client.subscribe(registerTopic, 0, new RegisterTopicCallback());
         } catch (MqttException e) {
             e.printStackTrace();
         }

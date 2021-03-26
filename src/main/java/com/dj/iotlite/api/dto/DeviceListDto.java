@@ -14,5 +14,6 @@ public class DeviceListDto implements BaseDto {
     Long createdAt;
     Object tags;
     String version;
+    String hdVersion;
     String deviceGroup;
 }

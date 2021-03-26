@@ -1,8 +1,11 @@
 package com.dj.iotlite.api;
 
 import com.dj.iotlite.api.dto.ResDto;
+import com.dj.iotlite.api.form.HookSaveForm;
 import com.dj.iotlite.api.form.NewVersionReleaseForm;
+import com.dj.iotlite.service.HookService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,10 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class HookController extends BaseController {
 
+    @Autowired
+    HookService hookService;
 
     @PostMapping("/save")
-    public ResDto<Boolean> version(@RequestBody NewVersionReleaseForm form) {
-        return success(true);
+    public ResDto<Boolean> version(@RequestBody HookSaveForm form) {
+        return success(hookService.save(form));
     }
 
 

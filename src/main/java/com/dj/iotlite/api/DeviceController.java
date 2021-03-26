@@ -5,6 +5,7 @@ import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.device.DeviceGroup;
 import com.dj.iotlite.entity.device.DeviceLog;
+import com.dj.iotlite.enums.RegTypeEnum;
 import com.dj.iotlite.service.DeviceService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class DeviceController extends BaseController {
         res.forEach(s -> {
             DeviceListDto t = new DeviceListDto();
             BeanUtils.copyProperties(s, t);
-            deviceService.getProduct(s.getProductId(), t.getProduct());
+            deviceService.getProduct(s.getProductSn(), t.getProduct());
             ret.getList().add(t);
         });
         ret.setTotal(res.getTotalElements());
@@ -112,6 +113,7 @@ public class DeviceController extends BaseController {
 
     @PostMapping("/save")
     public ResDto<Boolean> save(@RequestBody DeviceSaveForm deviceDto) {
+        deviceDto.setRegType(RegTypeEnum.admin);
         return success(deviceService.saveDevice(deviceDto));
     }
 

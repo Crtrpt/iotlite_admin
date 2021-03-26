@@ -38,6 +38,10 @@ public class DeviceGroupLink extends Base {
      * 产品Sn
      */
     String productSn;
+    /**
+     * 产品版本
+     */
+    String version;
 
     Long deviceId;
 

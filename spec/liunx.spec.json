@@ -1,0 +1,53 @@
+{
+  "version": "01",
+  "name": "liunx",
+  "desc": "liunx机器",
+  "property": [
+    {
+      "name": "CPU使用率",
+      "desc": "CPU使用率",
+      "value": 0,
+      "type": "int",
+      "unit": "%",
+      "defaultValue": 0,
+      "expect": 0
+    },
+    {
+      "name": "内存使用率",
+      "desc": "Mem",
+      "value": 0,
+      "type": "int",
+      "unit": "%",
+      "threshold": 5,
+      "defaultValue": 0,
+      "expect": 0
+    },
+    {
+      "name": "硬盘使用率",
+      "desc": "Disk",
+      "value": 0,
+      "type": "int",
+      "unit": "%",
+      "threshold": 5,
+      "defaultValue": 0,
+      "expect": 0
+    },
+    {
+      "name": "带宽",
+      "desc": "net",
+      "value": 0,
+      "type": "int",
+      "unit": "%",
+      "threshold": 5,
+      "defaultValue": 0,
+      "expect": 0
+    }
+  ],
+  "control":[
+    {
+      "name": "更新版本",
+      "desc": "更新版本",
+      "action":"print('更新版本')"
+    }
+  ]
+}

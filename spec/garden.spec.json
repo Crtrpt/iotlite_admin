@@ -1,9 +1,0 @@
-[
-  {
-    "name": "自动喷水任务",
-    "desc": "每天早上10点执行",
-    "crontab": "0 8 * * *",
-    "where": "select * from device where device.name='hygrometer' and device.property < 30",
-    "do": "select ctrl(*,'turn on') from device where device.name='sprinkler'"
-  }
-]

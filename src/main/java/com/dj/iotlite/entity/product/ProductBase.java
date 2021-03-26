@@ -97,4 +97,10 @@ public class ProductBase extends Base {
      * 产品所有者
      */
     Long owner;
+
+    /**
+     * 设备更新策略 默认设备自动更新到最新版本
+     */
+    @Column(columnDefinition = "int default 0")
+    UpdateStrategyEnum updateStrategy;
 }
