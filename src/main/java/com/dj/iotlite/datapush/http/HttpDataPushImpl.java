@@ -17,18 +17,18 @@ import java.util.Map;
 @Slf4j
 public class HttpDataPushImpl implements DataPush {
 
-    KeyedObjectPool<Map<String,Object>,HttpClient> httpFactory=new GenericKeyedObjectPool<>(new HttpFactory());
+    KeyedObjectPool<Map<String, Object>, HttpClient> httpFactory = new GenericKeyedObjectPool<>(new HttpFactory());
 
-    KeyedObjectPool<Map<String,Object>,HttpRequest.Builder> requestFactory=new GenericKeyedObjectPool<>(new HttpRequestFactory());
+    KeyedObjectPool<Map<String, Object>, HttpRequest.Builder> requestFactory = new GenericKeyedObjectPool<>(new HttpRequestFactory());
     /**
      * 默认的配置
      */
-    HashMap<String, Object> defaultConfig=new HashMap<>();
+    HashMap<String, Object> defaultConfig = new HashMap<>();
 
     @Override
     @Async
     public void Publish(Map<String, Object> config, Object payload) throws Exception {
-        var cfg=(HashMap<String, Object>) defaultConfig.clone();
+        var cfg = (HashMap<String, Object>) defaultConfig.clone();
         cfg.putAll(config);
 
         log.info("http push request");
@@ -36,19 +36,20 @@ public class HttpDataPushImpl implements DataPush {
 
         var requestBuilder = requestFactory.borrowObject(config);
 
-        var request= requestBuilder.POST(HttpRequest.BodyPublishers.ofString((String) payload))
+        var request = requestBuilder.POST(HttpRequest.BodyPublishers.ofString((String) payload))
+                .header("token", (String) config.get("token"))
                 .build();
 
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
-                .thenAccept(s->{
-                    log.info("http push response {} ",s);
+                .thenAccept(s -> {
+                    log.info("http push response {} ", s);
                     try {
                         /**
                          * 返还 http client对象
                          */
-                        httpFactory.returnObject(config,client);
-                        requestFactory.returnObject(config,requestBuilder);
+                        httpFactory.returnObject(config, client);
+                        requestFactory.returnObject(config, requestBuilder);
                         System.out.println(httpFactory.getNumActive());
                     } catch (Exception e) {
                         e.printStackTrace();

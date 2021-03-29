@@ -32,5 +32,4 @@ public class CaffeineCacheConfig {
                 .weakKeys()
                 .recordStats();
     }
-
 }
