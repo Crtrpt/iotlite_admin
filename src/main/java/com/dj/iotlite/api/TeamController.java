@@ -28,9 +28,27 @@ public class TeamController extends BaseController {
      * @return
      */
     @GetMapping("/list")
-    public ResDto<Page<UserListDto>> list(TeamQueryForm query) {
+    public ResDto<Page<TeamListDto>> list(TeamQueryForm query) {
         Page<TeamListDto> ret = new Page<>();
         org.springframework.data.domain.Page<Team> res = teamService.list(query);
+        res.forEach(s -> {
+            TeamListDto t = new TeamListDto();
+            BeanUtils.copyProperties(s, t);
+            ret.getList().add(t);
+        });
+        return success(ret);
+    }
+
+    /**
+     * 我创建的团队
+     *
+     * @param query
+     * @return
+     */
+    @GetMapping("/listofOwner")
+    public ResDto<Page<UserListDto>> listofOwner(TeamQueryForm query) {
+        Page<TeamListDto> ret = new Page<>();
+        org.springframework.data.domain.Page<Team> res = teamService.listofOwner(query);
         res.forEach(s -> {
             TeamListDto t = new TeamListDto();
             BeanUtils.copyProperties(s, t);

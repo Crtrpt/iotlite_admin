@@ -2,6 +2,7 @@ package com.dj.iotlite.api.form;
 
 import com.dj.iotlite.api.dto.DeviceListDto;
 import com.dj.iotlite.api.dto.ProductDto;
+import com.dj.iotlite.enums.AccessTypeEnum;
 import com.dj.iotlite.enums.RegTypeEnum;
 import lombok.Data;
 
@@ -25,4 +26,5 @@ public class DeviceSaveForm extends DeviceListDto {
     Long proxyId;
     String hdVersion;
     RegTypeEnum regType;
+    AccessTypeEnum access;
 }

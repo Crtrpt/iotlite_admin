@@ -26,5 +26,16 @@ public class Team extends Base {
      */
     String name;
 
+    String sn;
+    /**
+     * 团队简介
+     */
+    String description;
+
     Long owner;
+
+    /**
+     * 成员数量
+     */
+    Long memberCount;
 }

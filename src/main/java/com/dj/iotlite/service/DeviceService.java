@@ -36,7 +36,6 @@ import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -157,7 +156,7 @@ public class DeviceService {
         device.setVer(1);
         device.setCreatedAt(System.currentTimeMillis());
         device.setTags(new ArrayList<>());
-
+        device.setAccess(form.getAccess());
         device.setHdVersion(form.getHdVersion());
         //创建的时候的版本
         device.setVersion(form.getVersion());
@@ -176,8 +175,7 @@ public class DeviceService {
         var groupIdsMap = new HashMap<String, Long>();
         if (!ObjectUtils.isEmpty(form.getDeviceGroup())) {
             Arrays.stream(form.getDeviceGroup().split(",")).forEach((s) -> {
-                if (s.equals("")) {
-                } else {
+                if (!s.equals("")) {
                     deviceGroupRepository.findFirstByName(s).ifPresentOrElse(
                             (s1) -> {
                                 groupIdsMap.put(s1.getName(), s1.getId());
@@ -320,9 +318,10 @@ public class DeviceService {
         product.setTags("[]");
         product.setVersion("0.0.0");
         product.setSn(UUID.getUUID());
-        product.setDeviceCert(DeviceCertEnum.none);
+        product.setDeviceCert(productForm.getCert());
         product.setSecKey(UUID.getUUID());
-        product.setDiscover(ProductDiscoverEnum.auto);
+        product.setDiscover(productForm.getDiscover());
+        product.setAccess(productForm.getAccess());
         productRepository.save(product);
         ep.publishEvent(new ChangeProduct(this, product, ChangeProduct.Action.ADD));
         return true;
@@ -690,5 +689,25 @@ public class DeviceService {
             }
         });
         saveDevice(form);
+    }
+
+    public Object saveAccess(ProductSaveAccessForm form) {
+        productRepository.findFirstBySn(form.getSn()).ifPresentOrElse(p -> {
+            p.setAccess(form.getAccess());
+            productRepository.save(p);
+        }, () -> {
+            throw new BusinessException("not found product");
+        });
+        return true;
+    }
+
+    public Object saveDeviceAccess(DeviceSaveAccessForm form) {
+        deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).ifPresentOrElse(d -> {
+            d.setAccess(form.getAccess());
+            deviceRepository.save(d);
+        }, () -> {
+            throw new BusinessException("not found device");
+        });
+        return true;
     }
 }

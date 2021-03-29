@@ -7,4 +7,8 @@ public class TeamListDto implements BaseDto {
     Long id;
     String name;
     String description;
+    /**
+     * team的sn
+     */
+    String sn;
 }

@@ -15,4 +15,6 @@ public interface TeamService {
     Boolean remove(Long id);
 
     Page<Team> list(TeamQueryForm query);
+
+    Page<Team> listofOwner(TeamQueryForm query);
 }

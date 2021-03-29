@@ -11,6 +11,7 @@ import com.dj.iotlite.entity.user.User;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.exception.BusinessExceptionEnum;
 import com.dj.iotlite.utils.PasswordUtils;
+import com.dj.iotlite.utils.UUID;
 import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -47,15 +48,14 @@ public class AuthService {
         return loginDto;
     }
 
-
     @Autowired
     RedisCommands<String, String> redisCommands;
 
-    @Autowired
-    JwtTokenUtil jwt;
-
     private String genToken(User user) {
-        return jwt.generateToken(user);
+        var token = UUID.getUUID();
+        var key = String.format(RedisKey.TOKEN, token);
+        redisCommands.set(key, String.valueOf(user.getId()));
+        return token;
     }
 
 

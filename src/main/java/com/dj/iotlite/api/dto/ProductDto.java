@@ -35,7 +35,6 @@ public class ProductDto extends ProductListDto {
     /**
      * 默认所有人可见
      */
-    @Column(columnDefinition = "int default 0")
     AccessTypeEnum access;
 
     /**

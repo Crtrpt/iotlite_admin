@@ -87,6 +87,11 @@ public class ProductController extends BaseController {
         return success(deviceService.saveModel(form));
     }
 
+    @PostMapping("/saveAccess")
+    public ResDto<Boolean> saveAccess(@RequestBody ProductSaveAccessForm form) {
+        return success(deviceService.saveAccess(form));
+    }
+
     @PostMapping("/refreshProductKey")
     public ResDto<Boolean> refreshProductKey(@RequestBody ProductRefreshProductKeyForm form) {
         return success(deviceService.refreshProductKey(form));
