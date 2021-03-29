@@ -16,9 +16,9 @@ public class UserForm {
 
     String getPassword(){
         if(ObjectUtils.isEmpty(password)){
-            return PasswordUtils.md5("123456");
+            return PasswordUtils.Hash("123456");
         }else {
-            return  PasswordUtils.md5(this.password);
+            return  PasswordUtils.Hash(this.password);
         }
     }
 }

@@ -1,10 +1,8 @@
 package com.dj.iotlite.api;
 
-import com.dj.iotlite.api.dto.Page;
-import com.dj.iotlite.api.dto.ResDto;
-import com.dj.iotlite.api.dto.UserDto;
-import com.dj.iotlite.api.dto.UserListDto;
+import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.TeamForm;
+import com.dj.iotlite.api.form.TeamQueryForm;
 import com.dj.iotlite.api.form.UserForm;
 import com.dj.iotlite.api.form.UserQueryForm;
 import com.dj.iotlite.entity.user.Team;
@@ -23,12 +21,18 @@ public class TeamController extends BaseController {
     @Autowired
     TeamService teamService;
 
+    /**
+     * 我的团队
+     *
+     * @param query
+     * @return
+     */
     @GetMapping("/list")
-    public ResDto<Page<UserListDto>> list(UserQueryForm query) {
-        Page<UserListDto> ret = new Page<>();
+    public ResDto<Page<UserListDto>> list(TeamQueryForm query) {
+        Page<TeamListDto> ret = new Page<>();
         org.springframework.data.domain.Page<Team> res = teamService.list(query);
         res.forEach(s -> {
-            UserListDto t = new UserListDto();
+            TeamListDto t = new TeamListDto();
             BeanUtils.copyProperties(s, t);
             ret.getList().add(t);
         });
@@ -39,8 +43,10 @@ public class TeamController extends BaseController {
     public ResDto<Boolean> remove(@RequestParam("id") Long id) {
         return success(teamService.remove(id));
     }
+
     /**
      * 创建团队
+     *
      * @param form
      * @return
      */

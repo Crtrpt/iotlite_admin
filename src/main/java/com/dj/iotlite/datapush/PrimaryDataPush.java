@@ -51,7 +51,7 @@ public class PrimaryDataPush implements DataPush {
                 CtxUtils.applicationContext.getBean("mqttDataPushImpl", DataPush.class).Publish(config,payload);
                 break;
             case "sse":
-                CtxUtils.applicationContext.getBean("sseDataPushImpl", DataPush.class).Publish(config,payload);
+                CtxUtils.applicationContext.getBean("sse1DataPushImpl", DataPush.class).Publish(config,payload);
                 break;
             default:
                 log.info("不存在的推送");

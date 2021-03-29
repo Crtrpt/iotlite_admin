@@ -1,6 +1,8 @@
 package com.dj.iotlite.entity.product;
 
 import com.dj.iotlite.enums.*;
+import com.dj.iotlite.listener.DeviceListener;
+import com.dj.iotlite.listener.ProductListener;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
@@ -17,6 +19,7 @@ import javax.persistence.*;
 @Where(clause = "deleted_at is null")
 @DynamicUpdate
 @Cacheable
+@EntityListeners(ProductEntityListener.class)
 @org.hibernate.annotations.TypeDef(name = "json", typeClass = JsonStringType.class)
 public class Product extends ProductBase {
 
@@ -103,4 +106,9 @@ public class Product extends ProductBase {
      */
     @Column(columnDefinition = "int default 0")
     InterpreterTypeEnum interpreter;
+
+    /**
+     * 设备数量
+     */
+    Long deviceCount;
 }

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 @Data
-public class PageForm {
+public class PageForm extends BaseForm {
     String words;
 
     int pageSize;

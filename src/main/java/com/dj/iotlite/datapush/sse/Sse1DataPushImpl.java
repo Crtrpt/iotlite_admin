@@ -2,7 +2,6 @@ package com.dj.iotlite.datapush.sse;
 
 import com.dj.iotlite.datapush.DataPush;
 import io.undertow.Undertow;
-import io.undertow.server.handlers.sse.ServerSentEventHandler;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -15,17 +14,28 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 @Service
 @Slf4j
 @Data
-public class SseDataPushImpl implements DataPush {
+public class Sse1DataPushImpl implements DataPush {
 
+    @Data
+    static
+    class Context {
+        Context(StreamSinkChannel sink){
+            this.sink=sink;
+        }
+        StreamSinkChannel sink;
+        AtomicInteger id=new AtomicInteger(1);
+        HashMap<String,Object> ctx;
+    }
     /**
      * 所有订阅者
      */
-    static public Map<String, StreamSinkChannel> connects = new HashMap<>();
+    static public Map<String, Context> connects = new HashMap<>();
 
     @PostConstruct
     void init() {
@@ -48,15 +58,19 @@ public class SseDataPushImpl implements DataPush {
 
         var connect = connects.get(config.get("key"));
 
-        //TODO json转换 为sse支持的格式
 
-        var msg = "id: " + 1 + "\n";
+        var msg = "id: " + connect.getId().getAndAdd(1) + "\n";
         msg = msg + "event: pull\n";
         msg = msg + "retry: 10000\n";
         msg = msg + "data: " + payload + "\n\n";
 
         try {
-            connect.write(ByteBuffer.wrap(msg.getBytes(StandardCharsets.UTF_8)));
+            if(connect.sink.isOpen()){
+                connect.sink.write(ByteBuffer.wrap(msg.getBytes(StandardCharsets.UTF_8)));
+            }else {
+                log.info("连接已经断开");
+                connects.remove(config.get("key"));
+            }
         } catch (IOException e) {
             System.out.println("推送异常" + config.get("key"));
             e.printStackTrace();
