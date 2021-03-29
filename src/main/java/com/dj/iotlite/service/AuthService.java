@@ -67,7 +67,7 @@ public class AuthService {
             var u1 = new User();
             u1.setAccount("admin");
             u1.setName("admin");
-            u1.setPassword(PasswordUtils.Hash("admin"));
+            u1.setPassword(PasswordUtils.Hash(PasswordUtils.Hash("admin")));
             userRepository.save(u1);
         });
 
@@ -106,13 +106,13 @@ public class AuthService {
 
         var key = String.format(RedisKey.TOKEN, token);
 
-        var userId=redisCommands.get(key);
+        var userId = redisCommands.get(key);
 
-        if(ObjectUtils.isEmpty(userId)){
+        if (ObjectUtils.isEmpty(userId)) {
             throw new BusinessException("token error");
         }
 
-        return userRepository.findById(Long.valueOf(userId)).orElseThrow(()->{
+        return userRepository.findById(Long.valueOf(userId)).orElseThrow(() -> {
             throw new BusinessException("user not found");
         });
     }
