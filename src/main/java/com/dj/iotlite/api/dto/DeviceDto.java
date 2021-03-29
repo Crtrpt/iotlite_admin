@@ -1,9 +1,12 @@
 package com.dj.iotlite.api.dto;
 
+import com.dj.iotlite.enums.AccessTypeEnum;
 import com.dj.iotlite.enums.DeviceCertEnum;
 import com.dj.iotlite.enums.ProductDiscoverEnum;
 import com.dj.iotlite.enums.UpdateStrategyEnum;
 import lombok.Data;
+
+import javax.persistence.Column;
 
 @Data
 public class DeviceDto extends DeviceListDto {
@@ -29,6 +32,12 @@ public class DeviceDto extends DeviceListDto {
      * 推送hook
      */
     Object hook;
+
+    /**
+     * 默认所有人可见
+     */
+    AccessTypeEnum access;
+
 
     UpdateStrategyEnum updateStrategy;
 }

@@ -158,4 +158,9 @@ public class DeviceController extends BaseController {
     public ResDto<Boolean> changeTags(@RequestBody DeviceChangeTagsForm form) {
         return success(deviceService.deviceChangeTags(form));
     }
+
+    @PostMapping("/saveAccess")
+    public ResDto<Boolean> saveAccess(@RequestBody DeviceSaveAccessForm form) {
+        return success(deviceService.saveDeviceAccess(form));
+    }
 }

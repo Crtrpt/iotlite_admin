@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TeamMemberRepository extends
@@ -22,6 +23,8 @@ public interface TeamMemberRepository extends
      * @return
      */
     List<TeamMember> findAllByUserId(Long userId);
+
+    Optional<TeamMember> findFirstByUserIdAndTeamId(Long userId,Long teamId);
 
 
     List<TeamMember> findAllByTeamId(Long teamId);

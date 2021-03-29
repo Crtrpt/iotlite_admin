@@ -15,4 +15,5 @@ public interface TeamRepository extends
         CrudRepository<Team, Long>,
         JpaSpecificationExecutor<Team>,
         JpaRepository<Team, Long> {
+    Optional<Team> findFirstBySn(String sn);
 }
