@@ -5,7 +5,6 @@ import com.dj.iotlite.api.dto.LoginDto;
 import com.dj.iotlite.api.dto.UserDto;
 import com.dj.iotlite.api.form.LoginForm;
 import com.dj.iotlite.api.form.SigninForm;
-import com.dj.iotlite.component.JwtTokenUtil;
 import com.dj.iotlite.entity.repo.UserRepository;
 import com.dj.iotlite.entity.user.User;
 import com.dj.iotlite.exception.BusinessException;
@@ -17,8 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 import org.springframework.util.ObjectUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 @Slf4j
@@ -85,5 +85,35 @@ public class AuthService {
             userRepository.save(newUser);
         });
         return true;
+    }
+
+
+    @Autowired
+    HttpServletRequest httpServletRequest;
+
+
+    public User getUserInfo() {
+        String token = "";
+        if (httpServletRequest.getMethod().equals("GET")) {
+            token = httpServletRequest.getParameter("token");
+        } else {
+            token = httpServletRequest.getHeader("Authorization").split(" ")[1];
+        }
+
+        if (ObjectUtils.isEmpty(token)) {
+            throw new BusinessException(BusinessExceptionEnum.ACCOUNT_HAS_BEEN_LOGINED_IN_FROM_ELSEWHERE);
+        }
+
+        var key = String.format(RedisKey.TOKEN, token);
+
+        var userId=redisCommands.get(key);
+
+        if(ObjectUtils.isEmpty(userId)){
+            throw new BusinessException("token error");
+        }
+
+        return userRepository.findById(Long.valueOf(userId)).orElseThrow(()->{
+            throw new BusinessException("user not found");
+        });
     }
 }
