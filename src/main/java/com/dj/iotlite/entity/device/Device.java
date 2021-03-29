@@ -2,6 +2,7 @@ package com.dj.iotlite.entity.device;
 
 import com.dj.iotlite.entity.Base;
 import com.dj.iotlite.enums.*;
+import com.dj.iotlite.listener.DeviceListener;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 @Where(clause = "deleted_at is null")
 @DynamicUpdate
 @Cacheable
+@EntityListeners(DeviceEntityListener.class)
 public class Device extends Base {
 
     @Id
@@ -41,11 +43,6 @@ public class Device extends Base {
      * 设备备注
      */
     String description;
-
-    /**
-     * 设备的uuid
-     */
-    String uuid;
 
 
     Long productId;
@@ -139,10 +136,7 @@ public class Device extends Base {
     @Column(columnDefinition = "int default 0")
     AccessTypeEnum access;
 
-    /**
-     * 设备所有者
-     */
-    Long owner;
+
 
     @Column(columnDefinition = "int default 0")
     RegTypeEnum regType;
@@ -152,4 +146,14 @@ public class Device extends Base {
      */
     @Column(columnDefinition = "int default 0")
     UpdateStrategyEnum updateStrategy;
+
+    /**
+     * 设备所有者
+     */
+    Long owner;
+
+    /**
+     * 产品所属团队
+     */
+    Long team;
 }

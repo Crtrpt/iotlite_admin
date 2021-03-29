@@ -1,6 +1,9 @@
 package com.dj.iotlite.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.RemovalCause;
+import com.github.benmanes.caffeine.cache.RemovalListener;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
@@ -24,11 +27,11 @@ public class CaffeineCacheConfig {
         return cacheManager;
     }
 
-    Caffeine < Object, Object > caffeineCacheBuilder() {
+    Caffeine<Object, Object> caffeineCacheBuilder() {
         return Caffeine.newBuilder()
                 .initialCapacity(100)
                 .maximumSize(5000)
-                .expireAfterAccess(10, TimeUnit.MINUTES)
+                .expireAfterAccess(20, TimeUnit.MINUTES)
                 .weakKeys()
                 .recordStats();
     }

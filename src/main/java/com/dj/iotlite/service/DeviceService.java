@@ -36,6 +36,7 @@ import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -55,7 +56,6 @@ public class DeviceService {
 
     @Autowired
     private ApplicationEventPublisher ep;
-
 
     @Autowired
     ProductRepository productRepository;
@@ -96,7 +96,7 @@ public class DeviceService {
         if (!ObjectUtils.isEmpty(device.getProxyId())) {
             deviceDto.setProxy(queryDevice(device.getProxyId()));
         }
-        var key="hook@device@"+member;
+        var key = "hook@device@" + member;
         deviceDto.setHook(redisCommands.hgetall(key));
         return deviceDto;
     }
@@ -284,6 +284,9 @@ public class DeviceService {
                         criteriaBuilder.like(root.get("description").as(String.class), "%" + query.getWords() + "%")
                 ));
             }
+            //获取我的产品列表
+            criteriaBuilder.equal(root.get("owner").as(String.class), query.getUserId());
+
             Predicate[] p = new Predicate[list.size()];
             criteriaQuery.where(criteriaBuilder.and(list.toArray(p)));
             return null;
@@ -345,8 +348,8 @@ public class DeviceService {
      * @return
      */
     public Object action(DeviceActionForm action) {
+
         deviceRepository.findFirstBySnAndProductSn(action.getDeviceSn(), action.getProductSn()).ifPresentOrElse((d) -> {
-            var oldSpec = d.getSpec();
             SpecV1 specV1 = new SpecV1();
             Gson gson = new Gson();
             try {
@@ -365,16 +368,6 @@ public class DeviceService {
         }, () -> {
             throw new BusinessException("设备不存在");
         });
-        return null;
-    }
-
-    /**
-     * 启用或者关闭设备
-     *
-     * @param uuid
-     * @return
-     */
-    public Object enable(String uuid) {
         return null;
     }
 
@@ -406,7 +399,7 @@ public class DeviceService {
     DeviceLogRepository deviceLogRepository;
 
     public Page<DeviceLog> getDeviceLogList(DeviceLogQueryForm deviceQueryForm) {
-        Specification<DeviceLog> specification = (Specification<DeviceLog>) (root, criteriaQuery, criteriaBuilder) -> {
+        Specification<DeviceLog> specification = (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
             if (!StringUtils.isEmpty(deviceQueryForm.getWords())) {
                 list.add(criteriaBuilder.or(
@@ -474,9 +467,6 @@ public class DeviceService {
     }
 
     public Object refreshDeviceKey(DeviceRefreshDeviceKeyForm form) {
-        var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
-            throw new BusinessException("产品不存在或者已经被删除");
-        });
 
         var device = deviceRepository.findFirstBySnAndProductSn(form.getDeviceSn(), form.getProductSn()).orElseThrow(
                 () -> {
@@ -627,8 +617,8 @@ public class DeviceService {
 
             deviceGroupRepository.save(d);
             //编排文件存入redis
-            var deviceKey = String.format(RedisKey.DEVICE_GROUP, d.getName());
-            redisCommands.hset(deviceKey, "playground", form.getSpec());
+            var key = String.format(RedisKey.DEVICE_GROUP, d.getName());
+            redisCommands.hset(key, "playground", form.getSpec());
         });
         return true;
     }
@@ -695,7 +685,7 @@ public class DeviceService {
         form.setRegType(RegTypeEnum.device_auto);
 
         productRepository.findFirstBySn(regDto.getProductSn()).ifPresent(product -> {
-            if(product.getDiscover().equals(ProductDiscoverEnum.all) || product.getDiscover().equals(ProductDiscoverEnum.auto)){
+            if (product.getDiscover().equals(ProductDiscoverEnum.all) || product.getDiscover().equals(ProductDiscoverEnum.auto)) {
 
             }
         });

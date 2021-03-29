@@ -55,4 +55,9 @@ public class DeviceGroup extends Base {
      * 设备所有者
      */
     Long owner;
+
+    /**
+     * 产品所属团队
+     */
+    Long team;
 }

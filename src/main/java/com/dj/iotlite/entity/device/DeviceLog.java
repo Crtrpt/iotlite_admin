@@ -2,6 +2,7 @@ package com.dj.iotlite.entity.device;
 
 import com.dj.iotlite.entity.Base;
 import com.dj.iotlite.enums.DirectionEnum;
+import io.netty.handler.logging.LogLevel;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
@@ -21,6 +22,8 @@ public class DeviceLog extends Base {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    LogLevel level;
 
     String source;
 

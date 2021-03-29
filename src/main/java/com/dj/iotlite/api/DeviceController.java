@@ -21,7 +21,7 @@ public class DeviceController extends BaseController {
 
     @GetMapping("/list")
     public ResDto<Page<DeviceListDto>> list(DeviceQueryForm deviceQueryForm) {
-        Page<DeviceListDto> ret = new Page<DeviceListDto>();
+        Page<DeviceListDto> ret = new Page<>();
         org.springframework.data.domain.Page<Device> res = deviceService.getDeviceList(deviceQueryForm);
         res.forEach(s -> {
             DeviceListDto t = new DeviceListDto();
@@ -130,11 +130,6 @@ public class DeviceController extends BaseController {
     @GetMapping("/location")
     public ResDto<DeviceLocationDto> location(DeviceLocationForm action) {
         return success(deviceService.location(action));
-    }
-
-    @GetMapping("/enable")
-    public ResDto<AsynPage> enable(@RequestParam("uuid") String uuid) {
-        return success(deviceService.enable(uuid));
     }
 
 

@@ -97,6 +97,10 @@ public class ProductBase extends Base {
      * 产品所有者
      */
     Long owner;
+    /**
+     * 产品所属团队
+     */
+    Long team;
 
     /**
      * 设备更新策略 默认设备自动更新到最新版本

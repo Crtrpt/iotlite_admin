@@ -25,4 +25,6 @@ public class Team extends Base {
      * 团队名称
      */
     String name;
+
+    Long owner;
 }
