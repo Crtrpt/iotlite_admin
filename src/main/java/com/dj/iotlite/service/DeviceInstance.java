@@ -128,12 +128,15 @@ public class DeviceInstance implements DeviceModel {
     GroupInstance groupInstance;
 
     public void devicePropertyChange(String productSn, String deviceSn, String topic, String data) {
-        String name = JsonPath.read(data, "$.name");
-        Object value = JsonPath.read(data, "$.value");
+        HashMap<String,Object> payload = JsonPath.read(data, "$.payload");
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
-        redisCommands.hset(member, name, String.valueOf(value));
+        payload.forEach((key,v)->{
+            redisCommands.hset(member, key, String.valueOf(v));
+            redisCommands.hset(member, key + ":last_at", String.valueOf(System.currentTimeMillis()));
+        });
+
         //设备值最后变更时间
-        redisCommands.hset(member, name + ":last_at", String.valueOf(System.currentTimeMillis()));
+
     }
 
     public void deviceEventFire(String productSn, String deviceSn, String topic, String rawData) {
