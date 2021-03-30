@@ -51,6 +51,7 @@ public class VersionServiceImpl implements VersionService {
             newProduct.setStartAt(form.getStartAt());
             newProduct.setEndAt(form.getEndAt());
             newProduct.setDeviceCount(0L);
+            newProduct.setReleaseType(form.getReleaseType());
             productVersionRepository.save(newProduct);
         }, () -> {
             throw new BusinessException("产品不存在");

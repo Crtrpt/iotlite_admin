@@ -17,9 +17,9 @@ import com.dj.iotlite.entity.repo.DeviceGroupRepository;
 import com.dj.iotlite.entity.repo.AdapterRepository;
 import com.dj.iotlite.entity.repo.DeviceLogRepository;
 import com.dj.iotlite.entity.repo.DeviceRepository;
-import com.dj.iotlite.enums.DeviceCertEnum;
 import com.dj.iotlite.enums.ProductDiscoverEnum;
 import com.dj.iotlite.enums.RegTypeEnum;
+import com.dj.iotlite.enums.ReleaseTypeEnum;
 import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
 import com.dj.iotlite.exception.BusinessException;
@@ -168,6 +168,7 @@ public class DeviceService {
         productVersionRepository.findFirstBySnAndVersion(form.getProductSn(), form.getVersion()).ifPresentOrElse(pv -> {
             device.setSpec(pv.getSpec());
             device.setProductSn(pv.getSn());
+            device.setReleaseType(pv.getReleaseType());
         }, () -> {
             throw new BusinessException("product version not found");
         });
@@ -743,6 +744,17 @@ public class DeviceService {
             deviceGroupRepository.save(d);
         }, () -> {
             throw new BusinessException("group not found");
+        });
+        return true;
+    }
+
+    public Object saveDeviceModel(DeviceSaveModelForm form) {
+        deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).ifPresent(d -> {
+            if (ReleaseTypeEnum.Alpha.equals(d.getReleaseType())) {
+                Gson gson = new Gson();
+                d.setSpec(gson.fromJson(form.getSpec(), Object.class));
+                deviceRepository.save(d);
+            }
         });
         return true;
     }

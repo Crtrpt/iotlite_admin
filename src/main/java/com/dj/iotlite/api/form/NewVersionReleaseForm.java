@@ -1,5 +1,6 @@
 package com.dj.iotlite.api.form;
 
+import com.dj.iotlite.enums.ReleaseTypeEnum;
 import lombok.Data;
 
 import java.sql.Date;
@@ -12,4 +13,5 @@ public class NewVersionReleaseForm {
     String minHdVersion;
     Date startAt;
     Date endAt;
+    ReleaseTypeEnum releaseType;
 }
