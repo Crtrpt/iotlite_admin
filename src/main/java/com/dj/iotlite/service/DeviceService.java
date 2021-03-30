@@ -710,4 +710,37 @@ public class DeviceService {
         });
         return true;
     }
+
+    public Object saveProductBase(ProductSaveBaseForm form) {
+        productRepository.findFirstBySn(form.getSn()).ifPresentOrElse(d->{
+           d.setName(form.getName());
+           d.setDescription(form.getDescription());
+           productRepository.save(d);
+        },()->{
+            throw new BusinessException("not found product");
+        });
+        return true;
+    }
+
+    public Object saveBase(DeviceSaveBaseForm form) {
+        deviceRepository.findFirstBySnAndProductSn(form.getSn(),form.getProductSn()).ifPresentOrElse(d->{
+            d.setName(form.getName());
+            d.setDescription(form.getDescription());
+            deviceRepository.save(d);
+        },()->{
+            throw new BusinessException("not found device");
+        });
+        return true;
+    }
+
+    public Object saveGroupBase(DeviceSaveGroupBaseForm form) {
+        deviceGroupRepository.findById(form.getId()).ifPresentOrElse(d->{
+            d.setName(form.getName());
+            d.setDescription(form.getDescription());
+            deviceGroupRepository.save(d);
+        },()->{
+            throw new BusinessException("group not found");
+        });
+        return true;
+    }
 }

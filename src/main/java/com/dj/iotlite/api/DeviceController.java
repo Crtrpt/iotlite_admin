@@ -163,4 +163,14 @@ public class DeviceController extends BaseController {
     public ResDto<Boolean> saveAccess(@RequestBody DeviceSaveAccessForm form) {
         return success(deviceService.saveDeviceAccess(form));
     }
+
+    @PostMapping("/saveBase")
+    public ResDto<Boolean> saveBase(@RequestBody DeviceSaveBaseForm form) {
+        return success(deviceService.saveBase(form));
+    }
+
+    @PostMapping("/saveGroupBase")
+    public ResDto<Boolean> saveGroupBase(@RequestBody DeviceSaveGroupBaseForm form) {
+        return success(deviceService.saveGroupBase(form));
+    }
 }

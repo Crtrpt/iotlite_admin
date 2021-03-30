@@ -132,36 +132,17 @@ public class DeviceInstance implements DeviceModel {
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
         payload.forEach((key,v)->{
             redisCommands.hset(member, key, String.valueOf(v));
+            //设备值最后变更时间
             redisCommands.hset(member, key + ":last_at", String.valueOf(System.currentTimeMillis()));
         });
-
-        //设备值最后变更时间
-
     }
 
     public void deviceEventFire(String productSn, String deviceSn, String topic, String rawData) {
-        String name = JsonPath.read(rawData, "$.name");
-        Object payload = null;
-        try {
-            payload = JsonPath.read(rawData, "$.payload");
-        } catch (Exception e) {
-            log.info("payload is empty");
-        }
-        String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
-
-
+        log.info("设备发生事件  更新");
     }
 
     public void deviceAlarm(String productSn, String deviceSn, String topic, String rawData) {
         log.info("设备发生告警  更新");
-        String name = JsonPath.read(rawData, "$.name");
-        Object payload = null;
-        try {
-            payload = JsonPath.read(rawData, "$.payload");
-        } catch (Exception e) {
-            log.info("payload is empty");
-        }
-
     }
 
     public void deviceLog(String productSn, String deviceSn, String topic, String rawData) {
