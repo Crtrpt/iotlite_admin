@@ -102,5 +102,9 @@ public class ProductController extends BaseController {
         return success(deviceService.changeTags(form));
     }
 
+    @PostMapping("/saveBase")
+    public ResDto<Boolean> saveBase(@RequestBody ProductSaveBaseForm form) {
+        return success(deviceService.saveProductBase(form));
+    }
 
 }
