@@ -32,14 +32,14 @@ public interface DeviceRepository extends CrudRepository<Device, Long>, JpaSpeci
     Long countByProductSn(String productSn);
 
     @Override
-    @Cacheable()
+//    @Cacheable()
     Optional<Device> findById(Long id);
 
     @Override
-    @CachePut(cacheNames = "device", key = "#device.id")
+//    @CachePut(cacheNames = "device", key = "#device.id")
     Device save(Device device);
 
     @Override
-    @CacheEvict(cacheNames = "device", key = "#device.id")
+//    @CacheEvict(cacheNames = "device", key = "#device.id")
     void delete(Device device);
 }

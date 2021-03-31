@@ -5,9 +5,11 @@ import com.dj.iotlite.entity.user.Team;
 import com.dj.iotlite.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,4 +18,10 @@ public interface TeamRepository extends
         JpaSpecificationExecutor<Team>,
         JpaRepository<Team, Long> {
     Optional<Team> findFirstBySn(String sn);
+
+
+
+
+
+
 }

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,18 +20,20 @@ public interface ProductRepository extends
         JpaSpecificationExecutor<Product>,
         JpaRepository<Product, Long> {
 
-    @Cacheable(key = "#productSn")
+    List<Product> findAllByOwner(Long owner);
+
+//    @Cacheable(key = "#productSn")
     Optional<Product> findFirstBySn(String productSn);
 
     @Override
     Optional<Product> findById(Long id);
 
     @Override
-    @CachePut(key="#product.sn")
+//    @CachePut(key="#product.sn")
     Product save(Product product);
 
     @Override
-    @CachePut(key="#product.sn")
+//    @CachePut(key="#product.sn")
     void delete(Product product);
 
 }

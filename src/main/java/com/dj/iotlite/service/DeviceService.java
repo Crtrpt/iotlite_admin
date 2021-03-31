@@ -1,7 +1,6 @@
 package com.dj.iotlite.service;
 
 import com.dj.iotlite.RedisKey;
-import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.adaptor.IotliteMqttAdaptor.RegisterDto;
 import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.*;
@@ -12,13 +11,8 @@ import com.dj.iotlite.entity.device.DeviceGroupLink;
 import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.entity.product.ProductVersion;
-import com.dj.iotlite.entity.repo.ProductVersionRepository;
-import com.dj.iotlite.entity.repo.ProductRepository;
-import com.dj.iotlite.entity.repo.DeviceGroupLinkRepository;
-import com.dj.iotlite.entity.repo.DeviceGroupRepository;
-import com.dj.iotlite.entity.repo.AdapterRepository;
-import com.dj.iotlite.entity.repo.DeviceLogRepository;
-import com.dj.iotlite.entity.repo.DeviceRepository;
+import com.dj.iotlite.entity.repo.*;
+import com.dj.iotlite.entity.user.User;
 import com.dj.iotlite.enums.*;
 import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
@@ -77,11 +71,31 @@ public class DeviceService {
     @Autowired
     DeviceGroupLinkRepository deviceGroupLinkRepository;
 
-    public DeviceDto queryDevice(Long id) {
+    void checkUserCanAccessDevice(Device device, User user) {
+        if (!device.getOwner().equals(user.getId())) {
+            throw new BusinessException("device access denied");
+        }
+    }
+
+    void checkUserCanAccessProduct(Product product, User user) {
+        if (!product.getOwner().equals(user.getId())) {
+            throw new BusinessException("device access denied");
+        }
+    }
+
+    void checkUserCanAccessGroup(DeviceGroup group, User user) {
+        if (!group.getOwner().equals(user.getId())) {
+            throw new BusinessException("device access denied");
+        }
+    }
+
+    public DeviceDto queryDevice(Long id, User userInfo) {
         DeviceDto deviceDto = new DeviceDto();
         Device device = deviceRepository.findById(id).orElseThrow(() -> {
             throw new BusinessException("not found device");
         });
+        checkUserCanAccessDevice(device, userInfo);
+
         BeanUtils.copyProperties(device, deviceDto);
 
         ProductDto productDto = new ProductDto();
@@ -96,14 +110,14 @@ public class DeviceService {
 
         //上级代理设备
         if (!ObjectUtils.isEmpty(device.getProxyId())) {
-            deviceDto.setProxy(queryDevice(device.getProxyId()));
+            deviceDto.setProxy(queryDevice(device.getProxyId(), userInfo));
         }
         var key = "hook@device@" + member;
         deviceDto.setHook(redisCommands.hgetall(key));
         return deviceDto;
     }
 
-    public Page<Device> getDeviceList(DeviceQueryForm deviceQueryForm) {
+    public Page<Device> getDeviceList(DeviceQueryForm deviceQueryForm, User userInfo) {
         Specification<Device> specification = (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
             if (!StringUtils.isEmpty(deviceQueryForm.getWords())) {
@@ -136,6 +150,8 @@ public class DeviceService {
                 list.add(criteriaBuilder.equal(root.get("version").as(String.class), deviceQueryForm.getVersion()));
             }
 
+            list.add(criteriaBuilder.equal(root.get("owner").as(Long.class), userInfo.getId()));
+
             Predicate[] p = new Predicate[list.size()];
             criteriaQuery.where(criteriaBuilder.and(list.toArray(p)));
             return null;
@@ -144,7 +160,8 @@ public class DeviceService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Object removeDevice(DeviceRemoveForm form) {
+    public Object removeDevice(DeviceRemoveForm form, User userInfo) {
+        checkUserCanAccessDevice(deviceRepository.findById(form.getId()).get(), userInfo);
         deviceRepository.deleteById(form.getId());
         var links = deviceGroupLinkRepository.findAllByProductSnAndDeviceSn(form.getProductSn(), form.getDeviceSn());
         deviceGroupLinkRepository.deleteInBatch(links);
@@ -153,7 +170,7 @@ public class DeviceService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Object saveDevice(DeviceSaveForm form) {
+    public Object saveDevice(DeviceSaveForm form, User userInfo) {
         Device device = new Device();
         BeanUtils.copyProperties(form, device);
         device.setVer(1);
@@ -163,6 +180,7 @@ public class DeviceService {
         device.setHdVersion(form.getHdVersion());
         //创建的时候的版本
         device.setVersion(form.getVersion());
+        device.setOwner(userInfo.getId());
 
         deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).ifPresent(d -> {
             throw new BusinessException("device already exists ");
@@ -188,6 +206,7 @@ public class DeviceService {
                                 var deviceGroup = new com.dj.iotlite.entity.device.DeviceGroup();
                                 deviceGroup.setName(s);
                                 deviceGroup.setDescription(s);
+                                deviceGroup.setOwner(userInfo.getId());
                                 var s2 = deviceGroupRepository.save(deviceGroup);
                                 groupIdsMap.put(s2.getName(), s2.getId());
                             });
@@ -271,7 +290,8 @@ public class DeviceService {
         return list;
     }
 
-    public Page<Product> getProductList(ProductQueryForm query) {
+
+    public Page<Product> getProductList(ProductQueryForm query, User userInfo) {
         Specification<Product> specification = (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
             if (!StringUtils.isEmpty(query.getWords())) {
@@ -287,7 +307,7 @@ public class DeviceService {
                 ));
             }
             //获取我的产品列表
-            criteriaBuilder.equal(root.get("owner").as(String.class), query.getUserId());
+            list.add(criteriaBuilder.equal(root.get("owner").as(Long.class), userInfo.getId()));
 
             Predicate[] p = new Predicate[list.size()];
             criteriaQuery.where(criteriaBuilder.and(list.toArray(p)));
@@ -297,8 +317,9 @@ public class DeviceService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Object removeProduct(ProductRemoveForm form) {
+    public Object removeProduct(ProductRemoveForm form, User userInfo) {
         productRepository.findById(form.getId()).ifPresentOrElse((p) -> {
+            checkUserCanAccessProduct(p,userInfo);
             //删除所有所有版本的产品
             productVersionRepository.deleteAll(productVersionRepository.findAllBySn(p.getSn()));
             //删除所有设备
@@ -315,27 +336,34 @@ public class DeviceService {
         return true;
     }
 
-    public Object saveProduct(ProductForm productForm) {
+    @Transactional(rollbackFor = Exception.class)
+    public Object saveProduct(ProductForm productForm, User userInfo) {
         Product product = new Product();
         BeanUtils.copyProperties(productForm, product);
         product.setSpec("{}");
         product.setTags("[]");
+        product.setMeta("{}");
         product.setVersion("0.0.0");
         product.setSn(UUID.getUUID());
         product.setDeviceCert(productForm.getCert());
         product.setSecKey(UUID.getUUID());
         product.setDiscover(productForm.getDiscover());
         product.setAccess(productForm.getAccess());
+        product.setOwner(userInfo.getId());
+        //自动更新
+        product.setUpdateStrategy(UpdateStrategyEnum.auto);
+        product.setInterpreter(InterpreterTypeEnum.GROOVY);
         productRepository.save(product);
-        ep.publishEvent(new ChangeProduct(this, product, ChangeProduct.Action.ADD));
+//        ep.publishEvent(new ChangeProduct(this, product, ChangeProduct.Action.ADD));
         return true;
     }
 
-    public Object queryProduct(String sn) {
+    public Object queryProduct(String sn, User userInfo) {
         ProductDto productDto = new ProductDto();
         Product product = productRepository.findFirstBySn(sn).orElseThrow(() -> {
             throw new BusinessException("not found device");
         });
+        checkUserCanAccessProduct(product,userInfo);
         BeanUtils.copyProperties(product, productDto);
         productDto.setDeviceCount(deviceRepository.countByProductSn(product.getSn()));
         return productDto;
@@ -376,12 +404,14 @@ public class DeviceService {
      * 对设备发送命令
      *
      * @param action
+     * @param userInfo
      * @return
      */
-    public Object action(DeviceActionForm action) throws Exception {
+    public Object action(DeviceActionForm action, User userInfo) throws Exception {
         Device device = deviceRepository.findFirstBySnAndProductSn(action.getDeviceSn(), action.getProductSn()).orElseThrow(() -> {
             throw new BusinessException("device not found");
         });
+        checkUserCanAccessDevice(device,userInfo);
         ProductVersion product = productVersionRepository.findFirstBySnAndVersion(device.getProductSn(), device.getVersion()).orElseThrow(() -> {
             throw new BusinessException("product version not found");
         });
@@ -439,8 +469,13 @@ public class DeviceService {
         BeanUtils.copyProperties(product, productDto);
     }
 
-    public List<OptionDto> getAllProduct() {
-        return productRepository.findAll().stream().map(p -> {
+    /**
+     * 获取我能访问的设备
+     * @param userInfo
+     * @return
+     */
+    public List<OptionDto> getAllProduct(User userInfo) {
+        return productRepository.findAllByOwner(userInfo.getId()).stream().map(p -> {
             OptionDto optionDto = new OptionDto();
             optionDto.setId(p.getId());
             optionDto.setLabel(p.getName());
@@ -461,7 +496,13 @@ public class DeviceService {
     @Autowired
     DeviceLogRepository deviceLogRepository;
 
-    public Page<DeviceLog> getDeviceLogList(DeviceLogQueryForm deviceQueryForm) {
+    /**
+     * TODO 设备日志修改
+     * @param deviceQueryForm
+     * @param userInfo
+     * @return
+     */
+    public Page<DeviceLog> getDeviceLogList(DeviceLogQueryForm deviceQueryForm, User userInfo) {
         Specification<DeviceLog> specification = (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
             if (!StringUtils.isEmpty(deviceQueryForm.getWords())) {
@@ -487,7 +528,7 @@ public class DeviceService {
     @Autowired
     RedisCommands<String, String> redisCommands;
 
-    public Object location(DeviceLocationForm action) {
+    public Object location(DeviceLocationForm action, User userInfo) {
         String key = String.format(RedisKey.DeviceLOCATION, "default");
         String member = String.format(RedisKey.DeviceLOCATION_MEMBER, action.getProductSn(), action.getDeviceSn());
 
@@ -510,47 +551,51 @@ public class DeviceService {
         return deviceLocationDto;
     }
 
-    public Object saveModel(ProductSaveModelForm form) {
+    public Object saveModel(ProductSaveModelForm form, User userInfo) {
         var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
             throw new BusinessException("产品不存在或者已经被删除");
         });
+        checkUserCanAccessProduct(product,userInfo);
         Gson gson = new Gson();
         product.setSpec(gson.fromJson(form.getSpec(), Object.class));
         productRepository.save(product);
         return true;
     }
 
-    public Object refreshProductKey(ProductRefreshProductKeyForm form) {
+    public Object refreshProductKey(ProductRefreshProductKeyForm form, User userInfo) {
         var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
             throw new BusinessException("产品不存在或者已经被删除");
         });
+        checkUserCanAccessProduct(product,userInfo);
         product.setSecKey(UUID.getUUID());
         productRepository.save(product);
         return product.getSecKey();
     }
 
-    public Object refreshDeviceKey(DeviceRefreshDeviceKeyForm form) {
+    public Object refreshDeviceKey(DeviceRefreshDeviceKeyForm form, User userInfo) {
 
         var device = deviceRepository.findFirstBySnAndProductSn(form.getDeviceSn(), form.getProductSn()).orElseThrow(
                 () -> {
                     throw new BusinessException("设备不存在或者已经被删除");
                 }
         );
+        checkUserCanAccessDevice(device,userInfo);
         device.setDeviceKey(UUID.getUUID());
         deviceRepository.save(device);
         return device.getDeviceKey();
     }
 
-    public Object changeTags(ChangeTagsForm form) {
+    public Object changeTags(ChangeTagsForm form, User userInfo) {
         var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
             throw new BusinessException("产品不存在或者已经被删除");
         });
+        checkUserCanAccessProduct(product,userInfo);
         product.setTags(form.getTags());
         productRepository.save(product);
         return true;
     }
 
-    public Object deviceChangeTags(DeviceChangeTagsForm form) {
+    public Object deviceChangeTags(DeviceChangeTagsForm form, User userInfo) {
         var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
             throw new BusinessException("产品不存在或者已经被删除");
         });
@@ -559,24 +604,26 @@ public class DeviceService {
                     throw new BusinessException("设备不存在或者已经被删除");
                 }
         );
+        checkUserCanAccessDevice(device,userInfo);
         device.setTags((form.getTags()));
         deviceRepository.save(device);
         return true;
     }
 
-    public Object deviceGroupSave(DeviceGroupSaveForm deviceDto) {
+    public Object deviceGroupSave(DeviceGroupSaveForm deviceDto, User userInfo) {
         var deviceGroup = new DeviceGroup();
         deviceGroupRepository.findFirstByName(deviceDto.getName()).ifPresentOrElse((e) -> {
             throw new BusinessException("设备分组已经存在");
         }, () -> {
             BeanUtils.copyProperties(deviceDto, deviceGroup);
+            deviceGroup.setOwner(userInfo.getId());
             deviceGroup.setCreatedAt(System.currentTimeMillis());
             deviceGroupRepository.save(deviceGroup);
         });
         return deviceGroup;
     }
 
-    public Page<DeviceGroup> getDeviceGroupList(DeviceQueryForm deviceQueryForm) {
+    public Page<DeviceGroup> getDeviceGroupList(DeviceQueryForm deviceQueryForm, User userInfo) {
         Specification<DeviceGroup> specification = (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
             if (!StringUtils.isEmpty(deviceQueryForm.getWords())) {
@@ -586,6 +633,7 @@ public class DeviceService {
                         criteriaBuilder.like(root.get("description").as(String.class), "%" + deviceQueryForm.getWords() + "%")
                 ));
             }
+            list.add(criteriaBuilder.equal(root.get("owner").as(Long.class), userInfo.getId()));
             Predicate[] p = new Predicate[list.size()];
             criteriaQuery.where(criteriaBuilder.and(list.toArray(p)));
             return null;
@@ -593,11 +641,13 @@ public class DeviceService {
         return deviceGroupRepository.findAll(specification, deviceQueryForm.getPage());
     }
 
-    public DeviceGroupDto queryDeviceGroup(Long id) {
+    public DeviceGroupDto queryDeviceGroup(Long id, User userInfo) {
         var deviceGroupDto = new DeviceGroupDto();
-        DeviceGroup device = deviceGroupRepository.findById(id).orElse(new DeviceGroup());
-        BeanUtils.copyProperties(device, deviceGroupDto);
-        Script s = GroupInstanceImpl.groupScriptMapping.get(device.getName());
+        DeviceGroup group = deviceGroupRepository.findById(id).orElse(new DeviceGroup());
+
+        checkUserCanAccessGroup(group,userInfo);
+        BeanUtils.copyProperties(group, deviceGroupDto);
+        Script s = GroupInstanceImpl.groupScriptMapping.get(group.getName());
         if (ObjectUtils.isEmpty(s)) {
             deviceGroupDto.setState(new HashMap<>());
         } else {
@@ -614,9 +664,10 @@ public class DeviceService {
      * 获取组内设备列表
      *
      * @param deviceQueryForm
+     * @param userInfo
      * @return
      */
-    public com.dj.iotlite.api.dto.Page<DeviceListDto> getGroupDeviceList(DeviceQueryForm deviceQueryForm) {
+    public com.dj.iotlite.api.dto.Page<DeviceListDto> getGroupDeviceList(DeviceQueryForm deviceQueryForm, User userInfo) {
         Gson gson = new Gson();
 
         var ret = new com.dj.iotlite.api.dto.Page<DeviceListDto>();
@@ -640,7 +691,7 @@ public class DeviceService {
         return ret;
     }
 
-    public Object queryDeviceGroup(String name) {
+    public Object queryDeviceGroup(String name, User user) {
         var deviceGroupDto = new DeviceGroupDto();
         DeviceGroup device = deviceGroupRepository.findFirstByName(name).orElse(new DeviceGroup());
         BeanUtils.copyProperties(device, deviceGroupDto);
@@ -659,7 +710,7 @@ public class DeviceService {
         });
     }
 
-    public Object saveGroupFence(DeviceGroupFenceSaveForm form) {
+    public Object saveGroupFence(DeviceGroupFenceSaveForm form, User userInfo) {
         deviceGroupRepository.findById(form.getId()).ifPresent(d -> {
             d.setFence(form.getFence());
             deviceGroupRepository.save(d);
@@ -667,7 +718,7 @@ public class DeviceService {
         return true;
     }
 
-    public Object saveGroupPlayground(DeviceGroupSpecSaveForm form) {
+    public Object saveGroupPlayground(DeviceGroupSpecSaveForm form, User userInfo) {
         deviceGroupRepository.findById(form.getId()).ifPresent(d -> {
             d.setSpec(form.getSpec());
 
@@ -686,7 +737,7 @@ public class DeviceService {
         return true;
     }
 
-    public Object setDeviceMeta(DeviceMetaForm form) {
+    public Object setDeviceMeta(DeviceMetaForm form, User userInfo) {
         deviceRepository.findFirstBySnAndProductSn(form.getDeviceSn(), form.getProductSn()).ifPresent(d -> {
             var meta = d.getMeta();
             var hashMeta = new HashMap<String, Object>();
@@ -704,9 +755,10 @@ public class DeviceService {
      * TODO 修改为只显示视口内的设备
      *
      * @param query
+     * @param userInfo
      * @return
      */
-    public Object getMapDeviceList(MapDeviceQueryForm query) {
+    public Object getMapDeviceList(MapDeviceQueryForm query, User userInfo) {
         List<DeviceMapLocationDto> ret = new ArrayList<>();
         String key = String.format(RedisKey.DeviceLOCATION, "default");
         deviceRepository.findAllByProductSn(query.getProductSn()).stream().forEach(s -> {
@@ -721,7 +773,7 @@ public class DeviceService {
         return ret;
     }
 
-    public Object groupStateClean(DeviceGroupCleanForm deviceGroupCleanForm) {
+    public Object groupStateClean(DeviceGroupCleanForm deviceGroupCleanForm, User userInfo) {
         deviceGroupRepository.findById(deviceGroupCleanForm.getId()).ifPresent(g -> {
             var s = GroupInstanceImpl.groupScriptMapping.get(g.getName());
             if (s != null) {
@@ -732,11 +784,14 @@ public class DeviceService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Object groupRemove(DeviceGroupRemoveForm groupRemoveForm) {
+    public Object groupRemove(DeviceGroupRemoveForm groupRemoveForm, User userInfo) {
         deviceGroupRepository.deleteById(groupRemoveForm.getId());
         deviceGroupLinkRepository.deleteInBatch(deviceGroupLinkRepository.findAllByGroupId(groupRemoveForm.getId()));
         return true;
     }
+
+    @Autowired
+    UserRepository userRepository;
 
     public void deviceRegister(RegisterDto regDto) {
         var form = new DeviceSaveForm();
@@ -747,16 +802,21 @@ public class DeviceService {
         form.setHdVersion(regDto.getHdVersion());
         form.setRegType(RegTypeEnum.device_auto);
 
-        productRepository.findFirstBySn(regDto.getProductSn()).ifPresent(product -> {
-            if (product.getDiscover().equals(ProductDiscoverEnum.all) || product.getDiscover().equals(ProductDiscoverEnum.auto)) {
-
+        User user=new User();
+        var product=productRepository.findFirstBySn(regDto.getProductSn());
+        if(product.isPresent()){
+            user=userRepository.findById(product.get().getOwner()).get();
+            if (product.get().getDiscover().equals(ProductDiscoverEnum.all) || product.get().getDiscover().equals(ProductDiscoverEnum.auto)) {
+                return;
             }
-        });
-        saveDevice(form);
+        }
+
+        saveDevice(form, user);
     }
 
-    public Object saveAccess(ProductSaveAccessForm form) {
+    public Object saveAccess(ProductSaveAccessForm form, User userInfo) {
         productRepository.findFirstBySn(form.getSn()).ifPresentOrElse(p -> {
+            checkUserCanAccessProduct(p,userInfo);
             p.setAccess(form.getAccess());
             productRepository.save(p);
         }, () -> {
@@ -765,8 +825,9 @@ public class DeviceService {
         return true;
     }
 
-    public Object saveDeviceAccess(DeviceSaveAccessForm form) {
+    public Object saveDeviceAccess(DeviceSaveAccessForm form, User userInfo) {
         deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).ifPresentOrElse(d -> {
+            checkUserCanAccessDevice(d,userInfo);
             d.setAccess(form.getAccess());
             deviceRepository.save(d);
         }, () -> {
@@ -775,19 +836,21 @@ public class DeviceService {
         return true;
     }
 
-    public Object saveProductBase(ProductSaveBaseForm form) {
-        productRepository.findFirstBySn(form.getSn()).ifPresentOrElse(d -> {
-            d.setName(form.getName());
-            d.setDescription(form.getDescription());
-            productRepository.save(d);
+    public Object saveProductBase(ProductSaveBaseForm form, User userInfo) {
+        productRepository.findFirstBySn(form.getSn()).ifPresentOrElse(p -> {
+            checkUserCanAccessProduct(p,userInfo);
+            p.setName(form.getName());
+            p.setDescription(form.getDescription());
+            productRepository.save(p);
         }, () -> {
             throw new BusinessException("not found product");
         });
         return true;
     }
 
-    public Object saveBase(DeviceSaveBaseForm form) {
+    public Object saveBase(DeviceSaveBaseForm form, User userInfo) {
         deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).ifPresentOrElse(d -> {
+            checkUserCanAccessDevice(d,userInfo);
             d.setName(form.getName());
             d.setDescription(form.getDescription());
             deviceRepository.save(d);
@@ -797,8 +860,9 @@ public class DeviceService {
         return true;
     }
 
-    public Object saveGroupBase(DeviceSaveGroupBaseForm form) {
+    public Object saveGroupBase(DeviceSaveGroupBaseForm form, User userInfo) {
         deviceGroupRepository.findById(form.getId()).ifPresentOrElse(d -> {
+            checkUserCanAccessGroup(d,userInfo);
             d.setName(form.getName());
             d.setDescription(form.getDescription());
             deviceGroupRepository.save(d);
@@ -808,8 +872,9 @@ public class DeviceService {
         return true;
     }
 
-    public Object saveDeviceModel(DeviceSaveModelForm form) {
+    public Object saveDeviceModel(DeviceSaveModelForm form, User userInfo) {
         deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).ifPresent(d -> {
+            checkUserCanAccessDevice(d,userInfo);
             if (ReleaseTypeEnum.Alpha.equals(d.getReleaseType())) {
                 Gson gson = new Gson();
                 d.setSpec(gson.fromJson(form.getSpec(), Object.class));
