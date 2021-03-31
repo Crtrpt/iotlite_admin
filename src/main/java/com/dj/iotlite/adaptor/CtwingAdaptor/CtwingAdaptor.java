@@ -1,4 +1,4 @@
-package com.dj.iotlite.adaptor.CtwingAdaptor;
+package com.dj.iotlite.adaptor.ctwingAdaptor;
 
 import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.service.AdaptorService;

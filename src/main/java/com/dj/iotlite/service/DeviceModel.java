@@ -13,11 +13,11 @@ public interface DeviceModel {
      * 设置设备的属性
      * @param property
      */
-    void setProperty(String productSn,String deviceSn,String property,Object value,String desc) ;
+    void setProperty(String productSn,String deviceSn,String property,Object value,String desc,String ackId) ;
 
     /**
      * 设备设备的多个属性
      * @param propertys
      */
-    void setPropertys(String productSn,String deviceSn,Map<String,Object> propertys,String desc);
+    void setPropertys(String productSn,String deviceSn,Map<String,Object> propertys,String desc,String ackId);
 }

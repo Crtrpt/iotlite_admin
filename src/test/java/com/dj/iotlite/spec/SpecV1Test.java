@@ -50,11 +50,5 @@ class SpecV1Test {
 
         System.out.println(specV1.getProperty("temperature"));
 
-        specV1.action("reset");
-
-        System.out.println(specV1.getProperty("power"));
-
-        System.out.println(specV1.getProperty("temperature"));
-
     }
 }

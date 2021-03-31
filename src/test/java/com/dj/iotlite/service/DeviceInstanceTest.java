@@ -19,8 +19,5 @@ class DeviceInstanceTest {
     @Autowired
     DeviceInstance deviceInstance;
 
-    @Test
-    void setPropertys() {
-        deviceInstance.setProperty("3","1","power","20","测试");
-    }
+
 }

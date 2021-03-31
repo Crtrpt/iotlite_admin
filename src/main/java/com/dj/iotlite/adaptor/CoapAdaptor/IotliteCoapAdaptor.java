@@ -1,4 +1,4 @@
-package com.dj.iotlite.adaptor.CoapAdaptor;
+package com.dj.iotlite.adaptor.coapAdaptor;
 
 import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.service.AdaptorService;

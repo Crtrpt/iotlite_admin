@@ -1,4 +1,4 @@
-package com.dj.iotlite.adaptor.OnenetAdaptor;
+package com.dj.iotlite.adaptor.onenetAdaptor;
 
 import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.service.AdaptorService;

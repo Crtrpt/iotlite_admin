@@ -123,7 +123,7 @@ public class DeviceController extends BaseController {
     }
 
     @PostMapping("/action")
-    public ResDto<AsynPage> action(@RequestBody DeviceActionForm action) {
+    public ResDto<AsynPage> action(@RequestBody DeviceActionForm action) throws Exception {
         return success(deviceService.action(action));
     }
 

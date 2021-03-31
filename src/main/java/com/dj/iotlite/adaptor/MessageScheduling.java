@@ -10,6 +10,7 @@ import com.dj.iotlite.service.DeviceLogServiceImpl;
 import com.dj.iotlite.service.GroupInstance;
 import com.dj.iotlite.utils.CtxUtils;
 import com.jayway.jsonpath.JsonPath;
+import io.netty.handler.logging.LogLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
@@ -41,7 +42,7 @@ public interface MessageScheduling {
 
           String action = JsonPath.read(rawData, "$.action");
           //log
-          CtxUtils.getBean(DeviceLogServiceImpl.class).Log(deviceSn, productSn, DirectionEnum.UP, "device", topic, action, rawData);
+          CtxUtils.getBean(DeviceLogServiceImpl.class).Log(deviceSn, productSn, DirectionEnum.UP, "device", topic, action, rawData, LogLevel.TRACE);
 
           var device = CtxUtils.getBean(DeviceInstance.class);
           //action

@@ -1,4 +1,4 @@
-package com.dj.iotlite.adaptor.aliyunAdaptor;
+package com.dj.iotlite.adaptor.TencentCloudAdaptor;
 
 import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.service.AdaptorService;
@@ -10,12 +10,12 @@ import java.util.HashMap;
 
 @Service
 @Getter
-public class AliyunAdaptor implements Adaptor {
+public class TencentCloudAdaptor implements Adaptor {
 
     @Autowired
     AdaptorService adaptorService;
 
-    String name = "aliyun";
+    String name = "Tencent cloud";
 
     @Override
     public void install() {

@@ -17,6 +17,7 @@ import com.dj.iotlite.utils.JsonUtils;
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
 import io.lettuce.core.api.sync.RedisCommands;
+import io.netty.handler.logging.LogLevel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,21 +53,20 @@ public class DeviceInstance implements DeviceModel {
     }
 
     @Override
-    public void setProperty(String productSn, String deviceSn, String property, Object value, String desc) {
+    public void setProperty(String productSn, String deviceSn, String property, Object value, String desc, String ackId) {
         Map<String, Object> propertys = new HashMap<>();
         propertys.put(property, value);
-        setPropertys(productSn, deviceSn, propertys, desc);
+        setPropertys(productSn, deviceSn, propertys, desc, ackId);
     }
 
     @Override
-    public void setPropertys(String productSn, String deviceSn, Map<String, Object> propertys, String desc) {
-
+    public void setPropertys(String productSn, String deviceSn, Map<String, Object> propertys, String desc, String ackId) {
 
         Device device = deviceRepository.findFirstBySnAndProductSn(deviceSn, productSn).orElseThrow(() -> {
             throw new BusinessException("设备序号不存在");
         });
 
-        ProductVersion product = productVersionRepository.findFirstBySnAndVersion(device.getProductSn(),device.getVersion()).orElseThrow(() -> {
+        ProductVersion product = productVersionRepository.findFirstBySnAndVersion(device.getProductSn(), device.getVersion()).orElseThrow(() -> {
             throw new BusinessException("产品序号不存在");
         });
 
@@ -76,12 +76,15 @@ public class DeviceInstance implements DeviceModel {
         //透传下发
         if (device.getProxyId() != null) {
             proxy = deviceRepository.findById(device.getProxyId());
+            //TODO 处理设备 有topic 表示为透传 设备点喂 内部topic指定的数据
+            propertys.put("topic", "/" + productSn + "/" + deviceSn);
             topic = String.format(RedisKey.DeviceProperty, "default", proxy.get().getProductSn(), proxy.get().getSn());
         }
 
         Gson gson = new Gson();
-
-
+        //服务器端对主设备或者子设备的控制
+        propertys.put("action", "control");
+        propertys.put("ackId", ackId);
         propertys.put("v", device.getVer());
 
         String data = gson.toJson(propertys);
@@ -90,7 +93,7 @@ public class DeviceInstance implements DeviceModel {
         deviceRepository.save(device);
         //写入下发日志
 
-        deviceLogService.Log(deviceSn, productSn, DirectionEnum.Down, "admin", topic, desc, JsonUtils.toJson(propertys));
+        deviceLogService.Log(deviceSn, productSn, DirectionEnum.Down, "admin", topic, desc, JsonUtils.toJson(propertys), LogLevel.TRACE);
         try {
             log.info("topic {}  data: {}", topic, data);
             if (ObjectUtils.isEmpty(product.getAdapterId())) {
@@ -128,12 +131,13 @@ public class DeviceInstance implements DeviceModel {
     GroupInstance groupInstance;
 
     public void devicePropertyChange(String productSn, String deviceSn, String topic, String data) {
-        HashMap<String,Object> payload = JsonPath.read(data, "$.payload");
+        HashMap<String, Object> payload = JsonPath.read(data, "$.payload");
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
-        payload.forEach((key,v)->{
+        var time = String.valueOf(System.currentTimeMillis());
+        payload.forEach((key, v) -> {
             redisCommands.hset(member, key, String.valueOf(v));
             //设备值最后变更时间
-            redisCommands.hset(member, key + ":last_at", String.valueOf(System.currentTimeMillis()));
+            redisCommands.hset(member, key + ":last_at", time);
         });
     }
 
