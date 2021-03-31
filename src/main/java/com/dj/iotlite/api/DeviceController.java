@@ -173,4 +173,10 @@ public class DeviceController extends BaseController {
     public ResDto<Boolean> saveGroupBase(@RequestBody DeviceSaveGroupBaseForm form) {
         return success(deviceService.saveGroupBase(form));
     }
+
+
+    @PostMapping("/saveModel")
+    public ResDto<Boolean> saveModel(@RequestBody DeviceSaveModelForm form) {
+        return success(deviceService.saveDeviceModel(form));
+    }
 }

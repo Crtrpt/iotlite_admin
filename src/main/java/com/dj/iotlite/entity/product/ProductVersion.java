@@ -110,4 +110,7 @@ public class ProductVersion extends ProductBase {
     Date endAt;
 
     Long deviceCount;
+
+    @Column(columnDefinition = "int default 0")
+    ReleaseTypeEnum releaseType;
 }

@@ -1,4 +1,4 @@
-package com.dj.iotlite.api.dto;
+package com.dj.iotlite.api.form;
 
 import lombok.Data;
 

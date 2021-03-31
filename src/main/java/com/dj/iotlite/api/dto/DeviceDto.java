@@ -1,9 +1,6 @@
 package com.dj.iotlite.api.dto;
 
-import com.dj.iotlite.enums.AccessTypeEnum;
-import com.dj.iotlite.enums.DeviceCertEnum;
-import com.dj.iotlite.enums.ProductDiscoverEnum;
-import com.dj.iotlite.enums.UpdateStrategyEnum;
+import com.dj.iotlite.enums.*;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -40,4 +37,5 @@ public class DeviceDto extends DeviceListDto {
 
 
     UpdateStrategyEnum updateStrategy;
+
 }

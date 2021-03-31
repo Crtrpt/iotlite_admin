@@ -156,4 +156,7 @@ public class Device extends Base {
      * 产品所属团队
      */
     Long team;
+
+    @Column(columnDefinition = "int default 0")
+    ReleaseTypeEnum releaseType;
 }
