@@ -49,7 +49,7 @@ public class IotlitHttpImpl implements Adaptor {
     }
 
     @Override
-    public void publish(Optional<Device> proxy, ProductVersion product, Device device, String topic, String data) throws Exception {
+    public void publish(ProductVersion product, Device device, String topic, String data) throws Exception {
         log.info("发生给客户端");
     }
 }

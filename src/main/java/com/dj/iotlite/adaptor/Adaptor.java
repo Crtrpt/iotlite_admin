@@ -24,7 +24,7 @@ public interface Adaptor {
 
     void uninstall();
 
-    default void publish (Optional<Device> proxy, ProductVersion product, Device device, String topic, String data) throws Exception {
+    default void publish (ProductVersion product, Device device, String topic, String data) throws Exception {
         throw new Exception("未实现");
     }
 }
