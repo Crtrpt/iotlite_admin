@@ -14,13 +14,6 @@ public interface DeviceModel {
      * @param productSn
      */
     void setProductSn(String productSn);
-
-    /**
-     * 设置设备的属性
-     * @param property
-     */
-    void setProperty(String productSn,String deviceSn,String property,Object value,String desc,String ackId) ;
-
     /**
      * 设备设备的多个属性
      * @param propertys
