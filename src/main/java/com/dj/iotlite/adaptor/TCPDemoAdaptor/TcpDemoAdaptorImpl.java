@@ -38,9 +38,4 @@ public class TcpDemoAdaptorImpl implements Adaptor {
     public void uninstall() {
         adaptorService.unInstall(getName());
     }
-
-    @Override
-    public void publish(Optional<Device> proxy, ProductVersion product, Device device, String topic, String data) throws Exception {
-        log.info("发生给客户端");
-    }
 }
