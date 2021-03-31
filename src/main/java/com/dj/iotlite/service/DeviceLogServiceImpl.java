@@ -5,6 +5,7 @@ import com.dj.iotlite.entity.device.DeviceLog;
 import com.dj.iotlite.entity.repo.DeviceLogRepository;
 import com.dj.iotlite.enums.DirectionEnum;
 import io.lettuce.core.api.sync.RedisCommands;
+import io.netty.handler.logging.LogLevel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class DeviceLogServiceImpl implements DeviceLogService {
     RedisCommands<String, String> redisCommands;
 
     @Override
-    public void Log(String deviceSn,String productSn,DirectionEnum direction, String source, String target, String desc, String data) {
+    public void Log(String deviceSn,String productSn,DirectionEnum direction, String source, String target, String desc, String data,LogLevel level) {
 
         String member = String.format(RedisKey.DEVICE, productSn, deviceSn);
 
@@ -34,6 +35,7 @@ public class DeviceLogServiceImpl implements DeviceLogService {
         log.setSource(source);
         log.setProductSn(productSn);
         log.setDeviceSn(deviceSn);
+        log.setLevel(LogLevel.TRACE);
         log.setTarget(target);
         log.setDescription(desc);
         log.setRawData(data);

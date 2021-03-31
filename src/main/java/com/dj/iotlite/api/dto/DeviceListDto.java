@@ -1,5 +1,6 @@
 package com.dj.iotlite.api.dto;
 
+import com.dj.iotlite.enums.ReleaseTypeEnum;
 import com.dj.iotlite.serialize.LongToDateSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
@@ -16,4 +17,8 @@ public class DeviceListDto implements BaseDto {
     String version;
     String hdVersion;
     String deviceGroup;
+    /**
+     * 设备发行类型
+     */
+    ReleaseTypeEnum releaseType;
 }

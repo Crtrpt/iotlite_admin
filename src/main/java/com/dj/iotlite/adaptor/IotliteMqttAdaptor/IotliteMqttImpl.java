@@ -87,7 +87,7 @@ public class IotliteMqttImpl implements Adaptor {
     }
 
     @Override
-    public void publish(Optional<Device> proxy, ProductVersion product, Device device, String topic, String data) throws Exception {
+    public void publish(ProductVersion product, Device device, String topic, String data) throws Exception {
         MqttMessage mqttMessage = new MqttMessage();
         mqttMessage.setPayload(data.getBytes(StandardCharsets.UTF_8));
         mqttClient.publish(topic, mqttMessage);

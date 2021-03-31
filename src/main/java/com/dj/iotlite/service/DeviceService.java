@@ -1,9 +1,11 @@
 package com.dj.iotlite.service;
 
 import com.dj.iotlite.RedisKey;
+import com.dj.iotlite.adaptor.Adaptor;
 import com.dj.iotlite.adaptor.IotliteMqttAdaptor.RegisterDto;
 import com.dj.iotlite.api.dto.*;
 import com.dj.iotlite.api.form.*;
+import com.dj.iotlite.entity.adaptor.Adapter;
 import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.device.DeviceGroup;
 import com.dj.iotlite.entity.device.DeviceGroupLink;
@@ -17,15 +19,14 @@ import com.dj.iotlite.entity.repo.DeviceGroupRepository;
 import com.dj.iotlite.entity.repo.AdapterRepository;
 import com.dj.iotlite.entity.repo.DeviceLogRepository;
 import com.dj.iotlite.entity.repo.DeviceRepository;
-import com.dj.iotlite.enums.DeviceCertEnum;
-import com.dj.iotlite.enums.ProductDiscoverEnum;
-import com.dj.iotlite.enums.RegTypeEnum;
+import com.dj.iotlite.enums.*;
 import com.dj.iotlite.event.ChangeDevice;
 import com.dj.iotlite.event.ChangeProduct;
 import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.function.StateAble;
 import com.dj.iotlite.mapper.DeviceMapper;
 import com.dj.iotlite.spec.SpecV1;
+import com.dj.iotlite.utils.JsonUtils;
 import com.dj.iotlite.utils.UUID;
 import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
@@ -33,9 +34,11 @@ import groovy.lang.GroovyShell;
 import groovy.lang.Script;
 import io.lettuce.core.GeoArgs;
 import io.lettuce.core.api.sync.RedisCommands;
+import io.netty.handler.logging.LogLevel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -168,6 +171,7 @@ public class DeviceService {
         productVersionRepository.findFirstBySnAndVersion(form.getProductSn(), form.getVersion()).ifPresentOrElse(pv -> {
             device.setSpec(pv.getSpec());
             device.setProductSn(pv.getSn());
+            device.setReleaseType(pv.getReleaseType());
         }, () -> {
             throw new BusinessException("product version not found");
         });
@@ -340,37 +344,94 @@ public class DeviceService {
     @Autowired
     DeviceInstance deviceInstance;
 
+
+    /**
+     * TODO 优化为每个产品一个spec 或者 池化对象
+     *
+     * @param action
+     * @return
+     */
+    @Cacheable(value = "device_spec", key = "#{action.productSn}")
+    public com.dj.iotlite.spec.SpecV1 getSpec(DeviceActionForm action) {
+        Optional<Device> d = deviceRepository.findFirstBySnAndProductSn(action.getDeviceSn(), action.getProductSn());
+        if (d.isPresent()) {
+            SpecV1 specV1 = new SpecV1();
+            Gson gson = new Gson();
+            try {
+                return (SpecV1) specV1.fromJson(gson.toJson(d.get().getSpec()));
+                //执行命令
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new BusinessException("model parse exception");
+            }
+        } else {
+            throw new BusinessException("model parse exception");
+        }
+    }
+
+    @Autowired
+    DeviceLogService deviceLogService;
+
     /**
      * 对设备发送命令
      *
      * @param action
      * @return
      */
-    public Object action(DeviceActionForm action) {
+    public Object action(DeviceActionForm action) throws Exception {
+        Device device = deviceRepository.findFirstBySnAndProductSn(action.getDeviceSn(), action.getProductSn()).orElseThrow(() -> {
+            throw new BusinessException("device not found");
+        });
+        ProductVersion product = productVersionRepository.findFirstBySnAndVersion(device.getProductSn(), device.getVersion()).orElseThrow(() -> {
+            throw new BusinessException("product version not found");
+        });
+
+        Adapter adaptor = adapterRepository.findById(product.getAdapterId()).orElseThrow(() -> {
+            throw new BusinessException("adapter version not found");
+        });
+
+        HashMap<String, Object> propertys = new HashMap<>();
+
         var member = String.format(RedisKey.DEVICE, action.getProductSn(), action.getDeviceSn());
         redisCommands.hset(member, action.getName() + ":last_at", String.valueOf(System.currentTimeMillis()));
+        //最后一次命令的跟踪id
+        String ackId = UUID.getUUID();
+        propertys.put("ackId", ackId);
+        //设置最后跟踪id
+        redisCommands.hset(member, action.getName() + ":last_id", ackId);
+        //最后一次命令的响应状态 已经创建
+        redisCommands.hset(member, action.getName() + ":last_status", String.valueOf(ActionStatus.values()[0]));
 
-        deviceRepository.findFirstBySnAndProductSn(action.getDeviceSn(), action.getProductSn()).ifPresentOrElse((d) -> {
-            SpecV1 specV1 = new SpecV1();
-            Gson gson = new Gson();
-            try {
-                specV1.fromJson(gson.toJson(d.getSpec()));
-                specV1.action(action.getName());
-                HashMap<String, Object> propertys = new HashMap<>();
-                specV1.getProperty().forEach(p -> {
-                    if (!p.getValue().equals(p.getExpect())) {
-                        propertys.put(p.getName(), p.getExpect());
-                    }
-                });
-                deviceInstance.setPropertys(action.getProductSn(), action.getDeviceSn(), propertys, action.getName());
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new BusinessException("设备物模型解析异常");
-            }
-        }, () -> {
-            throw new BusinessException("设备不存在");
-        });
-        return null;
+
+        //透传下发
+        if (device.getProxyId() != null) {
+            var proxy = deviceRepository.findById(device.getProxyId());
+            propertys.put("topic", String.format(RedisKey.DeviceProperty, "default", proxy.get().getProductSn(), proxy.get().getSn()));
+            propertys.put("subtopic", "/" + action.getProductSn() + "/" + action.getDeviceSn());
+        } else {
+
+        }
+        // TODO 处理影子问题
+        deviceLogService.Log(device.getSn(), device.getProductSn(), DirectionEnum.Down, "admin", (String) propertys.get("topic"), action.getName(), JsonUtils.toJson(propertys), LogLevel.TRACE);
+        if (SideTypeEnum.Server.equals(action.getSide())) {
+            //服务端来处理逻辑
+            var sp = getSpec(action);
+
+            sp.action(action.getName());
+            //找到执行后的 property 下发给设备端
+            sp.getProperty().forEach(p -> {
+                if (!p.getValue().equals(p.getExpect())) {
+                    propertys.put(p.getName(), p.getExpect());
+                }
+            });
+            //通过 ackid追踪 消息任务 进程
+            deviceInstance.setPropertys(product, device, propertys, action.getName(), ackId, adaptor);
+        } else {
+            deviceInstance.setControl(product, device, propertys, action.getName(), ackId, adaptor);
+        }
+
+        //数据下发成功
+        return ackId;
     }
 
     public void getProduct(String sn, ProductDto productDto) {
@@ -743,6 +804,17 @@ public class DeviceService {
             deviceGroupRepository.save(d);
         }, () -> {
             throw new BusinessException("group not found");
+        });
+        return true;
+    }
+
+    public Object saveDeviceModel(DeviceSaveModelForm form) {
+        deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).ifPresent(d -> {
+            if (ReleaseTypeEnum.Alpha.equals(d.getReleaseType())) {
+                Gson gson = new Gson();
+                d.setSpec(gson.fromJson(form.getSpec(), Object.class));
+                deviceRepository.save(d);
+            }
         });
         return true;
     }

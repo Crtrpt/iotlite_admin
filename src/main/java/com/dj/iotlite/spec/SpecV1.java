@@ -5,53 +5,47 @@ import com.dj.iotlite.spec.exception.NotFoundActionException;
 import com.dj.iotlite.spec.exception.NotFoundPropertyException;
 import com.google.gson.Gson;
 import groovy.lang.GroovyShell;
+import groovy.lang.Script;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Data
 public class SpecV1 implements Specification {
 
+    //json 实例化到 SpecV1
     @Override
-    public  Specification fromJson(String json) throws Exception {
-        Gson gson=new Gson();
-        SpecV1 specV1 = gson.fromJson(json,SpecV1.class);
-        BeanUtils.copyProperties(specV1,this);
+    public Specification fromJson(String json) throws Exception {
+        Gson gson = new Gson();
+        SpecV1 specV1 = gson.fromJson(json, SpecV1.class);
+        BeanUtils.copyProperties(specV1, this);
+        this.control.forEach(c -> {
+            c.script = new GroovyShell().parse((String) c.action);
+        });
         return this;
     }
 
-    @Override
     public void setProperty(String property, Integer value) throws Exception {
-        this.property.forEach(p->{
-            if(property.equals(p.name)){
-                p.expect=value;
+        this.property.forEach(p -> {
+            if (property.equals(p.name)) {
+                p.expect = value;
             }
         });
     }
 
     @Override
     public void action(String name) throws Exception {
-        if (name.equals("reset")) {
-            this.property.forEach(p -> {
-                p.setExpect(p.defaultValue);
-            });
-            return;
-        }
         for (Control c : this.control) {
             if (c.name.equals(name)) {
                 //执行控制脚本
-                GroovyShell gs = new GroovyShell();
                 this.property.forEach(p -> {
-                    gs.setVariable(p.name, p.expect);
+                    c.script.setProperty(p.name, p.expect);
                 });
-                System.out.println("编译 -> "+c.action);
-                var script=gs.parse(c.action);
-                System.out.println("执行 -> "+c.action);
-
-                script.run();
+                c.script.run();
                 this.property.forEach(p -> {
-                    p.setExpect((int) gs.getVariable(p.name));
+                    p.setExpect(c.script.getProperty(p.name));
                 });
                 return;
             }
@@ -60,24 +54,22 @@ public class SpecV1 implements Specification {
     }
 
     @Data
-    static public class  Property {
+    static public class Property {
         String name;
         String desc;
-        Integer value;
+        Object value;
 
-        Integer defaultValue;
-//        String type;
+        Object expect;
+        //        String type;
         Integer threshold;
 
-        Integer expect;
-
-        public void setExpect(Integer expect) {
+        public void setExpect(Object expect) {
             this.expect = expect;
         }
     }
 
     @Data
-    static class  Alarm {
+    static class Alarm {
         String name;
         String desc;
         Integer level;
@@ -87,14 +79,15 @@ public class SpecV1 implements Specification {
     }
 
     @Data
-    static class  Control {
+    static class Control {
         String name;
         String desc;
         String action;
+        Script script;
     }
 
     @Data
-    static class  Event {
+    static class Event {
         String name;
         String desc;
         String condition;
@@ -102,12 +95,13 @@ public class SpecV1 implements Specification {
     }
 
     @Data
-    static class  Metric {
+    static class Metric {
         @Data
         static class Source {
             String type;
             String name;
         }
+
         String name;
         Source source;
     }
@@ -120,10 +114,10 @@ public class SpecV1 implements Specification {
 
     List<Property> property;
 
-    public Integer getProperty(String property) {
+    public Object getProperty(String property) {
         for (Property property1 : this.property) {
-            if(property1.getName().equals( property)){
-                return  property1.getExpect();
+            if (property1.getName().equals(property)) {
+                return property1.getExpect();
             }
         }
         throw new NotFoundPropertyException();
@@ -131,6 +125,7 @@ public class SpecV1 implements Specification {
 
     List<Alarm> alarm;
     List<Event> event;
+
     List<Control> control;
     List<Metric> metric;
 }
