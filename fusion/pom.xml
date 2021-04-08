@@ -12,6 +12,7 @@
         <module>aliyun</module>
         <module>onenet</module>
         <module>tencent</module>
+        <module>ctwing</module>
     </modules>
 
     <properties>
