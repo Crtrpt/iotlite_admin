@@ -17,7 +17,7 @@ class MainTest {
     @Test
     public void async() throws IOException, IotServerException, IotClientException {
         Properties prop = new Properties();
-        prop.load(IotClient.class.getResourceAsStream("/onenet.properties"));
+        prop.load(IotClient.class.getResourceAsStream("/onenet.platform.properties"));
         var client = OnenetClient.getClient(prop);
         QueryProductListRequest queryProductListRequest=new QueryProductListRequest();
         queryProductListRequest.setProjectId(prop.getProperty("user.projectId"));

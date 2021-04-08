@@ -37,7 +37,7 @@ public class IotClient {
 
         Properties prop = new Properties();
         try {
-            prop.load(IotClient.class.getResourceAsStream("/aliyun.properties"));
+            prop.load(IotClient.class.getResourceAsStream("/aliyun.platform.properties"));
             accessKeyID = prop.getProperty("user.accessKeyID");
             accessKeySecret = prop.getProperty("user.accessKeySecret");
             regionId = prop.getProperty("iot.regionId");
