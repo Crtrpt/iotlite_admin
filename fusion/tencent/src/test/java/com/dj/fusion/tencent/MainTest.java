@@ -14,7 +14,7 @@ class MainTest {
     @Test
     public void aync() throws IOException {
         Properties prop = new Properties();
-        prop.load(TencentClient.class.getResourceAsStream("/tencent.properties"));
+        prop.load(TencentClient.class.getResourceAsStream("/tencent.platform.properties"));
         var client = TencentClient.getClient(prop);
         try {
             var req = new DescribeProductsRequest();

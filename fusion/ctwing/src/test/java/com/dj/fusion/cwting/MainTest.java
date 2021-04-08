@@ -12,7 +12,7 @@ class MainTest {
     @Test
     public void async() throws Exception {
         Properties prop = new Properties();
-        prop.load(CtwingClient.class.getResourceAsStream("/ctwing.properties"));
+        prop.load(CtwingClient.class.getResourceAsStream("/ctwing.platform.properties"));
         var client = CtwingClient.getProductClient(prop);
 
         var req = new QueryProductListRequest();
