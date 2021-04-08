@@ -10,6 +10,7 @@ public class PageForm extends BaseForm {
     String words;
 
     int pageSize;
+
     int pageNum;
 
     String sortBy = "id";

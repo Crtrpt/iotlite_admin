@@ -39,11 +39,6 @@ public class Product extends ProductBase {
     String icon;
 
     /**
-     * 产品uuid
-     */
-    String uuid;
-
-    /**
      * 产品标签
      */
     @Type(type = "json")
