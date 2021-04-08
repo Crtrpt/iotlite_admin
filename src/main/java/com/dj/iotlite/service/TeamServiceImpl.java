@@ -1,7 +1,11 @@
 package com.dj.iotlite.service;
 
+import com.dj.iotlite.api.dto.Page;
 import com.dj.iotlite.api.dto.TeamDto;
+import com.dj.iotlite.api.dto.TeamListDto;
+import com.dj.iotlite.api.dto.TeamMemberListDto;
 import com.dj.iotlite.api.form.TeamForm;
+import com.dj.iotlite.api.form.TeamMemberQueryForm;
 import com.dj.iotlite.api.form.TeamQueryForm;
 import com.dj.iotlite.entity.repo.TeamMemberRepository;
 import com.dj.iotlite.entity.repo.TeamRepository;
@@ -9,17 +13,13 @@ import com.dj.iotlite.entity.user.Team;
 import com.dj.iotlite.entity.user.TeamMember;
 import com.dj.iotlite.entity.user.User;
 import com.dj.iotlite.exception.BusinessException;
+import com.dj.iotlite.mapper.TeamMapper;
 import com.dj.iotlite.utils.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import javax.persistence.criteria.Predicate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,50 +59,27 @@ public class TeamServiceImpl implements TeamService {
     @Autowired
     TeamMemberRepository teamMemberRepository;
 
-    @Override
-    public Page<Team> list(TeamQueryForm form) {
-        Specification<Team> specification = (root, criteriaQuery, criteriaBuilder) -> {
-            List<Predicate> list = new ArrayList<>();
-            if (!StringUtils.isEmpty(form.getWords())) {
-                list.add(criteriaBuilder.or(
-                        //名称
-                        criteriaBuilder.like(root.get("name").as(String.class), "%" + form.getWords() + "%"),
-                        //备注
-                        criteriaBuilder.like(root.get("description").as(String.class), "%" + form.getWords() + "%")
-                ));
-            }
-
-            //我是团队的拥有者
-
-            //我是团队的成员
-            Predicate[] p = new Predicate[list.size()];
-            criteriaQuery.where(criteriaBuilder.and(list.toArray(p)));
-            return null;
-        };
-
-        return teamRepository.findAll(specification, form.getPage());
-    }
+    @Autowired(required = false)
+    TeamMapper teamMapper;
 
     @Override
-    public Page<Team> listofOwner(TeamQueryForm form) {
-        Specification<Team> specification = (root, criteriaQuery, criteriaBuilder) -> {
-            List<Predicate> list = new ArrayList<>();
-            if (!StringUtils.isEmpty(form.getWords())) {
-                list.add(criteriaBuilder.or(
-                        //名称
-                        criteriaBuilder.like(root.get("name").as(String.class), "%" + form.getWords() + "%"),
-                        //备注
-                        criteriaBuilder.like(root.get("description").as(String.class), "%" + form.getWords() + "%")
-                ));
-            }
+    public Page<TeamListDto> list(TeamQueryForm query, User userInfo) {
 
-            Predicate[] p = new Predicate[list.size()];
-            criteriaQuery.where(criteriaBuilder.and(list.toArray(p)));
-            return null;
-        };
 
-        return teamRepository.findAll(specification, form.getPage());
+        Page<TeamListDto> res = new Page<TeamListDto>();
+        var users = teamMapper.getMyTeamList(userInfo.getId()
+                , (query.getPageSize()) * (query.getPageNum() - 1)
+                , query.getPageSize());
+        users.forEach(s -> {
+            var t1 = new TeamListDto();
+            BeanUtils.copyProperties(s, t1);
+            res.getList().add(t1);
+        });
+
+        res.setTotal(teamMapper.getMyTeamListCount(userInfo.getId()));
+        return res;
     }
+
 
     @Override
     public Object queryTeam(String sn, User userInfo) {
@@ -116,4 +93,25 @@ public class TeamServiceImpl implements TeamService {
         BeanUtils.copyProperties(team, res);
         return res;
     }
+
+
+    @Override
+    public com.dj.iotlite.api.dto.Page<TeamMemberListDto> getTeamMemberList(TeamMemberQueryForm query, User userInfo) {
+        var t = teamRepository.findFirstBySn(query.getSn()).get();
+
+        com.dj.iotlite.api.dto.Page<TeamMemberListDto> res = new com.dj.iotlite.api.dto.Page<TeamMemberListDto>();
+        var users = teamMapper.getMyTeamMemberList(t.getId()
+                , (query.getPageSize()) * (query.getPageNum() - 1)
+                , query.getPageSize());
+        users.forEach(s -> {
+            var t1 = new TeamMemberListDto();
+            BeanUtils.copyProperties(s, t1);
+            res.getList().add(t1);
+        });
+
+        res.setTotal(teamMapper.getMyTeamMemberListCount(userInfo.getId()));
+        return res;
+    }
+
+
 }

@@ -1,10 +1,7 @@
 package com.dj.iotlite.api;
 
 import com.dj.iotlite.api.dto.*;
-import com.dj.iotlite.api.form.TeamForm;
-import com.dj.iotlite.api.form.TeamQueryForm;
-import com.dj.iotlite.api.form.UserForm;
-import com.dj.iotlite.api.form.UserQueryForm;
+import com.dj.iotlite.api.form.*;
 import com.dj.iotlite.entity.user.Team;
 import com.dj.iotlite.entity.user.User;
 import com.dj.iotlite.service.AuthService;
@@ -33,31 +30,7 @@ public class TeamController extends BaseController {
     @GetMapping("/list")
     public ResDto<Page<TeamListDto>> list(TeamQueryForm query) {
         Page<TeamListDto> ret = new Page<>();
-        org.springframework.data.domain.Page<Team> res = teamService.list(query);
-        res.forEach(s -> {
-            TeamListDto t = new TeamListDto();
-            BeanUtils.copyProperties(s, t);
-            ret.getList().add(t);
-        });
-        return success(ret);
-    }
-
-    /**
-     * 我创建的团队
-     *
-     * @param query
-     * @return
-     */
-    @GetMapping("/listofOwner")
-    public ResDto<Page<UserListDto>> listofOwner(TeamQueryForm query) {
-        Page<TeamListDto> ret = new Page<>();
-        org.springframework.data.domain.Page<Team> res = teamService.listofOwner(query);
-        res.forEach(s -> {
-            TeamListDto t = new TeamListDto();
-            BeanUtils.copyProperties(s, t);
-            ret.getList().add(t);
-        });
-        return success(ret);
+        return success(teamService.list(query,authService.getUserInfo()));
     }
 
     @PostMapping("/remove")

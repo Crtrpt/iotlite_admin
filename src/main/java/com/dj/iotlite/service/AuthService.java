@@ -94,11 +94,7 @@ public class AuthService {
 
     public User getUserInfo() {
         String token = "";
-        if (httpServletRequest.getMethod().equals("GET")) {
-            token = httpServletRequest.getParameter("token");
-        } else {
-            token = httpServletRequest.getHeader("Authorization").split(" ")[1];
-        }
+        token = httpServletRequest.getHeader("Authorization").split(" ")[1];
 
         if (ObjectUtils.isEmpty(token)) {
             throw new BusinessException(BusinessExceptionEnum.ACCOUNT_HAS_BEEN_LOGINED_IN_FROM_ELSEWHERE);
