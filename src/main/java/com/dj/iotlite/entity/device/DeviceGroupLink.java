@@ -43,7 +43,8 @@ public class DeviceGroupLink extends Base {
      */
     String version;
 
+    /**
+     *
+     */
     Long deviceId;
-
-
 }

@@ -106,4 +106,6 @@ public class Product extends ProductBase {
      * 设备数量
      */
     Long deviceCount;
+
+
 }
