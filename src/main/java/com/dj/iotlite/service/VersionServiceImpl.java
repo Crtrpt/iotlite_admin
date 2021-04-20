@@ -92,7 +92,7 @@ public class VersionServiceImpl implements VersionService {
     @Override
     public List<OptionDto> getAll(GetAllVersionForm query) {
         List<OptionDto> res = new ArrayList<>();
-
+        //自动创建一个开发者版本
         OptionDto optionDto = new OptionDto();
         optionDto.setId(-1L);
         optionDto.setLabel("开发版");
@@ -126,9 +126,9 @@ public class VersionServiceImpl implements VersionService {
     public Object removeProductVersion(VersionRemoveForm form) {
         productVersionRepository.findById(form.getId()).ifPresentOrElse((p) -> {
             //删除所有设备
-            deviceRepository.deleteAll(deviceRepository.findAllByProductSnAndVersion(p.getSn(),p.getVersion()));
+            deviceRepository.deleteAll(deviceRepository.findAllByProductSnAndVersion(p.getSn(), p.getVersion()));
             //删除组内关系
-            var links = deviceGroupLinkRepository.findAllByProductSnAndVersion(p.getSn(),p.getVersion());
+            var links = deviceGroupLinkRepository.findAllByProductSnAndVersion(p.getSn(), p.getVersion());
             deviceGroupLinkRepository.deleteInBatch(links);
             //删除版本
             productVersionRepository.delete(p);

@@ -13,6 +13,8 @@ public class ProductListDto implements BaseDto {
 
     String sn;
 
+    String icon;
+
     Object tags;
 
     Integer onlineCount;

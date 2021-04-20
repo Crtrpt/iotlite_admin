@@ -38,3 +38,5 @@ log/*
 ./web/node_modules
 
 /connector
+
+/upload

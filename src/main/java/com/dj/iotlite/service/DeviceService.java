@@ -20,6 +20,7 @@ import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.function.StateAble;
 import com.dj.iotlite.mapper.DeviceMapper;
 import com.dj.iotlite.spec.SpecV1;
+import com.dj.iotlite.utils.FileUtils;
 import com.dj.iotlite.utils.JsonUtils;
 import com.dj.iotlite.utils.UUID;
 import com.github.pagehelper.PageHelper;
@@ -32,6 +33,7 @@ import io.netty.handler.logging.LogLevel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -41,8 +43,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.criteria.Predicate;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -319,7 +326,7 @@ public class DeviceService {
     @Transactional(rollbackFor = Exception.class)
     public Object removeProduct(ProductRemoveForm form, User userInfo) {
         productRepository.findById(form.getId()).ifPresentOrElse((p) -> {
-            checkUserCanAccessProduct(p,userInfo);
+            checkUserCanAccessProduct(p, userInfo);
             //删除所有所有版本的产品
             productVersionRepository.deleteAll(productVersionRepository.findAllBySn(p.getSn()));
             //删除所有设备
@@ -363,7 +370,7 @@ public class DeviceService {
         Product product = productRepository.findFirstBySn(sn).orElseThrow(() -> {
             throw new BusinessException("not found device");
         });
-        checkUserCanAccessProduct(product,userInfo);
+        checkUserCanAccessProduct(product, userInfo);
         BeanUtils.copyProperties(product, productDto);
         productDto.setDeviceCount(deviceRepository.countByProductSn(product.getSn()));
         return productDto;
@@ -411,7 +418,7 @@ public class DeviceService {
         Device device = deviceRepository.findFirstBySnAndProductSn(action.getDeviceSn(), action.getProductSn()).orElseThrow(() -> {
             throw new BusinessException("device not found");
         });
-        checkUserCanAccessDevice(device,userInfo);
+        checkUserCanAccessDevice(device, userInfo);
         ProductVersion product = productVersionRepository.findFirstBySnAndVersion(device.getProductSn(), device.getVersion()).orElseThrow(() -> {
             throw new BusinessException("product version not found");
         });
@@ -471,6 +478,7 @@ public class DeviceService {
 
     /**
      * 获取我能访问的设备
+     *
      * @param userInfo
      * @return
      */
@@ -498,6 +506,7 @@ public class DeviceService {
 
     /**
      * TODO 设备日志修改
+     *
      * @param deviceQueryForm
      * @param userInfo
      * @return
@@ -555,7 +564,7 @@ public class DeviceService {
         var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
             throw new BusinessException("产品不存在或者已经被删除");
         });
-        checkUserCanAccessProduct(product,userInfo);
+        checkUserCanAccessProduct(product, userInfo);
         Gson gson = new Gson();
         product.setSpec(gson.fromJson(form.getSpec(), Object.class));
         productRepository.save(product);
@@ -566,7 +575,7 @@ public class DeviceService {
         var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
             throw new BusinessException("产品不存在或者已经被删除");
         });
-        checkUserCanAccessProduct(product,userInfo);
+        checkUserCanAccessProduct(product, userInfo);
         product.setSecKey(UUID.getUUID());
         productRepository.save(product);
         return product.getSecKey();
@@ -579,7 +588,7 @@ public class DeviceService {
                     throw new BusinessException("设备不存在或者已经被删除");
                 }
         );
-        checkUserCanAccessDevice(device,userInfo);
+        checkUserCanAccessDevice(device, userInfo);
         device.setDeviceKey(UUID.getUUID());
         deviceRepository.save(device);
         return device.getDeviceKey();
@@ -589,7 +598,7 @@ public class DeviceService {
         var product = productRepository.findFirstBySn(form.getProductSn()).orElseThrow(() -> {
             throw new BusinessException("产品不存在或者已经被删除");
         });
-        checkUserCanAccessProduct(product,userInfo);
+        checkUserCanAccessProduct(product, userInfo);
         product.setTags(form.getTags());
         productRepository.save(product);
         return true;
@@ -604,7 +613,7 @@ public class DeviceService {
                     throw new BusinessException("设备不存在或者已经被删除");
                 }
         );
-        checkUserCanAccessDevice(device,userInfo);
+        checkUserCanAccessDevice(device, userInfo);
         device.setTags((form.getTags()));
         deviceRepository.save(device);
         return true;
@@ -645,7 +654,7 @@ public class DeviceService {
         var deviceGroupDto = new DeviceGroupDto();
         DeviceGroup group = deviceGroupRepository.findById(id).orElse(new DeviceGroup());
 
-        checkUserCanAccessGroup(group,userInfo);
+        checkUserCanAccessGroup(group, userInfo);
         BeanUtils.copyProperties(group, deviceGroupDto);
         Script s = GroupInstanceImpl.groupScriptMapping.get(group.getName());
         if (ObjectUtils.isEmpty(s)) {
@@ -802,10 +811,10 @@ public class DeviceService {
         form.setHdVersion(regDto.getHdVersion());
         form.setRegType(RegTypeEnum.device_auto);
 
-        User user=new User();
-        var product=productRepository.findFirstBySn(regDto.getProductSn());
-        if(product.isPresent()){
-            user=userRepository.findById(product.get().getOwner()).get();
+        User user = new User();
+        var product = productRepository.findFirstBySn(regDto.getProductSn());
+        if (product.isPresent()) {
+            user = userRepository.findById(product.get().getOwner()).get();
             if (product.get().getDiscover().equals(ProductDiscoverEnum.all) || product.get().getDiscover().equals(ProductDiscoverEnum.auto)) {
                 return;
             }
@@ -816,7 +825,7 @@ public class DeviceService {
 
     public Object saveAccess(ProductSaveAccessForm form, User userInfo) {
         productRepository.findFirstBySn(form.getSn()).ifPresentOrElse(p -> {
-            checkUserCanAccessProduct(p,userInfo);
+            checkUserCanAccessProduct(p, userInfo);
             p.setAccess(form.getAccess());
             productRepository.save(p);
         }, () -> {
@@ -827,7 +836,7 @@ public class DeviceService {
 
     public Object saveDeviceAccess(DeviceSaveAccessForm form, User userInfo) {
         deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).ifPresentOrElse(d -> {
-            checkUserCanAccessDevice(d,userInfo);
+            checkUserCanAccessDevice(d, userInfo);
             d.setAccess(form.getAccess());
             deviceRepository.save(d);
         }, () -> {
@@ -838,7 +847,7 @@ public class DeviceService {
 
     public Object saveProductBase(ProductSaveBaseForm form, User userInfo) {
         productRepository.findFirstBySn(form.getSn()).ifPresentOrElse(p -> {
-            checkUserCanAccessProduct(p,userInfo);
+            checkUserCanAccessProduct(p, userInfo);
             p.setName(form.getName());
             p.setDescription(form.getDescription());
             productRepository.save(p);
@@ -850,7 +859,7 @@ public class DeviceService {
 
     public Object saveBase(DeviceSaveBaseForm form, User userInfo) {
         deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).ifPresentOrElse(d -> {
-            checkUserCanAccessDevice(d,userInfo);
+            checkUserCanAccessDevice(d, userInfo);
             d.setName(form.getName());
             d.setDescription(form.getDescription());
             deviceRepository.save(d);
@@ -862,7 +871,7 @@ public class DeviceService {
 
     public Object saveGroupBase(DeviceSaveGroupBaseForm form, User userInfo) {
         deviceGroupRepository.findById(form.getId()).ifPresentOrElse(d -> {
-            checkUserCanAccessGroup(d,userInfo);
+            checkUserCanAccessGroup(d, userInfo);
             d.setName(form.getName());
             d.setDescription(form.getDescription());
             deviceGroupRepository.save(d);
@@ -874,7 +883,7 @@ public class DeviceService {
 
     public Object saveDeviceModel(DeviceSaveModelForm form, User userInfo) {
         deviceRepository.findFirstBySnAndProductSn(form.getSn(), form.getProductSn()).ifPresent(d -> {
-            checkUserCanAccessDevice(d,userInfo);
+            checkUserCanAccessDevice(d, userInfo);
             if (ReleaseTypeEnum.Alpha.equals(d.getReleaseType())) {
                 Gson gson = new Gson();
                 d.setSpec(gson.fromJson(form.getSpec(), Object.class));
@@ -882,5 +891,36 @@ public class DeviceService {
             }
         });
         return true;
+    }
+
+
+    @Value("${app.upload}")
+    String path;
+
+    @Value("${app.downloadDomain}")
+    String downloadDomain;
+
+    /**
+     * @param file
+     * @param productSn
+     * @return
+     */
+    public Object updateProductImage(MultipartFile file, String productSn) {
+
+        HashMap<String, Object> ret = new HashMap<>();
+        try {
+            String fileName ="/"+ productSn + ".png";
+            InputStream is = file.getInputStream();
+            String filePath = path + fileName;
+            Files.copy(is, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+            ret.put("url", downloadDomain + fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        productRepository.findFirstBySn(productSn).ifPresent(p -> {
+            p.setIcon((String) ret.get("url"));
+            productRepository.save(p);
+        });
+        return ret;
     }
 }
