@@ -94,9 +94,17 @@ public class ProductBase extends Base {
     AccessTypeEnum access;
 
     /**
+     * 属主类型
+     */
+    OwnerTypeEnum ownerType;
+    /**
      * 产品所有者
      */
     Long owner;
+    /**
+     * team
+     */
+    Long team;
     /**
      * 设备更新策略 默认设备自动更新到最新版本
      */

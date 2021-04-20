@@ -6,11 +6,15 @@ import com.dj.iotlite.entity.device.Device;
 import com.dj.iotlite.entity.product.Product;
 import com.dj.iotlite.service.AuthService;
 import com.dj.iotlite.service.DeviceService;
+import com.dj.iotlite.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -24,6 +28,20 @@ public class ProductController extends BaseController {
 
     @Autowired
     AuthService authService;
+
+
+    @Autowired
+    ImageService imageService;
+
+    /**
+     * upload image
+     * @param dataFile
+     * @return
+     */
+    @RequestMapping("/image")
+    public ResDto upload(@RequestPart("file") @NotNull @NotBlank MultipartFile dataFile,@RequestPart("productSn") String productSn){
+        return success(deviceService.updateProductImage(dataFile,productSn));
+    }
 
     @GetMapping("/list")
     public ResDto<Page<ProductListDto>> list(ProductQueryForm query) {

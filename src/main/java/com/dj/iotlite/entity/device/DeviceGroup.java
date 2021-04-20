@@ -2,6 +2,7 @@ package com.dj.iotlite.entity.device;
 
 import com.dj.iotlite.entity.Base;
 import com.dj.iotlite.enums.AccessTypeEnum;
+import com.dj.iotlite.enums.OwnerTypeEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
@@ -50,6 +51,11 @@ public class DeviceGroup extends Base {
      */
     @Column(columnDefinition = "int default 0")
     AccessTypeEnum access;
+
+    /**
+     * 属主类型
+     */
+    OwnerTypeEnum ownerType;
 
     /**
      * 设备所有者

@@ -148,6 +148,10 @@ public class Device extends Base {
     UpdateStrategyEnum updateStrategy;
 
     /**
+     *
+     */
+    OwnerTypeEnum ownerType;
+    /**
      * 设备所有者
      */
     Long owner;
