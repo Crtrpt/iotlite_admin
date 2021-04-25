@@ -7,4 +7,5 @@ public class SigninForm {
     String account;
     String username;
     String password;
+    String email;
 }
