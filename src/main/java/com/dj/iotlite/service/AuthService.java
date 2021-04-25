@@ -27,6 +27,8 @@ import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.Random;
+
 import static com.dj.iotlite.RedisKey.emailCode;
 
 @Service
@@ -91,6 +93,7 @@ public class AuthService {
             newUser.setAccount(form.getAccount());
             newUser.setName(form.getUsername());
             newUser.setPassword(PasswordUtils.Hash(form.getPassword()));
+            newUser.setEmail(form.getEmail());
             userRepository.save(newUser);
         });
         return true;
@@ -131,8 +134,9 @@ public class AuthService {
     public Object confirmEmail(ConfirmEmailForm form) {
         log.info("找回邮箱"+form.getEmail());
         userRepository.findFirstByEmail(form.getEmail()).orElseThrow(()->{throw new BusinessException("email not found");});
-        var code=UUID.getUUID();
-        redisCommands.set(String.format(emailCode,form.getEmail()),code, new SetArgs().ex(1000*60));
+        var r= new Random();
+        var code=r.nextInt(10000);
+        redisCommands.set(String.format(emailCode,form.getEmail()),String.valueOf(code), new SetArgs().ex(1000*60));
         try {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             //邮件发送人
@@ -144,6 +148,7 @@ public class AuthService {
             //邮件内容
             simpleMailMessage.setText("验证码:"+code+"  有效期：60秒");
             javaMailSender.send(simpleMailMessage);
+            log.info("发送邮件完成");
         } catch (Exception e) {
             log.error("邮件发送失败 {}", e.getMessage());
         }
@@ -170,6 +175,7 @@ public class AuthService {
             //邮件内容
             simpleMailMessage.setText("您的密码已经修改请重新登录");
             javaMailSender.send(simpleMailMessage);
+            log.info("发生邮件完成");
         } catch (Exception e) {
             log.error("邮件发送失败 {}", e.getMessage());
         }
