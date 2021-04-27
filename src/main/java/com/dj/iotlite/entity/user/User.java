@@ -45,4 +45,5 @@ public class User extends Base {
 
     Boolean isActive;
 
+    String avatar;
 }
