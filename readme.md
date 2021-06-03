@@ -14,4 +14,5 @@ QQ群：829543314
 
 ## todo
 
-修改语言为 whisper-language
+- 修改语言为 whisper-language
+- 增加 srs 支持 视频设备
