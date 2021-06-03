@@ -3,7 +3,9 @@ package com.dj.iotlite.service;
 import com.dj.iotlite.RedisKey;
 import com.dj.iotlite.api.dto.LoginDto;
 import com.dj.iotlite.api.dto.UserDto;
+import com.dj.iotlite.api.form.ConfirmEmailForm;
 import com.dj.iotlite.api.form.LoginForm;
+import com.dj.iotlite.api.form.ResetPasswordForm;
 import com.dj.iotlite.api.form.SigninForm;
 import com.dj.iotlite.entity.repo.UserRepository;
 import com.dj.iotlite.entity.user.User;
@@ -11,14 +13,23 @@ import com.dj.iotlite.exception.BusinessException;
 import com.dj.iotlite.exception.BusinessExceptionEnum;
 import com.dj.iotlite.utils.PasswordUtils;
 import com.dj.iotlite.utils.UUID;
+import io.lettuce.core.SetArgs;
 import io.lettuce.core.api.sync.RedisCommands;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.Random;
+
+import static com.dj.iotlite.RedisKey.emailCode;
 
 @Service
 @Slf4j
@@ -82,6 +93,7 @@ public class AuthService {
             newUser.setAccount(form.getAccount());
             newUser.setName(form.getUsername());
             newUser.setPassword(PasswordUtils.Hash(form.getPassword()));
+            newUser.setEmail(form.getEmail());
             userRepository.save(newUser);
         });
         return true;
@@ -111,5 +123,62 @@ public class AuthService {
         return userRepository.findById(Long.valueOf(userId)).orElseThrow(() -> {
             throw new BusinessException("user not found");
         });
+    }
+
+    @Autowired
+    JavaMailSender javaMailSender;
+
+
+    @Value("${spring.mail.username}")
+    String from;
+    public Object confirmEmail(ConfirmEmailForm form) {
+        log.info("找回邮箱"+form.getEmail());
+        userRepository.findFirstByEmail(form.getEmail()).orElseThrow(()->{throw new BusinessException("email not found");});
+        var r= new Random();
+        var code=r.nextInt(10000);
+        redisCommands.set(String.format(emailCode,form.getEmail()),String.valueOf(code), new SetArgs().ex(1000*60));
+        try {
+            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+            //邮件发送人
+            simpleMailMessage.setFrom(from);
+            //邮件接收人
+            simpleMailMessage.setTo(form.getEmail());
+            //邮件主题
+            simpleMailMessage.setSubject("找回密码-验证码");
+            //邮件内容
+            simpleMailMessage.setText("验证码:"+code+"  有效期：60秒");
+            javaMailSender.send(simpleMailMessage);
+            log.info("发送邮件完成");
+        } catch (Exception e) {
+            log.error("邮件发送失败 {}", e.getMessage());
+        }
+        return  true;
+    }
+
+    public Object resetpassword(ResetPasswordForm form) {
+        var user=  userRepository.findFirstByEmail(form.getEmail()).orElseThrow(()->{throw new BusinessException("email not found");});
+       var code=(String)redisCommands.get(String.format(emailCode,form.getEmail()));
+       if(!form.getCode().equals(code)){
+           throw new BusinessException("code error");
+       }else {
+           user.setPassword(PasswordUtils.Hash(form.getPassword()));
+           userRepository.save(user);
+       }
+        try {
+            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+            //邮件发送人
+            simpleMailMessage.setFrom(from);
+            //邮件接收人
+            simpleMailMessage.setTo(form.getEmail());
+            //邮件主题
+            simpleMailMessage.setSubject("找回密码-确认修改");
+            //邮件内容
+            simpleMailMessage.setText("您的密码已经修改请重新登录");
+            javaMailSender.send(simpleMailMessage);
+            log.info("发生邮件完成");
+        } catch (Exception e) {
+            log.error("邮件发送失败 {}", e.getMessage());
+        }
+        return  true;
     }
 }

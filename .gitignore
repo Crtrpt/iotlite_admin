@@ -30,9 +30,14 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+/src/main/resources/application-dev.properties
 
 ### VS Code ###
 .vscode/
 log/*
 
 ./web/node_modules
+
+/connector
+
+/upload
