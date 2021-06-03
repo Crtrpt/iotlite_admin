@@ -49,4 +49,5 @@ public class User extends Base {
      */
     String openId;
 
+    String avatar;
 }
