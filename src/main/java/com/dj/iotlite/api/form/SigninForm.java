@@ -8,4 +8,5 @@ public class SigninForm {
     String username;
     String password;
     String email;
+    String phone;
 }

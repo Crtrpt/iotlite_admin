@@ -13,11 +13,12 @@
 ![设备工作流程图](./diagram/sample_device.svg)
 
 
-## 测试环境体验
-
-http://iotlite.crtrpt.com
-## 文档
 https://crtrpt.github.io/iotlite_doc/#/
 
 ## 支持
 QQ群：829543314
+
+## todo
+
+- 修改语言为 whisper-language
+- 增加 srs 支持 视频设备

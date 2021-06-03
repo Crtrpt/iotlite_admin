@@ -39,7 +39,8 @@ public class ProductController extends BaseController {
      * @return
      */
     @RequestMapping("/image")
-    public ResDto upload(@RequestPart("file") @NotNull @NotBlank MultipartFile dataFile,@RequestPart("productSn") String productSn){
+    public ResDto upload(@RequestPart("file") @NotNull @NotBlank MultipartFile dataFile
+            ,@RequestPart("productSn") String productSn){
         return success(deviceService.updateProductImage(dataFile,productSn));
     }
 

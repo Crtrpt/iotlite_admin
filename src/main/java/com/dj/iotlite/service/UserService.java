@@ -1,5 +1,6 @@
 package com.dj.iotlite.service;
 
+import com.dj.iotlite.api.dto.UserDto;
 import com.dj.iotlite.api.form.OrganizationForm;
 import com.dj.iotlite.api.form.OrganizationQueryForm;
 import com.dj.iotlite.api.form.UserForm;
@@ -15,14 +16,20 @@ import com.dj.iotlite.utils.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.criteria.Predicate;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -169,5 +176,42 @@ public class UserService {
                 organizationRepository.save(o);
             });
         });
+    }
+
+    public Object getProfile(User userInfo) {
+        UserDto userDto=new UserDto();
+        BeanUtils.copyProperties(userInfo,userDto);
+        return  userDto;
+    }
+
+    public Object saveProfile(User userInfo, UserDto userDto) {
+        userInfo.setName(userDto.getName());
+        userRepository.save(userInfo);
+        return  true;
+    }
+
+
+    @Value("${app.upload}")
+    String path;
+
+    @Value("${app.downloadDomain}")
+    String downloadDomain;
+
+    public Object updateAvatarImage(MultipartFile file, Long userId) {
+        HashMap<String, Object> ret = new HashMap<>();
+        try {
+            String fileName ="/"+ userId + ".png";
+            InputStream is = file.getInputStream();
+            String filePath = path + fileName;
+            Files.copy(is, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+            ret.put("url", downloadDomain + fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        userRepository.findById(userId).ifPresent(u->{
+            u.setAvatar((String) ret.get("url"));
+            userRepository.save(u);
+        });
+        return ret;
     }
 }

@@ -21,5 +21,7 @@ public interface UserRepository extends
 
     Optional<User> findFirstByEmail(String email);
 
+    Optional<User> findFirstByPhone(String phone);
+
     Integer countAllByOrganizationId(Long organizationId);
 }

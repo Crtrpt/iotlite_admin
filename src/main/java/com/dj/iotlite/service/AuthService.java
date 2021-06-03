@@ -86,6 +86,12 @@ public class AuthService {
     }
 
     public Object signup(SigninForm form) {
+        userRepository.findFirstByPhone(form.getPhone()).ifPresent(u -> {
+            throw new BusinessException("phone ready exits");
+        });
+        userRepository.findFirstByEmail(form.getPhone()).ifPresent(u -> {
+            throw new BusinessException("email ready exits");
+        });
         userRepository.findFirstByAccount(form.getAccount()).ifPresentOrElse(u -> {
             throw new BusinessException("account ready exits");
         }, () -> {
@@ -94,6 +100,7 @@ public class AuthService {
             newUser.setName(form.getUsername());
             newUser.setPassword(PasswordUtils.Hash(form.getPassword()));
             newUser.setEmail(form.getEmail());
+            newUser.setPhone(form.getPhone());
             userRepository.save(newUser);
         });
         return true;
@@ -131,6 +138,7 @@ public class AuthService {
 
     @Value("${spring.mail.username}")
     String from;
+
     public Object confirmEmail(ConfirmEmailForm form) {
         log.info("找回邮箱"+form.getEmail());
         userRepository.findFirstByEmail(form.getEmail()).orElseThrow(()->{throw new BusinessException("email not found");});
@@ -146,24 +154,26 @@ public class AuthService {
             //邮件主题
             simpleMailMessage.setSubject("找回密码-验证码");
             //邮件内容
-            simpleMailMessage.setText("验证码:"+code+"  有效期：60秒");
+            simpleMailMessage.setText("验证码:" + code + "  有效期：60秒");
             javaMailSender.send(simpleMailMessage);
             log.info("发送邮件完成");
         } catch (Exception e) {
             log.error("邮件发送失败 {}", e.getMessage());
         }
-        return  true;
+        return true;
     }
 
     public Object resetpassword(ResetPasswordForm form) {
-        var user=  userRepository.findFirstByEmail(form.getEmail()).orElseThrow(()->{throw new BusinessException("email not found");});
-       var code=(String)redisCommands.get(String.format(emailCode,form.getEmail()));
-       if(!form.getCode().equals(code)){
-           throw new BusinessException("code error");
-       }else {
-           user.setPassword(PasswordUtils.Hash(form.getPassword()));
-           userRepository.save(user);
-       }
+        var user = userRepository.findFirstByEmail(form.getEmail()).orElseThrow(() -> {
+            throw new BusinessException("email not found");
+        });
+        var code = (String) redisCommands.get(String.format(emailCode, form.getEmail()));
+        if (!form.getCode().equals(code)) {
+            throw new BusinessException("code error");
+        } else {
+            user.setPassword(PasswordUtils.Hash(form.getPassword()));
+            userRepository.save(user);
+        }
         try {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
             //邮件发送人
@@ -179,6 +189,6 @@ public class AuthService {
         } catch (Exception e) {
             log.error("邮件发送失败 {}", e.getMessage());
         }
-        return  true;
+        return true;
     }
 }
