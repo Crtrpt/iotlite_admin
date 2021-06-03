@@ -44,5 +44,9 @@ public class User extends Base {
     String phone;
 
     Boolean isActive;
+    /**
+     * 用户微信openid
+     */
+    String openId;
 
 }
