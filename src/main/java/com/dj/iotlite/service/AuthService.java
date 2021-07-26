@@ -86,10 +86,13 @@ public class AuthService {
     }
 
     public Object signup(SigninForm form) {
-        userRepository.findFirstByPhone(form.getPhone()).ifPresent(u -> {
-            throw new BusinessException("phone ready exits");
-        });
-        userRepository.findFirstByEmail(form.getPhone()).ifPresent(u -> {
+        if(!ObjectUtils.isEmpty(form.getPhone())){
+            userRepository.findFirstByPhone(form.getPhone()).ifPresent(u -> {
+                throw new BusinessException("phone ready exits");
+            });
+        }
+
+        userRepository.findFirstByEmail(form.getEmail()).ifPresent(u -> {
             throw new BusinessException("email ready exits");
         });
         userRepository.findFirstByAccount(form.getAccount()).ifPresentOrElse(u -> {

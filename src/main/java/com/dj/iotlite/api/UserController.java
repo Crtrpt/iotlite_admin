@@ -79,9 +79,15 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/image")
     public ResDto upload(@RequestPart("file") @NotNull @NotBlank MultipartFile dataFile,
-                         @RequestPart("id") Long userId){
-        return success(userService.updateAvatarImage(dataFile,userId));
+                         @RequestPart("userId") String userId){
+        return success(userService.updateAvatarImage(dataFile,Long.valueOf(userId)));
     }
+
+//    @RequestMapping("/image")
+//    public ResDto upload(@RequestPart("file") @NotNull @NotBlank MultipartFile dataFile
+//            ,@RequestPart("productSn") String productSn){
+//        return success(deviceService.updateProductImage(dataFile,productSn));
+//    }
 
 
 
