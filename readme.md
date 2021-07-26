@@ -2,8 +2,8 @@
 简单易用的物联网平台
 
 ---
-[![Maven Package](https://github.com/Crtrpt/iotlite_core/actions/workflows/maven.yml/badge.svg)](https://github.com/Crtrpt/iotlite_core/actions/workflows/maven.yml)
-[![CodeQL](https://github.com/Crtrpt/iotlite_core/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Crtrpt/iotlite_core/actions/workflows/codeql-analysis.yml)
+[![Maven Package](https://github.com/Crtrpt/iotlite_admin/actions/workflows/maven.yml/badge.svg)](https://github.com/Crtrpt/iotlite_core/actions/workflows/maven.yml)
+[![CodeQL](https://github.com/Crtrpt/iotlite_admin/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Crtrpt/iotlite_core/actions/workflows/codeql-analysis.yml)
 ---
 
 ### 总体流程图
